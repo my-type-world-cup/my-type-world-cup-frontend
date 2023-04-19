@@ -5,8 +5,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <header className="bg-main">
+    <main className="flex min-h-screen flex-col ">
+      <header className="bg-main flex w-full px-4 py-3 items-center justify-between">
         <Image
           src="/icon/finger.svg"
           alt="Vercel Logo"
