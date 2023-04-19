@@ -1,9 +1,15 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import DropDown from "./DropDown";
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const router = useRouter();
+  const handleHome = () => {
+    router.push("/");
+    setIsDropdownOpen(false);
+  };
 
   return (
     <div className="relative">
@@ -15,6 +21,7 @@ const Header = () => {
           width={30}
           height={20}
           priority
+          onClick={handleHome}
         />
         <span className="text-2xl tracking-wider font-medium text-white">
           이상형 월드컵

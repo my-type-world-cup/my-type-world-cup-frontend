@@ -1,7 +1,7 @@
 import Header from "@/components/ui/Header";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-// _app.js 파일 내
+
 import Head from "next/head";
 
 function App({ Component, pageProps }: AppProps) {
@@ -14,7 +14,7 @@ function App({ Component, pageProps }: AppProps) {
         />
       </Head>
 
-      <div className="bg-blue max-w-full sm:max-w-[480px] mx-auto">
+      <div className="bg-white max-w-[480px] mx-auto shadow-lg ">
         <div>
           <Header />
           <Component {...pageProps} />

@@ -41,6 +41,10 @@
   --leferiPointWhiteObliqueA: "LeferiPoint-WhiteObliqueA", sans-serif;
 }
 
+input:focus {
+  outline: none;
+  box-shadow: none;
+}
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
