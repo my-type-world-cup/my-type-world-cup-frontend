@@ -11,6 +11,8 @@ const Header = () => {
     setIsDropdownOpen(false);
   };
 
+  // 나중에 해당 주소에 맞추어서 갈 수 있도록 수정해야함
+
   return (
     <div className="relative">
       <header className="bg-main flex w-full relative z-20 px-4 py-3 items-center justify-between">
@@ -23,7 +25,10 @@ const Header = () => {
           priority
           onClick={handleHome}
         />
-        <span className="text-2xl tracking-wider font-medium text-white">
+        <span
+          className="text-2xl tracking-wider font-medium text-white"
+          onClick={handleHome}
+        >
           이상형 월드컵
         </span>
         <Image
