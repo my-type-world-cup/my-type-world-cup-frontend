@@ -13,6 +13,11 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
+    fontFamily: {
+      pretendard: ["Pretendard", "sans-serif"],
+      poppins: ["Poppins", "sans-serif"],
+      bevietnam: ["BeVietnam", "sans-serif"],
+    },
     colors: {
       inherit: "inherit", //부모 요소 상속
       transparent: "transparent", // 투명

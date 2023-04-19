@@ -19,3 +19,4 @@ function App({ Component, pageProps }: AppProps) {
 }
 
 export default App;
+//onTouchStart 기억할 것
