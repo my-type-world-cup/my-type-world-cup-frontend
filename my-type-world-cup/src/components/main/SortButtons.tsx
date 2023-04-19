@@ -4,8 +4,9 @@ interface Sort_buttons {
   name: string;
   value: string;
 }
+type value = "popular" | "recent" | "like" | "comment";
 const SortButtons = () => {
-  const [isWord, setIsWord] = useState<string>("popular");
+  const [isWord, setIsWord] = useState<value>("popular");
   const sortButtons: Sort_buttons[] = [
     { name: "인기순", value: "popular" },
     { name: "최신순", value: "recent" },
@@ -14,7 +15,7 @@ const SortButtons = () => {
   ];
   console.log(isWord);
   const sortData = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    setIsWord(e.currentTarget.value);
+    setIsWord(e.currentTarget.value as value); //메모
 
     //함수로 구현
     // const sortType = e.currentTarget.value

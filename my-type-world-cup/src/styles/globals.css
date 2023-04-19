@@ -45,12 +45,8 @@ input:focus {
   outline: none;
   box-shadow: none;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+img {
+  filter: brightness(105%) contrast(110%);
 }
 
 body {
