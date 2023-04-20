@@ -1,8 +1,9 @@
 import Image from "next/image";
+import GameButtons from "./GameButtons";
 
 const Card = () => {
   return (
-    <article className="border-main mt-4 mx-4 border-[1px]">
+    <article className="border-main mt-4 mx-4 border-[1px] pb-4">
       <div className="flex justify-evenly mt-6">
         <div className="w-auto overflow-hidden">
           <div className="w-[175px] h-[175px] overflow-hidden">
@@ -34,7 +35,10 @@ const Card = () => {
       <h2 className="flex flex-col items-center mt-3 text-xl font-semibold">
         여돌 이상형 월드컵
       </h2>
-      <p className="mx-4">2023년 여자아이돌 중 당신의 이상형은 누구인가요?</p>
+      <p className="mx-4 text-center">
+        2023년 여자아이돌 중 당신의 이상형은 누구인가요?
+      </p>
+      <GameButtons />
     </article>
   );
 };

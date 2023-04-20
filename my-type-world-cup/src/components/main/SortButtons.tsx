@@ -14,7 +14,7 @@ const SortButtons = () => {
     { name: "댓글순", value: "comment" },
   ];
   console.log(isWord);
-  const sortData = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const sortHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setIsWord(e.currentTarget.value as value); //메모
 
     //함수로 구현
@@ -28,7 +28,7 @@ const SortButtons = () => {
       {sortButtons.map((button: Sort_buttons) => (
         <button
           key={button.value}
-          onClick={(e) => sortData(e)}
+          onClick={(e) => sortHandler(e)}
           value={button.value}
           className={
             button.value === isWord

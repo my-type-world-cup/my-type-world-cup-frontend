@@ -19,7 +19,7 @@ const Header = () => {
         <Image
           src="/icon/finger.svg"
           alt="Home"
-          className="cursor-pointer"
+          className="cursor-pointer hover:scale-125"
           width={30}
           height={20}
           priority
@@ -34,7 +34,7 @@ const Header = () => {
         <Image
           src="/icon/hambuger.svg"
           alt="dropdown"
-          className="cursor-pointer "
+          className="cursor-pointer hover:scale-125"
           width={30}
           height={20}
           priority

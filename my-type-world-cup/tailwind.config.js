@@ -30,6 +30,7 @@ module.exports = {
       blue: "#1a0dab",
       orange: "#F5541F",
       green: "#0F770D",
+      hover: "#98C4FF",
     },
   },
   mode: "jit",
