@@ -14,7 +14,7 @@ function App({ Component, pageProps }: AppProps) {
         />
       </Head>
 
-      <div className="bg-white max-w-[480px] mx-auto shadow-lg ">
+      <div className="bg-white max-w-[480px] mx-auto shadow-lg h-5/6">
         <div>
           <Header />
           <Component {...pageProps} />

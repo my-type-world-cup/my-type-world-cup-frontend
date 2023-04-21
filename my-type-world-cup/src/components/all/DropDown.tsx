@@ -141,7 +141,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
           transition: "opacity 0.3s ease-in-out",
           pointerEvents: isOpen ? "auto" : "none",
         }}
-      ></div>
+      />
     </>
   );
 };
