@@ -3,7 +3,7 @@ import GameButtons from "./GameButtons";
 
 const Card = () => {
   return (
-    <article className="border-main mt-4 mx-4 border-[1px] pb-4">
+    <article className="border-main mt-4 mx-4 px-2 border-[1px] pb-4">
       <div className="flex justify-evenly mt-6">
         <div className="w-auto overflow-hidden">
           <div className="w-[175px] h-[175px] overflow-hidden">
