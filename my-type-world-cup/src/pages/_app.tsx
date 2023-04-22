@@ -7,6 +7,10 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <div className="bg-hover sm:flex justify-center items-center">
       <Head>
+        <title>이상형 월드컵</title>
+        <meta name="description" content="당신만의 이상형을 찾아주세요!." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/icon/whitetrophy.svg" />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
