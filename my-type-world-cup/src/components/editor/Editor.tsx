@@ -23,41 +23,44 @@ const Editor = ({ onSave }: EditorProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="title">제목:</label>
+    <form className="mt-8 mx-8 text-lg flex flex-col" onSubmit={handleSubmit}>
+      <label htmlFor="title">제목</label>
       <input
-        id="title"
         type="text"
+        className="border-b-[1px] border-main text-gray mt-1"
+        placeholder="이상형 월드컵의 제목을 입력해주세요"
         value={title}
         onChange={(event) => setTitle(event.target.value)}
       />
       <br />
 
-      <label htmlFor="description">설명:</label>
+      <label htmlFor="description">설명</label>
       <textarea
-        id="description"
+        className="border-[1px] border-main mt-1"
         value={description}
         onChange={(event) => setDescription(event.target.value)}
       />
       <br />
 
-      <div>
-        <label>
+      <div className="flex justify-around items-center">
+        <label className="flex items-center">
           <input
             type="radio"
             name="public"
             value="public"
+            className="mr-3 w-6 h-6"
             checked={isPublic}
             onChange={handlePublicChange}
           />
           공개
         </label>
 
-        <label>
+        <label className="flex items-center ">
           <input
             type="radio"
             name="public"
             value="private"
+            className="mr-3 w-6 h-6"
             checked={!isPublic}
             onChange={handlePublicChange}
           />
