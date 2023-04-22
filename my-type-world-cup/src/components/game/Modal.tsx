@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 import GameMenubar from "./GameMenubar";
 
@@ -16,7 +15,7 @@ export default function Modal({}: Props) {
         alt="Mypage"
         className="mt-4 sm:mt-4"
         width={80}
-        height={60}
+        height={80}
         priority
       />
       <h2 className="text-main mt-2 text-xl break-all mx-6">
@@ -36,7 +35,7 @@ export default function Modal({}: Props) {
         총 n명의 후보 중 {number}명과 대결합니다
       </p>
       <div className="bg-main px-4 mt-2 sm:mt-4 mb-4 h-10 text-white flex items-center space-x-2 rounded-lg hover:scale-110  cursor-pointer">
-        <Image src="/icon/start.svg" alt="start" width={17} height={15} />
+        <Image src="/icon/start.svg" alt="start" width={17} height={17} />
         <button className="text-lg" value={"game"}>
           시작하기
         </button>

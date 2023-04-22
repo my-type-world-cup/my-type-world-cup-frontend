@@ -21,7 +21,7 @@ const Header = () => {
           alt="Home"
           className="cursor-pointer hover:scale-125"
           width={30}
-          height={20}
+          height={39}
           priority
           onClick={handleHome}
         />
@@ -36,7 +36,7 @@ const Header = () => {
           alt="dropdown"
           className="cursor-pointer hover:scale-125"
           width={30}
-          height={20}
+          height={22}
           priority
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         />

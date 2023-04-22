@@ -40,7 +40,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
               alt="Login"
               className="cursor-pointer"
               width={30}
-              height={20}
+              height={31}
               priority
             />
             <span className="text-gray-700 dark:text-gray-200 ml-3">
@@ -56,7 +56,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
               alt="Logout"
               className="cursor-pointer"
               width={30}
-              height={20}
+              height={36}
               priority
             />
             <span className="ml-3">로그아웃</span>
@@ -68,7 +68,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
               alt="Mypage"
               className="cursor-pointer"
               width={30}
-              height={20}
+              height={27}
               priority
             />
             <span className="ml-3">닉네임을 설정해주세요</span>
@@ -79,7 +79,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
               alt="Mypage"
               className="cursor-pointer"
               width={30}
-              height={20}
+              height={30}
               priority
             />
             <span className="ml-3">이상형 월드컵</span>
@@ -90,7 +90,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
               alt="Mypage"
               className="cursor-pointer"
               width={30}
-              height={20}
+              height={37}
               priority
             />
             <span className="ml-3">내가 만든 월드컵</span>
@@ -101,7 +101,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
               alt="Mypage"
               className="cursor-pointer"
               width={30}
-              height={20}
+              height={26}
               priority
             />
             <span className="ml-3">이상형 월드컵 만들기</span>
@@ -112,7 +112,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
               alt="Mypage"
               className="cursor-pointer"
               width={30}
-              height={20}
+              height={30}
               priority
             />
             <span className="ml-3">Google 로그인</span>
@@ -123,7 +123,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
               alt="Mypage"
               className="cursor-pointer"
               width={30}
-              height={20}
+              height={39}
               priority
             />
             <span className="ml-3">Guest 로그인</span>
