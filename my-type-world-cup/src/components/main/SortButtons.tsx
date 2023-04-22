@@ -13,7 +13,7 @@ const SortButtons = () => {
 
     { name: "댓글순", value: "comment" },
   ];
-  console.log("이거");
+
   const sortHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setIsWord(e.currentTarget.value as Value); //메모
 
@@ -24,7 +24,7 @@ const SortButtons = () => {
   };
 
   return (
-    <div className="flex  ">
+    <div className="flex  text-xl">
       {sortButtons.map((button: Sort_buttons) => (
         <button
           key={button.value}
@@ -32,10 +32,10 @@ const SortButtons = () => {
           value={button.value}
           className={
             button.value === isWord
-              ? "bg-main text-white w-20 h-7"
-              : "bg-lightBlue text-gray w-20 h-7"
+              ? "bg-main text-white w-20 h-10 px-2"
+              : "bg-lightBlue text-gray w-20 h-10 px-2"
           }
-          style={{ transition: "all 0.2s" }}
+          style={{ transition: "all 0.3s" }}
         >
           {button.name}
         </button>
