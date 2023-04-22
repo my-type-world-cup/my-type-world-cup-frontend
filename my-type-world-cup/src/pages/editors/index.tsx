@@ -1,6 +1,6 @@
+import Editor from "@/components/editor/Editor";
 import type { Step } from "@/components/editor/TabButton";
 import TabButtons from "@/components/editor/TabButton";
-import Editor from "@/components/editor/editor";
 import { useState } from "react";
 const WorldCupEditor = () => {
   const [isWord, setIsWord] = useState<Step>("first");
@@ -9,7 +9,7 @@ const WorldCupEditor = () => {
   };
 
   return (
-    <div>
+    <div className="pt-12">
       <TabButtons isWord={isWord} setIsWord={setIsWord} />
       <Editor onSave={onSave} />
     </div>

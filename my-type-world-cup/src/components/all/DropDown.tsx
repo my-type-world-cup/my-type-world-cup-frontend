@@ -119,11 +119,11 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
           </li>
           <li className="flex items-center px-4 py-3 cursor-pointer">
             <Image
-              src="/icon/finger.svg"
+              src="/icon/guest.svg"
               alt="Mypage"
               className="cursor-pointer"
-              width={30}
-              height={39}
+              width={32}
+              height={34}
               priority
             />
             <span className="ml-3">Guest 로그인</span>

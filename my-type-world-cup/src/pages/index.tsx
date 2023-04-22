@@ -6,12 +6,16 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <>
-      <main className="flex h-screen flex-col pt-40">
+      <main className="flex h-screen flex-col pt-36 overflow-y-scroll">
         <SearchBar isOpen={isOpen} setIsOpen={setIsOpen} />
         <div className="mt-12 mx-auto">
           <SortButtons />
         </div>
-        <article className="w-full">
+        <article className="w-full ">
+          <Card />
+          <Card />
+          <Card />
+          <Card />
           <Card />
         </article>
       </main>

@@ -27,7 +27,7 @@ const TabButtons = ({ isWord, setIsWord }: TabButtonProps) => {
   };
 
   return (
-    <div className="flex mt-8 text-lg">
+    <div className="flex mt-8 text-xl">
       {sortButtons.map((button: Tab_buttons) => (
         <button
           key={button.value}
@@ -35,8 +35,8 @@ const TabButtons = ({ isWord, setIsWord }: TabButtonProps) => {
           value={button.value}
           className={
             button.value === isWord
-              ? "bg-main text-white w-full h-10 p-1"
-              : "bg-lightBlue text-gray w-full h-10 p-1"
+              ? "bg-main text-white w-full h-12 p-1"
+              : "bg-lightBlue text-gray w-full h-12 p-1"
           }
           style={{ transition: "all 0.2s" }}
         >
