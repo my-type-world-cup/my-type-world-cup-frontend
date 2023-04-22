@@ -5,14 +5,16 @@ import { useState } from "react";
 export default function Home() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
-    <main className="flex h-screen flex-col pt-14">
-      <SearchBar isOpen={isOpen} setIsOpen={setIsOpen} />
-      <div className="mt-12 mx-auto">
-        <SortButtons />
-      </div>
-      <article className="w-full">
-        <Card />
-      </article>
-    </main>
+    <>
+      <main className="flex h-screen flex-col pt-14">
+        <SearchBar isOpen={isOpen} setIsOpen={setIsOpen} />
+        <div className="mt-12 mx-auto">
+          <SortButtons />
+        </div>
+        <article className="w-full">
+          <Card />
+        </article>
+      </main>
+    </>
   );
 }

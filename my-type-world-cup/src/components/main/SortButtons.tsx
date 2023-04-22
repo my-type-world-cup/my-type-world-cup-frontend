@@ -10,7 +10,7 @@ const SortButtons = () => {
   const sortButtons: Sort_buttons[] = [
     { name: "인기순", value: "popular" },
     { name: "최신순", value: "recent" },
-    { name: "좋아요순", value: "like" },
+
     { name: "댓글순", value: "comment" },
   ];
   console.log(isWord);
