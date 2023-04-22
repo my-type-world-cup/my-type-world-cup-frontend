@@ -1,16 +1,13 @@
+import type { round } from "@/pages/game";
 import Image from "next/image";
-import { useState } from "react";
-import type { round } from "./Modal";
+import { Dispatch, SetStateAction, useState } from "react";
 
 type Props = {
-  selectedRound: round;
-  setSelectedRound: (round: round) => void;
+  isModal: [boolean, round];
+  setIsModal: Dispatch<SetStateAction<[boolean, round]>>;
 };
 
-export default function GameMenubar({
-  selectedRound,
-  setSelectedRound,
-}: Props) {
+export default function GameMenubar({ isModal, setIsModal }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleClick = () => {
@@ -18,22 +15,25 @@ export default function GameMenubar({
   };
 
   const handleRoundSelect = (round: round) => {
-    setSelectedRound(round);
+    setIsModal((el) => {
+      console.log(el);
+      return [el[0], round];
+    });
     setIsOpen(false);
   };
-  const rounds: round[] = ["32강", "16강", "8강", "4강"];
+  const rounds: round[] = [32, 16, 8, 4];
   return (
     <>
       <div
         className="w-10/12 border-[1px] mt-1 border-gray flex justify-between px-2 cursor-pointer"
         onClick={handleClick}
       >
-        <h3 className=" py-1 text-sm ">{selectedRound}</h3>
+        <h3 className=" py-1 text-sm ">{isModal[1]}강</h3>
         <Image
           src="/icon/down.svg"
           alt="arrow"
           width={15}
-          height={15}
+          height={28}
           priority
         />
       </div>

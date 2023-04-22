@@ -31,6 +31,7 @@ module.exports = {
       orange: "#F5541F",
       green: "#0F770D",
       hover: "#E9F4FF",
+      sweetBlack: "#1A1A1A",
     },
   },
   mode: "jit",
