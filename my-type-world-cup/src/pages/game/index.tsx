@@ -125,28 +125,7 @@ const WorldCup = () => {
   useEffect(() => {
     setRound(isModal[1]);
   }, [isModal]);
-  const playMatch = (match: Match) => {};
 
-  const playRound = () => {
-    // const newContestants = [...contestants];
-    // const newMatches: Match[] = [];
-    // for (let i = 0; i < newContestants.length; i += 2) {
-    //   const match: Match = {
-    //     winner: newContestants[i],
-    //     loser: newContestants[i + 1],
-    //   };
-    //   newMatches.push(match);
-    // }
-    // setContestants([]);
-    // setMatches([...matches, ...newMatches]);
-    // setRound(round + 1);
-  };
-
-  const reset = () => {
-    // setContestants(initialContestants);
-    // setMatches([]);
-    // setRound(1);
-  };
   console.log(twoPeople);
   console.log(contestants);
   return (
