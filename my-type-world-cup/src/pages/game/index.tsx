@@ -151,7 +151,7 @@ const WorldCup = () => {
   console.log(contestants);
   return (
     <div className="relative h-screen shadow-lg z-50">
-      <div className="bg-sweetBlack w-full h-full">
+      <div className="bg-sweetBlack w-full h-full overflow-hidden">
         {!isModal[0] && (
           <InGame
             isModal={isModal}
