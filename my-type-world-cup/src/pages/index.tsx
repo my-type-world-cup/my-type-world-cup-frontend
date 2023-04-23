@@ -6,9 +6,9 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <>
-      <main className="flex h-screen flex-col pt-36 overflow-y-scroll">
+      <main className="flex h-screen flex-col pt-24 overflow-y-scroll">
         <SearchBar isOpen={isOpen} setIsOpen={setIsOpen} />
-        <div className="mt-12 mx-auto">
+        <div className="mt-8 mx-auto">
           <SortButtons />
         </div>
         <article className="w-full ">

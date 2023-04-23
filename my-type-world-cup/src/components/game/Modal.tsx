@@ -1,15 +1,21 @@
-import type { round } from "@/pages/game";
+import type { Round } from "@/pages/game";
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import GameMenubar from "./GameMenubar";
 
 type Props = {
-  isModal: [boolean, round];
-  setIsModal: Dispatch<SetStateAction<[boolean, round]>>;
+  isModal: [boolean, Round];
+  setIsModal: Dispatch<SetStateAction<[boolean, Round]>>;
+  randomContestant: () => void;
 };
 
-export default function Modal({ isModal, setIsModal }: Props) {
+export default function Modal({
+  isModal,
+  setIsModal,
+  randomContestant,
+}: Props) {
   const handleClick = () => {
+    randomContestant();
     setIsModal((el) => {
       return [false, el[1]];
     });

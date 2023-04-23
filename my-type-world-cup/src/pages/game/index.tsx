@@ -1,6 +1,8 @@
+import InGame from "@/components/game/InGame";
 import Modal from "@/components/game/Modal";
 import { useEffect, useState } from "react";
-type Contestant = {
+
+export type Contestant = {
   name: string;
   image: string;
 };
@@ -83,7 +85,7 @@ type Option = {
   label: string;
   value: string;
 };
-export type round = 32 | 16 | 8 | 4;
+export type Round = 32 | 16 | 8 | 4 | 2;
 
 const options: Option[] = [
   { label: "인기순", value: "popular" },
@@ -91,25 +93,38 @@ const options: Option[] = [
   { label: "좋아요순", value: "like" },
   { label: "댓글순", value: "comment" },
 ];
+
 // 수적으면 제한되는 로직 생성해야함
 const WorldCup = () => {
-  const [isModal, setIsModal] = useState<[boolean, round]>([true, 32]);
+  const [isModal, setIsModal] = useState<[boolean, Round]>([true, 16]);
+  const [round, setRound] = useState<Number>(0);
   const [contestants, setContestants] =
     useState<Contestant[]>(initialContestants);
   const [twoPeople, setTwoPeople] = useState<Contestant[]>([]);
+  const randomIndex = (el: number) => {
+    let num = Math.floor(Math.random() * contestants.length);
+    while (el === num) {
+      num = Math.floor(Math.random() * contestants.length);
+    }
+    return num;
+  };
+  // 겹치지 않는 2명을 계속해서 뽑는 법
+  const randomContestant = () => {
+    const randomIndex1 = Math.floor(Math.random() * contestants.length);
+    const randomIndex2 = randomIndex(randomIndex1);
+    const randomContestant1 = contestants[randomIndex1];
+    const randomContestant2 = contestants[randomIndex2];
+    setTwoPeople([randomContestant1, randomContestant2]);
+    setContestants(
+      contestants.filter(
+        (el) => el !== randomContestant1 && el !== randomContestant2
+      )
+    );
+  };
 
-  console.log(twoPeople);
   useEffect(() => {
-    let randomIndex1, randomIndex2;
-    do {
-      randomIndex1 = Math.floor(Math.random() * initialContestants.length);
-      randomIndex2 = Math.floor(Math.random() * initialContestants.length);
-    } while (randomIndex1 === randomIndex2);
-    setTwoPeople([
-      initialContestants[randomIndex1],
-      initialContestants[randomIndex2],
-    ]);
-  }, []);
+    setRound(isModal[1]);
+  }, [isModal]);
   const playMatch = (match: Match) => {};
 
   const playRound = () => {
@@ -132,11 +147,18 @@ const WorldCup = () => {
     // setMatches([]);
     // setRound(1);
   };
-  console.log(isModal);
+  console.log(twoPeople);
+  console.log(contestants);
   return (
-    <div className="relative h-screen shadow-lg ">
+    <div className="relative h-screen shadow-lg z-50">
       <div className="bg-sweetBlack w-full h-full">
-        <h2 className="pt-20 text-white text-xl text-center">{isModal[1]}강</h2>
+        {!isModal[0] && (
+          <InGame
+            isModal={isModal}
+            twoPeople={twoPeople}
+            randomContestant={() => randomContestant()}
+          />
+        )}
       </div>
       <div
         className="absolute top-0 left-0 w-full h-screen bg-black opacity-70 z-10"
@@ -149,10 +171,15 @@ const WorldCup = () => {
         }}
       />
 
-      {isModal[0] && <Modal isModal={isModal} setIsModal={setIsModal} />}
+      {isModal[0] && (
+        <Modal
+          isModal={isModal}
+          setIsModal={setIsModal}
+          randomContestant={() => randomContestant()}
+        />
+      )}
     </div>
   );
 };
-//검은색 고려할것
 
 export default WorldCup;
