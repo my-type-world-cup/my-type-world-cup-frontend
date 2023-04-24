@@ -4,9 +4,7 @@ import TabButtons from "@/components/editor/TabButton";
 import { useState } from "react";
 const WorldCupEditor = () => {
   const [isWord, setIsWord] = useState<Step>("first");
-  const onSave = (title: string, description: string, isPublic: boolean) => {
-    console.log(title, description, isPublic);
-  };
+  const onSave = (title: string, description: string, isPublic: boolean) => {};
 
   return (
     <div className="pt-12">

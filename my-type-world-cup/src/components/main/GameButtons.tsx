@@ -7,7 +7,7 @@ const GameButtons = () => {
 
   const buttonHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const buttonValue = e.currentTarget.value;
-    console.log(buttonValue);
+
     // router.push("/game");
   };
 

@@ -1,10 +1,10 @@
-import type { round } from "@/pages/game";
+import type { Round } from "@/pages/game";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useState } from "react";
 
 type Props = {
-  isModal: [boolean, round];
-  setIsModal: Dispatch<SetStateAction<[boolean, round]>>;
+  isModal: [boolean, Round];
+  setIsModal: Dispatch<SetStateAction<[boolean, Round]>>;
 };
 
 export default function GameMenubar({ isModal, setIsModal }: Props) {
@@ -14,14 +14,13 @@ export default function GameMenubar({ isModal, setIsModal }: Props) {
     setIsOpen(!isOpen);
   };
 
-  const handleRoundSelect = (round: round) => {
+  const handleRoundSelect = (round: Round) => {
     setIsModal((el) => {
-      console.log(el);
       return [el[0], round];
     });
     setIsOpen(false);
   };
-  const rounds: round[] = [32, 16, 8, 4];
+  const rounds: Round[] = [32, 16, 8, 4];
   return (
     <>
       <div
@@ -45,7 +44,7 @@ export default function GameMenubar({ isModal, setIsModal }: Props) {
             transition: "all 0.5s ease-in-out",
           }}
         >
-          {rounds.map((round: round) => (
+          {rounds.map((round: Round) => (
             <button
               key={round}
               className="w-full h-6 text-sm text-left hover:bg-gray-200  hover:bg-main "
