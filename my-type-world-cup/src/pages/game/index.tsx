@@ -98,80 +98,79 @@ const options: Option[] = [
 const WorldCup = () => {
   const [isModal, setIsModal] = useState<[boolean, Round]>([true, 16]);
   const [round, setRound] = useState<Number>(0);
-  const [contestants, setContestants] =
-    useState<Contestant[]>(initialContestants);
+  // const [contestants, setContestants] =
+  //   useState<Contestant[]>(initialContestants);
+  const matchRef = useRef<Contestant[]>(initialContestants);
   const [twoPeople, setTwoPeople] = useState<Contestant[]>([]);
-  const [winner, setWinner] = useState<Contestant[]>([]);
+  // const [winner, setWinner] = useState<Contestant[]>([]);
   const winnerRef = useRef<Contestant[]>([]);
-  useEffect(() => {}, [winner]);
 
-  const randomIndex = (el: number) => {
-    let num = Math.floor(Math.random() * contestants.length);
+  console.log(matchRef.current, "매치");
+  const randomIndex = (el: number, length: number) => {
+    let num = Math.floor(Math.random() * length);
     while (el === num) {
-      num = Math.floor(Math.random() * contestants.length);
+      num = Math.floor(Math.random() * length);
     }
     return num;
   };
   // 겹치지 않는 2명을 계속해서 뽑는 법
   // 새로운 배열로 업데이트가 되지않음
   const randomContestant = () => {
-    console.log(winner, "안", winnerRef.current, "안");
-    const randomIndex1 = Math.floor(Math.random() * contestants.length);
-    const randomIndex2 = randomIndex(randomIndex1);
+    console.log(winnerRef.current, "안 위너", matchRef.current, "안 매치");
+    const randomIndex1 = Math.floor(Math.random() * matchRef.current.length);
+    const randomIndex2 = randomIndex(randomIndex1, matchRef.current.length);
 
-    const randomContestant1 = contestants[randomIndex1];
-    const randomContestant2 = contestants[randomIndex2];
+    const randomContestant1 = matchRef.current[randomIndex1];
+    const randomContestant2 = matchRef.current[randomIndex2];
     setTwoPeople([randomContestant1, randomContestant2]);
-
-    setContestants((el: Contestant[]) => {
-      return el.filter(
-        (el) => el !== randomContestant1 && el !== randomContestant2
-      );
-    });
+    matchRef.current = matchRef.current.filter(
+      (el) => el !== randomContestant1 && el !== randomContestant2
+    );
+    console.log(matchRef.current, "안후 매치");
+    // setContestants((el: Contestant[]) => {
+    //   return el.filter(
+    //     (el) => el !== randomContestant1 && el !== randomContestant2
+    //   );
+    // });
   };
 
   useEffect(() => {
     setRound(isModal[1]);
   }, [isModal]);
 
-  console.log(twoPeople, contestants, winner, "밖");
-
-  if (twoPeople)
-    return (
-      <div className="relative h-screen shadow-lg z-50">
-        <div className="bg-sweetBlack w-full h-full overflow-hidden">
-          {!isModal[0] && (
-            <InGame
-              isModal={isModal}
-              twoPeople={twoPeople}
-              randomContestant={() => randomContestant()}
-              setWinner={setWinner}
-              winner={winner}
-              contestants={contestants}
-              winnerRef={winnerRef}
-            />
-          )}
-        </div>
-        <div
-          className="absolute top-0 left-0 w-full h-screen bg-black opacity-70 z-10"
-          style={{
-            opacity: isModal[0] ? "0.7" : "0",
-
-            transform: isModal[0] ? "translate-x-0" : "translate-x-full",
-            transition: "opacity 0.3s ease-in-out",
-            pointerEvents: isModal[0] ? "auto" : "none",
-          }}
-        />
-
-        {isModal[0] && (
-          <Modal
+  return (
+    <div className="relative h-screen shadow-lg z-50">
+      <div className="bg-sweetBlack w-full h-full overflow-hidden">
+        {!isModal[0] && (
+          <InGame
             isModal={isModal}
-            setIsModal={setIsModal}
+            twoPeople={twoPeople}
             randomContestant={() => randomContestant()}
+            winnerRef={winnerRef}
+            matchRef={matchRef}
           />
         )}
       </div>
-    );
+      <div
+        className="absolute top-0 left-0 w-full h-screen bg-black opacity-70 z-10"
+        style={{
+          opacity: isModal[0] ? "0.7" : "0",
+
+          transform: isModal[0] ? "translate-x-0" : "translate-x-full",
+          transition: "opacity 0.3s ease-in-out",
+          pointerEvents: isModal[0] ? "auto" : "none",
+        }}
+      />
+
+      {isModal[0] && (
+        <Modal
+          isModal={isModal}
+          setIsModal={setIsModal}
+          randomContestant={() => randomContestant()}
+        />
+      )}
+    </div>
+  );
 };
 
 export default WorldCup;

@@ -1,41 +1,49 @@
 import { Contestant, Round } from "@/pages/game";
 import Image from "next/image";
-import { Dispatch, MutableRefObject, SetStateAction, useState } from "react";
+import { MutableRefObject, useRef, useState } from "react";
 type Props = {
   isModal: [boolean, Round];
   twoPeople: Contestant[];
   randomContestant: () => void;
-  setWinner: Dispatch<SetStateAction<Contestant[]>>;
-  winner: Contestant[];
-  contestants: Contestant[];
+
   winnerRef: MutableRefObject<Contestant[]>;
+  matchRef: MutableRefObject<Contestant[]>;
 };
 
 export default function InGame({
   isModal,
   twoPeople,
   randomContestant,
-  setWinner,
-  winner,
-  contestants,
+
   winnerRef,
+  matchRef,
 }: Props) {
   const [isCheck, setIsCheck] = useState<[boolean, number]>([true, 3]);
+  const isButtonDisabledRef = useRef(false);
 
   const handleClick = (num: number) => {
+    if (isButtonDisabledRef.current) {
+      return;
+    }
+
+    isButtonDisabledRef.current = true; // 버튼 비활성화
     setIsCheck([false, num]); //이펙트 주고 뽑힌 사람 알려줌
     //다시 뽑기 진행해야하고,
     // 원래 상태로 돌려놔야함
     //이긴 사람들 관리해야함
 
-    setWinner((prev) => [...prev, twoPeople[num]]);
-    console.log(winner, "초기");
     //여기서 업데이트했을때 속도를 로직을 확인해야함
     winnerRef.current = [...winnerRef.current, twoPeople[num]];
+    if (matchRef.current.length === 0) {
+      matchRef.current = winnerRef.current;
+      winnerRef.current = [];
+    }
+
     setTimeout(() => {
-      console.log(winner, "위너", winnerRef.current, "리퍼");
+      console.log(winnerRef.current, matchRef.current, "타이머");
       setIsCheck([true, 3]); //원위치
       randomContestant(); //다시뽑기
+      isButtonDisabledRef.current = false; // 버튼 활성화
     }, 2200);
   };
 
