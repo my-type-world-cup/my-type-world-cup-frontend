@@ -39,7 +39,10 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
         }}
       >
         <ul className="text-white tracking-wide font-medium">
-          <li className="flex items-center px-4 py-3 cursor-pointer ">
+          <li
+            className="flex items-center px-4 py-3 mt-24 cursor-pointer "
+            onClick={() => setIsLogin(true)}
+          >
             <Image
               src="/icon/login.svg"
               alt="Login"
@@ -52,7 +55,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
               로그인을 해주세요
             </span>
           </li>
-          <li
+          {/* <li
             className="flex items-center px-4 py-3 cursor-pointer"
             onClick={handleLogout}
           >
@@ -65,9 +68,9 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
               priority
             />
             <span className="ml-3">로그아웃</span>
-          </li>
-          <hr className="border-gray-200 border-1" />
-          <li className="flex items-center px-4 py-3 cursor-pointer">
+          </li> */}
+          {/* <hr className="border-gray-200 border-1 mt-12" /> */}
+          {/* <li className="flex items-center px-4 py-3 cursor-pointer">
             <Image
               src="/icon/person.svg"
               alt="Mypage"
@@ -77,65 +80,73 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
               priority
             />
             <span className="ml-3">닉네임을 설정해주세요</span>
-          </li>
-          <li className="flex items-center px-4 py-3 cursor-pointer">
-            <Image
-              src="/icon/whiteTrophy.svg"
-              alt="Mypage"
-              className="cursor-pointer"
-              width={30}
-              height={30}
-              priority
-            />
-            <span className="ml-3">이상형 월드컵</span>
-          </li>
-          <li className="flex items-center px-4 py-3 cursor-pointer">
-            <Image
-              src="/icon/film.svg"
-              alt="Mypage"
-              className="cursor-pointer"
-              width={30}
-              height={37}
-              priority
-            />
-            <span className="ml-3">내가 만든 월드컵</span>
-          </li>
-          <li className="flex items-center px-4 py-3 cursor-pointer">
-            <Image
-              src="/icon/folder.svg"
-              alt="Mypage"
-              className="cursor-pointer"
-              width={30}
-              height={26}
-              priority
-            />
-            <span className="ml-3">이상형 월드컵 만들기</span>
-          </li>
-          <li
-            className="flex items-center px-4 py-3 cursor-pointer"
-            onClick={() => OauthHandler()}
-          >
-            <Image
-              src="/icon/google.svg"
-              alt="Mypage"
-              className="cursor-pointer"
-              width={30}
-              height={30}
-              priority
-            />
-            <span className="ml-3">Google 로그인</span>
-          </li>
-          <li className="flex items-center px-4 py-3 cursor-pointer">
-            <Image
-              src="/icon/guest.svg"
-              alt="Mypage"
-              className="cursor-pointer"
-              width={32}
-              height={34}
-              priority
-            />
-            <span className="ml-3">Guest 로그인</span>
-          </li>
+          </li> */}
+          {!isLogin && (
+            <>
+              <li className="flex items-center px-4 py-3 cursor-pointer mt-16">
+                <Image
+                  src="/icon/whiteTrophy.svg"
+                  alt="Mypage"
+                  className="cursor-pointer"
+                  width={30}
+                  height={30}
+                  priority
+                />
+                <span className="ml-3">이상형 월드컵</span>
+              </li>
+              <li className="flex items-center px-4 py-3 cursor-pointer">
+                <Image
+                  src="/icon/film.svg"
+                  alt="Mypage"
+                  className="cursor-pointer"
+                  width={30}
+                  height={37}
+                  priority
+                />
+                <span className="ml-3">내가 만든 월드컵</span>
+              </li>
+              <li className="flex items-center px-4 py-3 cursor-pointer">
+                <Image
+                  src="/icon/folder.svg"
+                  alt="Mypage"
+                  className="cursor-pointer"
+                  width={30}
+                  height={26}
+                  priority
+                />
+                <span className="ml-3">이상형 월드컵 만들기</span>
+              </li>
+            </>
+          )}
+          {isLogin && (
+            <>
+              <li
+                className="flex items-center px-4 py-3 cursor-pointer mt-16"
+                onClick={() => OauthHandler()}
+              >
+                <Image
+                  src="/icon/google.svg"
+                  alt="Mypage"
+                  className="cursor-pointer"
+                  width={30}
+                  height={30}
+                  priority
+                />
+                <span className="ml-3">Google 로그인</span>
+              </li>
+              <li className="flex items-center px-4 py-3 cursor-pointer">
+                <Image
+                  src="/icon/guest.svg"
+                  alt="Mypage"
+                  className="cursor-pointer"
+                  width={32}
+                  height={34}
+                  priority
+                />
+                <span className="ml-3">Guest 로그인</span>
+              </li>
+            </>
+          )}
         </ul>
       </div>
 
