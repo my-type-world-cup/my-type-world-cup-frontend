@@ -53,7 +53,7 @@ export default function InGame({
         여자 아이돌 월드컵 {isModal[1]}강
       </h2>
       <div
-        className="flex justify-center items-center overflow-hidden h-[250px] sm:h-full  "
+        className="flex justify-center items-center overflow-hidden h-[250px] sm:h-[380px]  "
         onClick={() => handleClick(0)}
         style={{
           transform: isCheck[0]
@@ -71,7 +71,7 @@ export default function InGame({
         <Image
           src={twoPeople[0].image}
           alt="one"
-          width={330}
+          width={500}
           height={330}
           className="cursor-pointer sm:hover:scale-125  duration-300"
         />
@@ -108,7 +108,7 @@ export default function InGame({
         />
       </div>
       <div
-        className="flex justify-center items-center overflow-hidden h-[250px] sm:h-full"
+        className="flex justify-center items-center overflow-hidden h-[250px] sm:h-[380px]"
         onClick={() => handleClick(1)}
         style={{
           transform: isCheck[0]
@@ -124,7 +124,7 @@ export default function InGame({
         <Image
           src={twoPeople[1].image}
           alt="two"
-          width={330}
+          width={500}
           height={150}
           onClick={() => handleClick(1)}
           className="cursor-pointer sm:hover:scale-125 duration-300"
