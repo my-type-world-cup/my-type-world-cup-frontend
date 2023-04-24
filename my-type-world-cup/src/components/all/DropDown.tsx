@@ -1,5 +1,6 @@
 //dropdown component for the app
 
+import { BACK_URL } from "@/lib/config";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -19,6 +20,10 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
     router.push("/");
     setIsOpen(false);
     localStorage.removeItem("user");
+  };
+
+  const OauthHandler = () => {
+    window.location.href = `${BACK_URL}/oauth2/authorization/google`;
   };
 
   return (
@@ -106,7 +111,10 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
             />
             <span className="ml-3">이상형 월드컵 만들기</span>
           </li>
-          <li className="flex items-center px-4 py-3 cursor-pointer">
+          <li
+            className="flex items-center px-4 py-3 cursor-pointer"
+            onClick={() => OauthHandler()}
+          >
             <Image
               src="/icon/google.svg"
               alt="Mypage"
