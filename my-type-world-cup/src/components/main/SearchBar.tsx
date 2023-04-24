@@ -31,7 +31,7 @@ const SearchBar = ({ isOpen, setIsOpen }: SearchBarProps) => {
             alt="Search"
             className="absolute left-2 pb-2"
             width={25}
-            height={10}
+            height={25}
             priority
           />
           <input

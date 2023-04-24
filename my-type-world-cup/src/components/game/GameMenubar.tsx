@@ -1,39 +1,38 @@
+import type { Round } from "@/pages/game";
 import Image from "next/image";
-import { useState } from "react";
-import type { round } from "./Modal";
+import { Dispatch, SetStateAction, useState } from "react";
 
 type Props = {
-  selectedRound: round;
-  setSelectedRound: (round: round) => void;
+  isModal: [boolean, Round];
+  setIsModal: Dispatch<SetStateAction<[boolean, Round]>>;
 };
 
-export default function GameMenubar({
-  selectedRound,
-  setSelectedRound,
-}: Props) {
+export default function GameMenubar({ isModal, setIsModal }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleRoundSelect = (round: round) => {
-    setSelectedRound(round);
+  const handleRoundSelect = (round: Round) => {
+    setIsModal((el) => {
+      return [el[0], round];
+    });
     setIsOpen(false);
   };
-  const rounds: round[] = ["32강", "16강", "8강", "4강"];
+  const rounds: Round[] = [32, 16, 8, 4];
   return (
     <>
       <div
         className="w-10/12 border-[1px] mt-1 border-gray flex justify-between px-2 cursor-pointer"
         onClick={handleClick}
       >
-        <h3 className=" py-1 text-sm ">{selectedRound}</h3>
+        <h3 className=" py-1 text-sm ">{isModal[1]}강</h3>
         <Image
           src="/icon/down.svg"
           alt="arrow"
           width={15}
-          height={15}
+          height={28}
           priority
         />
       </div>
@@ -45,7 +44,7 @@ export default function GameMenubar({
             transition: "all 0.5s ease-in-out",
           }}
         >
-          {rounds.map((round: round) => (
+          {rounds.map((round: Round) => (
             <button
               key={round}
               className="w-full h-6 text-sm text-left hover:bg-gray-200  hover:bg-main "

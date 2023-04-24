@@ -17,11 +17,11 @@ const Header = () => {
     <div className="relative">
       <header className="bg-main flex w-full relative z-20 px-4 py-3 items-center justify-between">
         <Image
-          src="/icon/finger.svg"
+          src="/icon/whitetrophy.svg"
           alt="Home"
           className="cursor-pointer hover:scale-125"
           width={30}
-          height={20}
+          height={30}
           priority
           onClick={handleHome}
         />
@@ -36,7 +36,7 @@ const Header = () => {
           alt="dropdown"
           className="cursor-pointer hover:scale-125"
           width={30}
-          height={20}
+          height={22}
           priority
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         />
