@@ -3,7 +3,8 @@
 # **프로젝트 소개**
  ## 이상형 월드컵
 
-- 배포 링크 : 준비중
+- 배포 링크 : https://vercel.com/nakjun12/my-type-world-cup 
+(임시)
 - 서버 배포 링크 : 준비중
 - 프로젝트 wiki 바로가기 : 준비중
 ## **🍊 LOGO 🍊**
