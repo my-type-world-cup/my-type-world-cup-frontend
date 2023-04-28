@@ -1,6 +1,7 @@
 import { Contestant, Round } from "@/pages/game";
 import Image from "next/image";
-import { MutableRefObject, useRef, useState } from "react";
+import { useRouter } from "next/router";
+import { Dispatch, MutableRefObject, SetStateAction, useRef } from "react";
 type Props = {
   isModal: [boolean, Round];
   twoPeople: Contestant[];
@@ -8,6 +9,8 @@ type Props = {
 
   winnerRef: MutableRefObject<Contestant[]>;
   matchRef: MutableRefObject<Contestant[]>;
+  isCheck: [boolean, number];
+  setIsCheck: Dispatch<SetStateAction<[boolean, number]>>;
 };
 
 export default function InGame({
@@ -17,10 +20,11 @@ export default function InGame({
 
   winnerRef,
   matchRef,
+  isCheck,
+  setIsCheck,
 }: Props) {
-  const [isCheck, setIsCheck] = useState<[boolean, number]>([true, 3]);
   const isButtonDisabledRef = useRef(false);
-
+  const router = useRouter();
   const handleClick = (num: number) => {
     if (isButtonDisabledRef.current) {
       return;
@@ -33,11 +37,18 @@ export default function InGame({
     //이긴 사람들 관리해야함
 
     //여기서 업데이트했을때 속도를 로직을 확인해야함
+
     winnerRef.current = [...winnerRef.current, twoPeople[num]];
-    if (matchRef.current.length === 0) {
+    if (matchRef.current.length === 0 && winnerRef.current.length === 1) {
+      // endRef.current = true;
+      console.log("끝");
+      setIsCheck([true, 4]); //원위치
+      return;
+    } else if (matchRef.current.length === 0) {
       matchRef.current = winnerRef.current;
       winnerRef.current = [];
     }
+    console.log(winnerRef.current, matchRef.current);
 
     setTimeout(() => {
       console.log(winnerRef.current, matchRef.current, "타이머");
@@ -47,13 +58,17 @@ export default function InGame({
     }, 2200);
   };
 
+  if (isCheck[1] === 4) {
+    console.log(isCheck, "끝");
+    return <></>;
+  }
   return (
     <div>
       <h2 className="pt-4 text-white text-xl text-center mb-4">
         여자 아이돌 월드컵 {isModal[1]}강
       </h2>
       <div
-        className="flex justify-center items-center overflow-hidden h-[250px] sm:h-[380px]  "
+        className="flex justify-center pt-2 items-center overflow-hidden h-[250px] sm:h-[380px]  "
         onClick={() => handleClick(0)}
         style={{
           transform: isCheck[0]
@@ -73,7 +88,7 @@ export default function InGame({
           alt="one"
           width={500}
           height={330}
-          className="cursor-pointer sm:hover:scale-125  duration-300"
+          className="cursor-pointer sm:hover:scale-125 duration-300"
         />
       </div>
       <div

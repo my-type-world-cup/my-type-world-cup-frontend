@@ -22,7 +22,7 @@ export default function Modal({
   };
 
   return (
-    <div className="absolute top-2/4 rounded-3xl left-1/2 z-20 flex flex-col justify-center items-center transform -translate-x-1/2 -translate-y-1/2 bg-white h-3/6 w-3/4">
+    <div className="absolute top-2/4 rounded-3xl left-1/2 z-20 flex flex-col justify-center items-center transform -translate-x-1/2 -translate-y-1/2 bg-white h-4/6 sm:h-3/6 w-3/4">
       <Image
         src="/icon/trophy.svg"
         alt="Mypage"
@@ -44,7 +44,14 @@ export default function Modal({
       <p className="mt-2 text-sm break-all w-10/12">
         총 32명의 후보 중 {isModal[1]}명과 대결합니다
       </p>
-      <div className="bg-main px-4 mt-2 sm:mt-4 mb-4 h-10 text-white flex items-center space-x-2 rounded-lg hover:scale-110  cursor-pointer">
+
+      <input
+        className="mt-2 sm:mt-4 w-10/12 h-8 px-4 border-[1px] text-sm border-gray "
+        type="password"
+        placeholder="비밀번호를 입력해주세요"
+      />
+
+      <div className="bg-main px-4 mt-4 mb-4 h-10 text-white flex items-center space-x-2 rounded-lg hover:scale-110  cursor-pointer">
         <Image src="/icon/start.svg" alt="start" width={17} height={20} />
         <button className="text-lg" onClick={() => handleClick()}>
           시작하기

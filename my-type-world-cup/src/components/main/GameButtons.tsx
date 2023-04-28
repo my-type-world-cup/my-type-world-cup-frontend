@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 const GameButtons = () => {
   const router = useRouter();
 
-  const buttonHandler = async () => {
+  const buttonHandler = () => {
     router.push("/game");
   };
 

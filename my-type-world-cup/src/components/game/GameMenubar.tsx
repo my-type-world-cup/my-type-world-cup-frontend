@@ -24,7 +24,7 @@ export default function GameMenubar({ isModal, setIsModal }: Props) {
   return (
     <>
       <div
-        className="w-10/12 border-[1px] mt-1 border-gray flex justify-between px-2 cursor-pointer"
+        className="w-10/12 border-[1px] mt-2 items-center h-8 border-gray flex justify-between px-4 cursor-pointer"
         onClick={handleClick}
       >
         <h3 className=" py-1 text-sm ">{isModal[1]}강</h3>
@@ -37,7 +37,7 @@ export default function GameMenubar({ isModal, setIsModal }: Props) {
         />
       </div>
       <div className="relative w-full">
-        <div
+        <nav
           className="absolute top-0 left-[8.5%] w-10/12 bg-white shadow-lg rounded-b-lg p-2 border-[1px] border-gray z-50 "
           style={{
             display: isOpen ? "block" : "none",
@@ -47,13 +47,13 @@ export default function GameMenubar({ isModal, setIsModal }: Props) {
           {rounds.map((round: Round) => (
             <button
               key={round}
-              className="w-full h-6 text-sm text-left hover:bg-gray-200  hover:bg-main "
+              className="w-full h-6 text-sm text-left hover:bg-gray-200 px-2 hover:bg-main "
               onClick={() => handleRoundSelect(round)}
             >
-              {round}
+              {round}강
             </button>
           ))}
-        </div>
+        </nav>
       </div>
     </>
   );
