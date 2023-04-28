@@ -4,6 +4,7 @@ import Image from "next/image";
 import Router from "next/router";
 import { MutableRefObject } from "react";
 import Comment from "./Comment";
+import CommentList from "./CommentList";
 type Props = {
   winnerRef: MutableRefObject<Contestant[]>;
 };
@@ -13,7 +14,7 @@ export default function Result({ winnerRef }: Props) {
 
   return (
     <>
-      <div className="h-full mt-20 ">
+      <div className="h-auto mt-20 ">
         <div className=" relative flex justify-center pt-2 items-center overflow-hidden h-[380px] sm:h-[380px]  ">
           <Image
             src={winnerRef.current[0].image}
@@ -39,23 +40,18 @@ export default function Result({ winnerRef }: Props) {
           여자 아이돌 월드컵 우승자
         </h3>
         <GameButtons isreload={true} />
-        <div className="flex justify-end mr-10 sm:mr-16 mt-4">
+        <div className="flex justify-center  mt-4">
           <button
-            className="flex items-center cursor-pointer hover:scale-125"
+            className="flex items-center cursor-pointer hover:scale-125 "
             onClick={() => router.push("/")}
           >
             홈으로 가기
-            <Image
-              src="/icon/rightArrow.svg"
-              alt="Home"
-              className=" ml-2"
-              width={15}
-              height={15}
-              priority
-            />
           </button>
         </div>
+        <hr className="border-gray border-1 mt-12" />
         <Comment />
+        <hr className="border-gray border-1 " />
+        <CommentList />
       </div>
     </>
   );

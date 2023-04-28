@@ -1,7 +1,7 @@
 import InGame from "@/components/game/InGame";
 import Modal from "@/components/game/Modal";
+import Result from "@/components/game/Result";
 import { useEffect, useRef, useState } from "react";
-
 export type Contestant = {
   name: string;
   image: string;
@@ -77,7 +77,7 @@ const initialContestants: Contestant[] = [
 
 //40명이 있다면 2명을 뽑음
 //32강 너무 헤비?
-//32강이면 총 16번을 뽑고
+//32강이면 총 16번을 뽑고s
 //승자는 저장 패자는 삭제
 //-2 해주면서 체킹
 //백업으로 저장
@@ -139,7 +139,7 @@ const WorldCup = () => {
   }, [isModal]);
   console.log(isCheck, "안 엔드");
   return (
-    <div className="h-screen shadow-lg">
+    <div className="h-auto shadow-lg">
       {isCheck[1] !== 4 && (
         <div className="relative h-screen shadow-lg z-50">
           <div className="bg-sweetBlack w-full h-full overflow-hidden">
@@ -173,6 +173,11 @@ const WorldCup = () => {
             />
           )}
         </div>
+      )}
+      {isCheck[1] === 4 && (
+        <>
+          <Result winnerRef={winnerRef} />
+        </>
       )}
     </div>
   );

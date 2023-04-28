@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 type FormProps = {
-  onSubmit: (nickname: string, message: string) => void;
+  onSubmit?: (nickname: string, message: string) => void;
 };
 
 const Form: React.FC<FormProps> = ({ onSubmit }) => {
@@ -10,35 +10,35 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit(nickname, message);
+
     setNickname("");
     setMessage("");
   };
 
   return (
     <form
-      className="flex flex-col bg-gray-100 rounded-md p-4"
+      className="flex flex-col bg-gray-100 rounded-md px-4 py-8"
       onSubmit={handleSubmit}
     >
       <input
         placeholder="닉네임"
-        className="border-gray-300 border rounded-md py-2 px-3 mb-2"
+        className=" border-gray border rounded-md py-2 px-3 mb-2"
         value={nickname}
         onChange={(e) => setNickname(e.target.value)}
       />
-      <label htmlFor="message-input" className="mb-2 font-bold text-lg">
+      <label htmlFor="comment-input" className="mb-2 font-bold text-lg">
         댓글 쓰기
       </label>
       <textarea
-        id="message-input"
+        id="comment-input"
         placeholder="메세지를 입력하세요"
-        className="border-gray-300 border rounded-md py-2 px-3 mb-4"
+        className="border-gray border rounded-md py-2 px-3 mb-4 outline-none"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
       />
       <button
         type="submit"
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="bg-main hover:bg-inputHover text-white font-bold py-2 px-4 rounded"
       >
         댓글 작성
       </button>

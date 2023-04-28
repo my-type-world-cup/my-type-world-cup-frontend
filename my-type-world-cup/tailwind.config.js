@@ -33,6 +33,7 @@ module.exports = {
       hover: "#E9F4FF",
       sweetBlack: "#1A1A1A",
       inputGray: "#F5F5F5",
+      inputHover: "#4AA0D5",
     },
   },
   mode: "jit",

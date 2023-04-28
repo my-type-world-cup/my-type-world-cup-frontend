@@ -139,7 +139,7 @@ const WorldCup = () => {
   }, [isModal]);
   console.log(isCheck, "안 엔드");
   return (
-    <div className="h-screen shadow-lg">
+    <div className="h-auto shadow-lg">
       {isCheck[1] !== 4 && (
         <div className="relative h-screen shadow-lg z-50">
           <div className="bg-sweetBlack w-full h-full overflow-hidden">
