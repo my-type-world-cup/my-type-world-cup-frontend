@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/router";
-const GameButtons = () => {
+const GameButtons = ({ isreload = false }: { isreload: boolean }) => {
   const router = useRouter();
 
   const buttonHandler = () => {
@@ -14,7 +14,7 @@ const GameButtons = () => {
       <div className="bg-main px-2 h-10 sm:px-4   space-x-2 flex items-center rounded-lg hover:scale-110  cursor-pointer">
         <Image src="/icon/start.svg" alt="start" width={17} height={20} />
         <button value={"game"} onClick={(e) => buttonHandler()}>
-          시작하기
+          {isreload ? "다시하기" : "시작하기"}
         </button>
       </div>
       <div className="bg-main px-2 sm:px-4  h-10 flex items-center space-x-2 mx-2 rounded-lg hover:scale-110 cursor-pointer">
