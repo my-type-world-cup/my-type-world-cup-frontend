@@ -64,11 +64,11 @@ export default function InGame({
   }
   return (
     <div>
-      <h2 className="pt-4 text-white text-xl text-center mb-4">
+      <h2 className="pt-4 text-white text-xl text-center">
         여자 아이돌 월드컵 {isModal[1]}강
       </h2>
       <div
-        className="relative flex justify-center pt-2 items-center overflow-hidden h-[250px] sm:h-[380px]  "
+        className="relative flex justify-center pt-2 items-center overflow-hidden h-[280px]  mx-12 "
         onClick={() => handleClick(0)}
         style={{
           transform: isCheck[0]
@@ -132,7 +132,7 @@ export default function InGame({
         />
       </div>
       <div
-        className="flex justify-center items-center overflow-hidden h-[250px] sm:h-[380px]"
+        className="flex justify-center items-center overflow-hidden mx-12 h-[280px]"
         onClick={() => handleClick(1)}
         style={{
           transform: isCheck[0]

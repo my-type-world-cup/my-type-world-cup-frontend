@@ -1,10 +1,8 @@
-import GameButtons from "@/components/main/GameButtons";
 import type { Contestant } from "@/pages/game/[id]";
 import Image from "next/image";
 import Router from "next/router";
 import { MutableRefObject } from "react";
-import Comment from "./Comment";
-import CommentList from "./CommentList";
+import GameSet from "../all/GameSet";
 type Props = {
   winnerRef: MutableRefObject<Contestant[]>;
 };
@@ -31,11 +29,7 @@ export default function Result({ winnerRef }: Props) {
         <h3 className="text-center text-2xl mb-12  ">
           여자 아이돌 월드컵 우승자
         </h3>
-        <GameButtons isreload={true} />
-
-        <Comment />
-
-        <CommentList />
+        <GameSet />
       </div>
     </>
   );

@@ -34,6 +34,7 @@ module.exports = {
       sweetBlack: "#1A1A1A",
       inputGray: "#F5F5F5",
       inputHover: "#4AA0D5",
+      hr: "#E5E5E5",
     },
   },
   mode: "jit",
