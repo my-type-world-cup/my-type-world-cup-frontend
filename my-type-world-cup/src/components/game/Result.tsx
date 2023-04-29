@@ -14,43 +14,27 @@ export default function Result({ winnerRef }: Props) {
 
   return (
     <>
-      <div className="h-auto mt-20 ">
-        <div className=" relative flex justify-center pt-2 items-center overflow-hidden h-[380px] sm:h-[380px]  ">
+      <div className="h-auto mt-28 ">
+        <div className=" relative flex flex-col justify-center pt-4 items-center overflow-hidden mx-12 h-[300px] ">
           <Image
             src={winnerRef.current[0].image}
             alt="one"
             width={500}
             height={330}
-            className="cursor-pointer sm:hover:scale-125 duration-300"
+            className="duration-300"
           />
-          <h3
-            className="absolute text-white bottom-10 text-xl"
-            style={{
-              textShadow:
-                "1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black",
-            }}
-          >
-            {winnerRef.current[0].name}
-          </h3>
         </div>
-        <h3
-          className="text-center text-2xl mt-4
-    "
-        >
+        <h3 className="my-4 text-black mx-8 text-center text-xl font-bold">
+          {winnerRef.current[0].name}
+        </h3>
+
+        <h3 className="text-center text-2xl mb-12  ">
           여자 아이돌 월드컵 우승자
         </h3>
         <GameButtons isreload={true} />
-        <div className="flex justify-center  mt-4">
-          <button
-            className="flex items-center cursor-pointer hover:scale-125 "
-            onClick={() => router.push("/")}
-          >
-            홈으로 가기
-          </button>
-        </div>
-        <hr className="border-gray border-1 mt-12" />
+
         <Comment />
-        <hr className="border-gray border-1 " />
+
         <CommentList />
       </div>
     </>

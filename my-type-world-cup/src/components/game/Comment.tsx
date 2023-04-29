@@ -1,5 +1,5 @@
+import Image from "next/image";
 import React, { useState } from "react";
-
 type FormProps = {
   onSubmit?: (nickname: string, message: string) => void;
 };
@@ -17,7 +17,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
 
   return (
     <form
-      className="flex flex-col bg-gray-100 rounded-md px-4 py-8"
+      className="flex flex-col bg-inputGray mt-12 px-4 py-8 "
       onSubmit={handleSubmit}
     >
       <input
@@ -26,7 +26,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
         value={nickname}
         onChange={(e) => setNickname(e.target.value)}
       />
-      <label htmlFor="comment-input" className="mb-2 font-bold text-lg">
+      <label htmlFor="comment-input" className="mb-2 font-light text-lg">
         댓글 쓰기
       </label>
       <textarea
@@ -38,8 +38,15 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
       />
       <button
         type="submit"
-        className="bg-main hover:bg-inputHover text-white font-bold py-2 px-4 rounded"
+        className="bg-main hover:bg-inputHover flex justify-center items-center text-white font-bold py-2 px-4 rounded"
       >
+        <Image
+          className="mr-2"
+          src="/icon/pen.svg"
+          alt="submit"
+          width={16}
+          height={12}
+        />
         댓글 작성
       </button>
     </form>
