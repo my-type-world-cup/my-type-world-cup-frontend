@@ -24,7 +24,7 @@ const Header = () => {
     <div className="relative">
       <header className="bg-main flex w-full relative z-20 px-4 py-3 items-center justify-between">
         <Image
-          src="/icon/whitetrophy.svg"
+          src="/icon/whiteTrophy.svg"
           alt="Home"
           className="cursor-pointer hover:scale-125"
           width={30}
