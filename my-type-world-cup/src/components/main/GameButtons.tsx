@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/router";
-const GameButtons = ({ isreload = false }: { isreload: boolean }) => {
+const GameButtons = ({ isreload = false }: { isreload?: boolean }) => {
   const router = useRouter();
 
   const buttonHandler = () => {
