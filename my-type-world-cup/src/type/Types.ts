@@ -4,7 +4,7 @@ type Candidate = {
   image: string;
 };
 
-type Worldcup = {
+type MainWorldcup = {
   id: number;
   title: string;
   description: string;
@@ -21,8 +21,8 @@ type PageInfo = {
 };
 
 type WorldcupsResponse = {
-  data: Worldcup[];
+  data: MainWorldcup[];
   pageInfo: PageInfo;
 };
 
-export type { WorldcupsResponse };
+export type { WorldcupsResponse, MainWorldcup, Candidate, PageInfo };
