@@ -23,15 +23,17 @@ const Header = () => {
   return (
     <div className="relative">
       <header className="bg-main flex w-full relative z-20 px-4 py-3 items-center justify-between">
-        <Image
-          src="/icon/whiteTrophy.svg"
-          alt="Home"
-          className="cursor-pointer hover:scale-125"
-          width={30}
-          height={30}
-          priority
-          onClick={handleHome}
-        />
+        <div className="w-10 h-10">
+          <Image
+            src="/icon/whale.svg"
+            alt="Home"
+            className="cursor-pointer hover:scale-125"
+            width={50}
+            height={50}
+            priority
+            onClick={handleHome}
+          />
+        </div>
         <span className="text-2xl tracking-wider font-medium text-white">
           {page?.word}
         </span>
