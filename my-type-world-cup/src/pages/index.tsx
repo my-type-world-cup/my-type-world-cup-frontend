@@ -59,8 +59,10 @@ export default function Home({}: {}) {
             이거야
           </button>
         </div>
-        <article className="w-full ">
-          <Card />
+        <article className="w-full h-auto ">
+          {worldcups.map((v) => (
+            <Card key={v.id} worldcup={v} />
+          ))}
         </article>
       </main>
     </>
