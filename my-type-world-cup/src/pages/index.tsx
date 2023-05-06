@@ -48,16 +48,9 @@ export default function Home({}: {}) {
         className="flex h-screen flex-col pt-24 overflow-y-scroll"
         ref={containerRef}
       >
-        <SearchBar isOpen={isOpen} setIsOpen={setIsOpen} />
+        <SearchBar />
         <div className="mt-8 mx-auto">
           <SortButtons />
-          <button
-            onClick={() => {
-              setSize(size + 1);
-            }}
-          >
-            이거야
-          </button>
         </div>
         <article className="w-full h-auto ">
           {worldcups.map((v) => (

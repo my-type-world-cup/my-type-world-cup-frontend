@@ -4,19 +4,13 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-type SearchBarProps = {
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isOpen: boolean;
-};
-
-const SearchBar = ({ isOpen, setIsOpen }: SearchBarProps) => {
+const SearchBar = () => {
   const router = useRouter();
   const [search, setSearch] = useState("");
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     router.push(`/search/${search}`);
-    setIsOpen(false);
   };
 
   return (

@@ -23,56 +23,56 @@ const initialContestants: Contestant[] = [
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxR3v4QBlbTY0Irx7zjXjXzAQGanPmYjYyuw&usqp=CAU",
   },
-  {
-    name: "3번",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu2-AmFTnKiSdDhsGI1A8IW-l987-QwOmWBw&usqp=CAU",
-  },
-  {
-    name: "4번",
-    image:
-      "https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2022/08/22/b7903101-048a-4375-bfcd-de61d3e70274.jpg",
-  },
-  {
-    name: "5번",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTo5mL_70gtLyr9PiSno7qELAqSVed-AEmszQ&usqp=CAU",
-  },
-  {
-    name: "6",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA5iu28--weHfscZPb5YzVrO3i-Y1jHJhNSQ&usqp=CAU",
-  },
-  {
-    name: "7777777777777777777",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkrJv40k36-sVYiItfL03cmAkO9L26J6kUmQ&usqp=CAU",
-  },
-  {
-    name: "8888888",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWJCk4j3xw8uqmAioEdmObXOwoETMOByTu31SisZjtT--0_QV4pKBtxePrsR0x5XV4BNg&usqp=CAU",
-  },
-  {
-    name: "99999999999",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtCOfv35R30lE3TaxA49lcLIxz89usOVdrHA&usqp=CAU",
-  },
-  {
-    name: "101010101010101010",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIziWrNvg-UJo4z3QM_sfHkvySQcsTyfhWrA&usqp=CAU",
-  },
-  {
-    name: "11111111111",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtVHRXVTgoTWUPAmGP2Aj8P4wC1J262PPRWw&usqp=CAU",
-  },
-  {
-    name: "12121212",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU4-uYiuIOu4pLY4KzoGUEkugLQQf3_3pbBg&usqp=CAU",
-  },
+  // {
+  //   name: "3번",
+  //   image:
+  //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu2-AmFTnKiSdDhsGI1A8IW-l987-QwOmWBw&usqp=CAU",
+  // },
+  // {
+  //   name: "4번",
+  //   image:
+  //     "https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2022/08/22/b7903101-048a-4375-bfcd-de61d3e70274.jpg",
+  // },
+  // {
+  //   name: "5번",
+  //   image:
+  //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTo5mL_70gtLyr9PiSno7qELAqSVed-AEmszQ&usqp=CAU",
+  // },
+  // {
+  //   name: "6",
+  //   image:
+  //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA5iu28--weHfscZPb5YzVrO3i-Y1jHJhNSQ&usqp=CAU",
+  // },
+  // {
+  //   name: "7777777777777777777",
+  //   image:
+  //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkrJv40k36-sVYiItfL03cmAkO9L26J6kUmQ&usqp=CAU",
+  // },
+  // {
+  //   name: "8888888",
+  //   image:
+  //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWJCk4j3xw8uqmAioEdmObXOwoETMOByTu31SisZjtT--0_QV4pKBtxePrsR0x5XV4BNg&usqp=CAU",
+  // },
+  // {
+  //   name: "99999999999",
+  //   image:
+  //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtCOfv35R30lE3TaxA49lcLIxz89usOVdrHA&usqp=CAU",
+  // },
+  // {
+  //   name: "101010101010101010",
+  //   image:
+  //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIziWrNvg-UJo4z3QM_sfHkvySQcsTyfhWrA&usqp=CAU",
+  // },
+  // {
+  //   name: "11111111111",
+  //   image:
+  //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtVHRXVTgoTWUPAmGP2Aj8P4wC1J262PPRWw&usqp=CAU",
+  // },
+  // {
+  //   name: "12121212",
+  //   image:
+  //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU4-uYiuIOu4pLY4KzoGUEkugLQQf3_3pbBg&usqp=CAU",
+  // },
 ];
 
 //40명이 있다면 2명을 뽑음
