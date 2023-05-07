@@ -27,11 +27,11 @@ const Header = () => {
       <header className="bg-main flex w-full relative z-20 px-4 py-3 items-center justify-between">
         <div className="w-10 h-10">
           <Image
-            src="/icon/IMG_9286.jpg"
+            src="/icon/blueMascot2.svg"
             alt="Home"
-            className="cursor-pointer hover:scale-125"
-            width={50}
-            height={50}
+            className="cursor-pointer hover:scale-125 mt-[4px]"
+            width={100}
+            height={100}
             priority
             onClick={handleHome}
           />

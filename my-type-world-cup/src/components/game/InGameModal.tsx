@@ -3,7 +3,6 @@ import { IngameModalData } from "@/type/Types";
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import GameMenubar from "./GameMenubar";
-
 type Props = {
   isModal: [boolean, Round];
   setIsModal: Dispatch<SetStateAction<[boolean, Round]>>;

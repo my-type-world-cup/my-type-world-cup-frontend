@@ -23,15 +23,9 @@ function Table() {
       </colgroup>
       <thead className="bg-inputGray text-gray ">
         <tr>
-          <th className="bg-inputGray text-gray font-medium font-bevietnam">
-            순위
-          </th>
-          <th className="bg-inputGray text-gray font-medium font-poppins">
-            사진
-          </th>
-          <th className="bg-inputGray text-gray font-bold font-pretendard">
-            이름
-          </th>
+          <th>순위</th>
+          <th>사진</th>
+          <th>이름</th>
           <th>우승</th>
           <th className="text-main border-b-4 border-main">우승비율</th>
           <th>승리</th>
