@@ -15,6 +15,8 @@ const Header = () => {
     { path: "", word: "이상형 월드컵" },
     { path: "game", word: "우승자" },
     { path: "editor", word: "월드컵 만들기" },
+    { path: "rank", word: "랭킹" },
+    { path: "mypage", word: "회원정보" },
   ];
   // 나중에 해당 주소에 맞추어서 갈 수 있도록 수정해야함
   const gamePath = pathname.split("/")[1];

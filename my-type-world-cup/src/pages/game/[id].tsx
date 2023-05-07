@@ -1,16 +1,12 @@
 import InGame from "@/components/game/InGame";
 import Modal from "@/components/game/InGameModal";
 import Result from "@/components/game/Result";
+import { getInitialRound } from "@/lib/Helper";
+import { BACK_URL } from "@/lib/config";
+import type { Round } from "@/type/Types";
+import { Contestant, IngameModalData } from "@/type/Types";
+import { GetStaticPaths, GetStaticProps } from "next";
 import { useEffect, useRef, useState } from "react";
-export type Contestant = {
-  name: string;
-  image: string;
-};
-
-type Match = {
-  winner: Contestant;
-  loser: Contestant;
-};
 
 const initialContestants: Contestant[] = [
   {
@@ -85,18 +81,11 @@ type Option = {
   label: string;
   value: string;
 };
-export type Round = 32 | 16 | 8 | 4 | 2;
-
-const options: Option[] = [
-  { label: "인기순", value: "popular" },
-  { label: "최신순", value: "recent" },
-  { label: "좋아요순", value: "like" },
-  { label: "댓글순", value: "comment" },
-];
 
 // 수적으면 제한되는 로직 생성해야함
-const WorldCup = () => {
-  const [isModal, setIsModal] = useState<[boolean, Round]>([true, 16]);
+const WorldCup = ({ data }: { data: IngameModalData }) => {
+  const init: Round = getInitialRound(data.candidatesCount);
+  const [isModal, setIsModal] = useState<[boolean, Round]>([true, init]);
   const [round, setRound] = useState<Number>(0);
   const [isCheck, setIsCheck] = useState<[boolean, number]>([true, 3]); //3은 초기화//4는 끝
   // const [contestants, setContestants] =
@@ -105,6 +94,10 @@ const WorldCup = () => {
   const [twoPeople, setTwoPeople] = useState<Contestant[]>([]);
   // const [winner, setWinner] = useState<Contestant[]>([]);
   const winnerRef = useRef<Contestant[]>([]);
+
+  useEffect(() => {
+    setRound(isModal[1]);
+  }, [isModal]);
 
   const randomIndex = (el: number, length: number) => {
     let num = Math.floor(Math.random() * length);
@@ -116,7 +109,7 @@ const WorldCup = () => {
   // 겹치지 않는 2명을 계속해서 뽑는 법
   // 새로운 배열로 업데이트가 되지않음
   const randomContestant = () => {
-    console.log(winnerRef.current, "안 위너", matchRef.current, "안 매치");
+    // console.log(winnerRef.current, "안 위너", matchRef.current, "안 매치");
     const randomIndex1 = Math.floor(Math.random() * matchRef.current.length);
     const randomIndex2 = randomIndex(randomIndex1, matchRef.current.length);
 
@@ -126,7 +119,7 @@ const WorldCup = () => {
     matchRef.current = matchRef.current.filter(
       (el) => el !== randomContestant1 && el !== randomContestant2
     );
-    console.log(matchRef.current, "안후 매치");
+    // console.log(matchRef.current, "안후 매치");
     // setContestants((el: Contestant[]) => {
     //   return el.filter(
     //     (el) => el !== randomContestant1 && el !== randomContestant2
@@ -134,10 +127,7 @@ const WorldCup = () => {
     // });
   };
 
-  useEffect(() => {
-    setRound(isModal[1]);
-  }, [isModal]);
-  console.log(isCheck, "안 엔드");
+  // console.log(isCheck, "안 엔드");
   return (
     <div className="h-auto shadow-lg">
       {isCheck[1] !== 4 && (
@@ -167,6 +157,8 @@ const WorldCup = () => {
           />
           {isModal[0] && (
             <Modal
+              data={data}
+              init={init}
               isModal={isModal}
               setIsModal={setIsModal}
               randomContestant={() => randomContestant()}
@@ -186,3 +178,19 @@ const WorldCup = () => {
 export default WorldCup;
 
 //두가지 쿠션으로 생각해보자
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const gameId = params?.id as string;
+  //worldcups/1
+
+  const res = await fetch(`${BACK_URL}/worldcups/${gameId}`);
+  const data = await res.json();
+
+  return { props: { data } };
+};

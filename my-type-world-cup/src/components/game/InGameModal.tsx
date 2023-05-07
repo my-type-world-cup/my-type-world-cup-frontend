@@ -1,4 +1,5 @@
-import type { Round } from "@/pages/game";
+import type { Round } from "@/type/Types";
+import { IngameModalData } from "@/type/Types";
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import GameMenubar from "./GameMenubar";
@@ -7,12 +8,16 @@ type Props = {
   isModal: [boolean, Round];
   setIsModal: Dispatch<SetStateAction<[boolean, Round]>>;
   randomContestant: () => void;
+  data: IngameModalData;
+  init: Round;
 };
 
 export default function Modal({
   isModal,
   setIsModal,
   randomContestant,
+  data,
+  init,
 }: Props) {
   const handleClick = () => {
     randomContestant();
@@ -21,6 +26,7 @@ export default function Modal({
     });
   };
 
+  console.log(data);
   return (
     <div className="absolute top-2/4 rounded-3xl left-1/2 z-20 flex flex-col justify-center items-center transform -translate-x-1/2 -translate-y-1/2 bg-white h-4/6 sm:h-3/6 w-3/4">
       <Image
@@ -31,23 +37,20 @@ export default function Modal({
         height={83}
         priority
       />
-      <h2 className="text-main mt-2 text-xl break-all mx-6">
-        여자 아이돌 이상형 월드컵
-      </h2>
-      <p className="mt-2 text-sm break-all w-10/12 h-12">
-        2023년도 여자 아이돌 월드컵 당신의 이상형은 누구인가요?
-      </p>
+      <h2 className="text-main mt-2 text-xl break-all mx-6">{data?.title}</h2>
+      <p className="mt-2 text-sm break-all w-10/12 h-12">{data?.description}</p>
       <p className="mt-2 sm:mt-8 text-sm break-all w-10/12">
         라운드를 선택해주세요
       </p>
-      <GameMenubar isModal={isModal} setIsModal={setIsModal} />
+      <GameMenubar isModal={isModal} setIsModal={setIsModal} init={init} />
       <p className="mt-2 text-sm break-all w-10/12">
-        총 32명의 후보 중 {isModal[1]}명과 대결합니다
+        총 {data.candidatesCount}명의 후보 중 {isModal[1]}명과 대결합니다
       </p>
 
       <input
         className="mt-2 sm:mt-4 w-10/12 h-8 px-4 border-[1px] text-sm border-gray "
         type="password"
+        disabled={data.visibility}
         placeholder="비밀번호를 입력해주세요"
       />
 
