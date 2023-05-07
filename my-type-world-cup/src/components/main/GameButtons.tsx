@@ -29,27 +29,36 @@ const GameButtons = ({
   };
 
   return (
-    <div className="flex items-center justify-center mx-auto mt-4 h-10 w-full text-lg text-white font-medium">
+    <button
+      type="button"
+      value={"game"}
+      onClick={(e) => buttonHandler(e)}
+      className="flex items-center justify-center mx-auto mt-4 h-10 w-full text-lg text-white font-medium"
+    >
       <div className="bg-main px-2 h-10 sm:px-4   space-x-2 flex items-center rounded-lg hover:scale-110  cursor-pointer">
         <Image src="/icon/start.svg" alt="start" width={17} height={20} />
-        <button type="button" value={"game"} onClick={(e) => buttonHandler(e)}>
-          {isreload ? "다시하기" : "시작하기"}
-        </button>
+        <p>{isreload ? "다시하기" : "시작하기"}</p>
       </div>
-      <div className="bg-main px-2 sm:px-4  h-10 flex items-center space-x-2 mx-2 rounded-lg hover:scale-110 cursor-pointer">
+      <button
+        type="button"
+        value={"rank"}
+        onClick={(e) => buttonHandler(e)}
+        className="bg-main px-2 sm:px-4  h-10 flex items-center space-x-2 mx-2 rounded-lg hover:scale-110 cursor-pointer"
+      >
         <Image src="/icon/ranking.svg" alt="ranking" width={27} height={27} />
-        <button type="button" value={"rank"} onClick={(e) => buttonHandler(e)}>
-          랭킹보기
-        </button>
-      </div>
-      <div className="bg-main px-2 sm:px-4 h-10 flex items-center space-x-2 rounded-lg hover:scale-110 cursor-pointer">
+        <p>랭킹보기</p>
+      </button>
+      <button
+        type="button"
+        value={"share"}
+        onClick={() => handleCopyLink()}
+        className="bg-main px-2 sm:px-4 h-10 flex items-center space-x-2 rounded-lg hover:scale-110 cursor-pointer"
+      >
         <Image src="/icon/share.svg" alt="ranking" width={18} height={25} />
-        <button type="button" value={"share"} onClick={() => handleCopyLink()}>
-          공유
-        </button>
-      </div>
+        <p>공유</p>
+      </button>
       {<ShareModal message="복사되었습니다" isCopied={isCopied} />}
-    </div>
+    </button>
   );
 };
 

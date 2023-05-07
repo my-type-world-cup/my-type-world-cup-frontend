@@ -51,12 +51,14 @@ export default function Modal({
         placeholder="비밀번호를 입력해주세요"
       />
 
-      <div className="bg-main px-4 mt-4 mb-4 h-10 text-white flex items-center space-x-2 rounded-lg hover:scale-110  cursor-pointer">
+      <button
+        onClick={() => handleClick()}
+        type="button"
+        className="bg-main px-4 mt-4 mb-4 h-10 text-white flex items-center space-x-2 rounded-lg hover:scale-110  cursor-pointer"
+      >
         <Image src="/icon/start.svg" alt="start" width={17} height={20} />
-        <button className="text-lg" onClick={() => handleClick()}>
-          시작하기
-        </button>
-      </div>
+        <p className="text-lg">시작하기</p>
+      </button>
     </div>
   );
 }
