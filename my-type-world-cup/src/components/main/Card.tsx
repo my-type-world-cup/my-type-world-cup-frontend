@@ -3,6 +3,8 @@ import Image from "next/image";
 import GameButtons from "./GameButtons";
 
 const Card = ({ worldcup }: { worldcup: MainWorldcup }) => {
+  const id = worldcup.id;
+
   return (
     <article className="border-main mt-4 mx-4 px-2 border-[1px] pb-4">
       <div className="flex justify-evenly mt-6">
@@ -41,7 +43,7 @@ const Card = ({ worldcup }: { worldcup: MainWorldcup }) => {
           ? worldcup.description.slice(0, 100) + "..."
           : worldcup.description}
       </p>
-      <GameButtons />
+      <GameButtons id={id} />
     </article>
   );
 };

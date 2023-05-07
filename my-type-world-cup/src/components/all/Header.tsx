@@ -15,6 +15,8 @@ const Header = () => {
     { path: "", word: "이상형 월드컵" },
     { path: "game", word: "우승자" },
     { path: "editor", word: "월드컵 만들기" },
+    { path: "rank", word: "랭킹" },
+    { path: "mypage", word: "회원정보" },
   ];
   // 나중에 해당 주소에 맞추어서 갈 수 있도록 수정해야함
   const gamePath = pathname.split("/")[1];
@@ -25,11 +27,11 @@ const Header = () => {
       <header className="bg-main flex w-full relative z-20 px-4 py-3 items-center justify-between">
         <div className="w-10 h-10">
           <Image
-            src="/icon/IMG_9286.jpg"
+            src="/icon/blueMascot2.svg"
             alt="Home"
-            className="cursor-pointer hover:scale-125"
-            width={50}
-            height={50}
+            className="cursor-pointer hover:scale-125 mt-[4px]"
+            width={100}
+            height={100}
             priority
             onClick={handleHome}
           />

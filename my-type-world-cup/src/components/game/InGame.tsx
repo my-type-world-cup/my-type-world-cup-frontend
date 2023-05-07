@@ -1,7 +1,8 @@
-import { Contestant, Round } from "@/pages/game";
+import type { Contestant, Round } from "@/type/Types";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Dispatch, MutableRefObject, SetStateAction, useRef } from "react";
+
 type Props = {
   isModal: [boolean, Round];
   twoPeople: Contestant[];

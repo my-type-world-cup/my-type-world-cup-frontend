@@ -1,13 +1,15 @@
-import type { Round } from "@/pages/game";
+import type { Round } from "@/type/Types";
+
 import Image from "next/image";
 import { Dispatch, SetStateAction, useState } from "react";
 
 type Props = {
   isModal: [boolean, Round];
   setIsModal: Dispatch<SetStateAction<[boolean, Round]>>;
+  init: Round;
 };
 
-export default function GameMenubar({ isModal, setIsModal }: Props) {
+export default function GameMenubar({ isModal, setIsModal, init }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleClick = () => {
@@ -20,7 +22,13 @@ export default function GameMenubar({ isModal, setIsModal }: Props) {
     });
     setIsOpen(false);
   };
-  const rounds: Round[] = [32, 16, 8, 4];
+  const rounds: Round[] = [32, 16, 8, 4].filter((el) => el <= init) as Round[];
+  3;
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
   return (
     <>
       <div
@@ -32,7 +40,7 @@ export default function GameMenubar({ isModal, setIsModal }: Props) {
           src="/icon/down.svg"
           alt="arrow"
           width={15}
-          height={28}
+          height={10}
           priority
         />
       </div>
@@ -54,7 +62,15 @@ export default function GameMenubar({ isModal, setIsModal }: Props) {
             </button>
           ))}
         </nav>
+        {isOpen && (
+          <div
+            className="fixed inset-0 opacity-1 z-40 pointer-events-auto"
+            onClick={handleClose}
+          />
+        )}
       </div>
     </>
   );
 }
+
+//비밀번호 설정

@@ -22,7 +22,7 @@ function App({ Component, pageProps }: AppProps) {
           이상형 월드컵
         </h2>
       </div>
-      <div className="bg-white max-w-[480px] w-auto sm:min-w-[480px] mx-auto sm:mx-20  shadow-lg h-5/6">
+      <div className="bg-white max-w-[480px] w-full sm:min-w-[480px] mx-auto sm:mx-20  shadow-lg h-5/6">
         <Header />
         <div className="-mt-[63px]">
           <Component {...pageProps} />
