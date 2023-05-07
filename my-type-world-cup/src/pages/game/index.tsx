@@ -1,5 +1,5 @@
 import InGame from "@/components/game/InGame";
-import Modal from "@/components/game/Modal";
+import Modal from "@/components/game/InGameModal";
 import Result from "@/components/game/Result";
 import { useEffect, useRef, useState } from "react";
 export type Contestant = {

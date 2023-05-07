@@ -1,16 +1,18 @@
 //search bar component for the app
 
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { useState } from "react";
 
-const SearchBar = () => {
-  const router = useRouter();
-  const [search, setSearch] = useState("");
+interface Props {
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const SearchBar = ({ setSearch }: Props) => {
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/search/${search}`);
+    setSearch(searchTerm);
   };
 
   return (
@@ -32,7 +34,7 @@ const SearchBar = () => {
             type="text"
             placeholder="당신의 이상형을 찾아주세요"
             className="border-b-2 border-b-gray text-gray pb-2 pl-10 text-xl w-[280px] h-10 "
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
       </form>

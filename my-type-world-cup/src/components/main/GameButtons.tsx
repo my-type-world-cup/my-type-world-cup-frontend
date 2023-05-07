@@ -2,33 +2,53 @@
 
 import Image from "next/image";
 import { useRouter } from "next/router";
-const GameButtons = ({ isreload = false }: { isreload?: boolean }) => {
+import { MouseEvent, useState } from "react";
+import ShareModal from "./ShareModal";
+const GameButtons = ({
+  isreload = false,
+  id,
+}: {
+  isreload?: boolean;
+  id?: number;
+}) => {
   const router = useRouter();
+  const [isCopied, setIsCopied] = useState(false);
 
-  const buttonHandler = () => {
-    router.push("/game");
+  const buttonHandler = (e: MouseEvent<HTMLButtonElement>) => {
+    console.log(e.currentTarget.value);
+    router.push(`/${e.currentTarget.value}/${id}`);
+    // router.push("/game/" + id);
+  };
+  const handleCopyLink = () => {
+    console.log("하이");
+    navigator.clipboard.writeText(window.location.href + "game/" + id);
+    setIsCopied(true);
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 1000);
   };
 
   return (
     <div className="flex items-center justify-center mx-auto mt-4 h-10 w-full text-lg text-white font-medium">
       <div className="bg-main px-2 h-10 sm:px-4   space-x-2 flex items-center rounded-lg hover:scale-110  cursor-pointer">
         <Image src="/icon/start.svg" alt="start" width={17} height={20} />
-        <button value={"game"} onClick={(e) => buttonHandler()}>
+        <button type="button" value={"game"} onClick={(e) => buttonHandler(e)}>
           {isreload ? "다시하기" : "시작하기"}
         </button>
       </div>
       <div className="bg-main px-2 sm:px-4  h-10 flex items-center space-x-2 mx-2 rounded-lg hover:scale-110 cursor-pointer">
         <Image src="/icon/ranking.svg" alt="ranking" width={27} height={27} />
-        <button value={"rank"} onClick={(e) => buttonHandler()}>
+        <button type="button" value={"rank"} onClick={(e) => buttonHandler(e)}>
           랭킹보기
         </button>
       </div>
       <div className="bg-main px-2 sm:px-4 h-10 flex items-center space-x-2 rounded-lg hover:scale-110 cursor-pointer">
         <Image src="/icon/share.svg" alt="ranking" width={18} height={25} />
-        <button value={"share"} onClick={(e) => buttonHandler()}>
+        <button type="button" value={"share"} onClick={() => handleCopyLink()}>
           공유
         </button>
       </div>
+      {<ShareModal message="복사되었습니다" isCopied={isCopied} />}
     </div>
   );
 };

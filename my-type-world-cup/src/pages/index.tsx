@@ -5,15 +5,25 @@ import { BACK_URL } from "@/lib/config";
 import { MainWorldcup, WorldcupsResponse } from "@/type/Types";
 import { useEffect, useRef, useState } from "react";
 import useSWRInfinite from "swr/infinite";
+
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const PAGE_SIZE = 10;
+
+export type Value = "playCount" | "createdAt" | "commentCount";
 
 export default function Home({}: {}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false); //메뉴바 관리
+  const [sort, setSort] = useState<Value>("playCount"); //정렬 관리
+  const [search, setSearch] = useState<string>(""); //검색 관리
+  console.log(sort);
+
   const { data, mutate, size, setSize, isValidating, isLoading } =
     useSWRInfinite<WorldcupsResponse>(
-      (index) => `${BACK_URL}/worldcups?page=${index + 1}&size=10`,
+      (index) =>
+        `${BACK_URL}/worldcups?page=${
+          index + 1
+        }&size=10&sort=${sort}&keyword=${search}`,
       fetcher
     );
   const isReachingEnd = data && data[data.length - 1]?.data.length < PAGE_SIZE;
@@ -40,17 +50,16 @@ export default function Home({}: {}) {
 
   // 더이상 없을때 체크
   const isRefreshing = isValidating && data && data.length === size; // 요청중
-  console.log(isLoadingMore, isReachingEnd, isRefreshing);
-  console.log(data?.[0]?.data.length);
+
   return (
     <>
       <main
-        className="flex h-screen flex-col pt-24 overflow-y-scroll"
+        className="flex h-screen flex-col pt-24 overflow-y-scroll relative"
         ref={containerRef}
       >
-        <SearchBar />
+        <SearchBar setSearch={setSearch} />
         <div className="mt-8 mx-auto">
-          <SortButtons />
+          <SortButtons setSort={setSort} sort={sort} />
         </div>
         <article className="w-full h-auto ">
           {worldcups.map((v) => (
