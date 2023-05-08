@@ -1,7 +1,7 @@
-import type { Contestant } from "@/pages/game/[id]";
 import Image from "next/image";
 import Router from "next/router";
 import { MutableRefObject } from "react";
+import type { Contestant } from "../../type/Types";
 import GameSet from "../all/GameSet";
 type Props = {
   winnerRef: MutableRefObject<Contestant[]>;

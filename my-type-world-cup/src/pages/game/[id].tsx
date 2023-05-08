@@ -191,6 +191,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const res = await fetch(`${BACK_URL}/worldcups/${gameId}`);
   const data = await res.json();
+  if (!data) {
+    return { notFound: true };
+  }
 
   return { props: { data } };
 };

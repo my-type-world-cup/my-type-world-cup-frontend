@@ -1,4 +1,3 @@
-import SearchBar from "../main/SearchBar";
 import DragImage from "./DragImage";
 type Props = {};
 
@@ -9,7 +8,7 @@ export default function ImageUpload({}: Props) {
         <label className=""> 이미지 업로드</label>
         <DragImage />
       </div>
-      <SearchBar />
+      {/* <SearchBar /> */}
     </section>
   );
 }
