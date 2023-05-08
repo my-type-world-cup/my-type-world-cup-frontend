@@ -40,7 +40,13 @@ type Contestant = {
   image: string;
 };
 
+type rank_Data = {
+  worldCupId: number;
+  password: string | null;
+};
+
 export type {
+  rank_Data,
   Contestant,
   Round,
   WorldcupsResponse,
