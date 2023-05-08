@@ -13,4 +13,15 @@ function getInitialRound(candidatesCount: number): Round {
   return selectedRound;
 }
 
-export { getInitialRound };
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+const fetcherPost = (url: string, data: any) =>
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((res) => res.json());
+
+export { getInitialRound, fetcher, fetcherPost };

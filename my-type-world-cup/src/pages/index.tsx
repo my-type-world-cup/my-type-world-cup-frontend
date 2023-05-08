@@ -1,12 +1,11 @@
 import Card from "@/components/main/Card";
 import SearchBar from "@/components/main/SearchBar";
 import SortButtons from "@/components/main/SortButtons";
+import { fetcher } from "@/lib/Helper";
 import { BACK_URL } from "@/lib/config";
 import { MainWorldcup, WorldcupsResponse } from "@/type/Types";
 import { useEffect, useRef, useState } from "react";
 import useSWRInfinite from "swr/infinite";
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const PAGE_SIZE = 10;
 
 export type Value = "playCount" | "createdAt" | "commentCount";
