@@ -39,9 +39,12 @@ const Comment: React.FC<FormProps> = ({ onSubmit }) => {
 
   return (
     <form
-      className="flex flex-col bg-inputGray mt-12 px-4 py-8 "
+      className="flex flex-col bg-inputGray mt-4 px-4 pt-4 pb-8 "
       onSubmit={handleSubmit}
     >
+      <label htmlFor="comment-input" className="mb-2 font-light text-lg">
+        닉네임
+      </label>
       <input
         placeholder="익명"
         className=" border-gray border rounded-md py-2 px-3 mb-2"
