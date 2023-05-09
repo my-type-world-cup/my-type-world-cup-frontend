@@ -45,8 +45,36 @@ type rank_Data = {
   password: string | null;
 };
 
+type rank_res = {
+  data: rank_res_data[];
+  pageInfo: rank_res_pageInfo;
+};
+
+type rank_res_data = {
+  id: number;
+  name: string;
+  image: string;
+  finalWinCount: number;
+  winCount: number;
+  matchUpWorldCupCount: number;
+  matchUpGameCount: number;
+  worldCupId: number;
+};
+
+type rank_res_pageInfo = {
+  first: boolean;
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
+};
+
 export type {
   rank_Data,
+  rank_res,
+  rank_res_data,
+  rank_res_pageInfo,
   Contestant,
   Round,
   WorldcupsResponse,

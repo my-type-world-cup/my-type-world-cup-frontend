@@ -11,9 +11,9 @@ export default function index({ worldcupId }: { worldcupId: number }) {
   };
 
   return (
-    <div className="h-screen shadow-lg">
+    <div className="h-auto shadow-lg ">
       <Table rankData={rankData} />
-      <GameSet />
+      <GameSet id={worldcupId} />
     </div>
   );
 }
