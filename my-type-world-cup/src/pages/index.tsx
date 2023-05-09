@@ -20,11 +20,10 @@ export default function Home({}: {}) {
   const { data, mutate, size, setSize, isValidating, isLoading } =
     useSWRInfinite<WorldcupsResponse>(
       (index) =>
-        `${BACK_URL}/worldcups?page=${
-          index + 1
-        }&size=10&sort=${sort}&keyword=${search}`,
+        `${BACK_URL}/worldcups?page=${index + 1}&size=10&sort=${sort}${search}`,
       fetcher
     );
+
   const isReachingEnd = data && data[data.length - 1]?.data.length < PAGE_SIZE;
   useEffect(() => {
     const handleScroll = () => {
@@ -42,7 +41,7 @@ export default function Home({}: {}) {
     };
   }, [isReachingEnd, setSize]);
   const worldcups: MainWorldcup[] = data ? data.map((v) => v.data).flat() : [];
-  console.log(worldcups);
+
   //예시는 모두다 배열임
   const isLoadingMore =
     isLoading || (size > 0 && data && typeof data[size - 1] === "undefined"); //로딩중
@@ -53,7 +52,7 @@ export default function Home({}: {}) {
   return (
     <>
       <main
-        className="flex h-screen flex-col pt-24 overflow-y-scroll relative"
+        className="flex h-screen flex-col pt-4 overflow-y-scroll relative mt-20"
         ref={containerRef}
       >
         <SearchBar setSearch={setSearch} />
