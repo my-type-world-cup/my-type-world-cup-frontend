@@ -6,16 +6,16 @@ const ShareModal = ({
   isCopied: boolean;
 }) => {
   return (
-    <div className="fixed top-0 left-0 lg:left-[7.3%] w-full h-full z-50 flex justify-center items-center pointer-events-none">
+    <div className="fixed top-0 left-0  w-full h-full z-50 flex justify-center items-center pointer-events-none">
       <div
-        className="absolute top-0 left-0 w-full h-full bg-black opacity-50"
+        className="fixed w-full h-full bg-black opacity-50"
         style={{
           opacity: isCopied ? 0.5 : 0,
           transition: "opacity 0.3s ease-out",
         }}
       />
       <div
-        className="bg-main rounded-xl z-50"
+        className="fixed left-50% lg: right-[38.2%] bg-main rounded-xl z-50"
         style={{
           opacity: isCopied ? 1 : 0,
           transition: "opacity 0.3s ease-out",
