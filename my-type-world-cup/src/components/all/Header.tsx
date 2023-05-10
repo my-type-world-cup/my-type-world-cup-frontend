@@ -36,9 +36,9 @@ const Header = () => {
             onClick={handleHome}
           />
         </div>
-        <span className="text-2xl tracking-wider font-medium text-white">
+        <h1 className="text-2xl tracking-wider font-medium text-white">
           {page?.word}
-        </span>
+        </h1>
         <Image
           src="/icon/hambuger.svg"
           alt="dropdown"

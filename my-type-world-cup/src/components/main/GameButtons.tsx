@@ -18,7 +18,6 @@ const GameButtons = ({
   const buttonHandler = (e: MouseEvent<HTMLButtonElement>) => {
     if (e.currentTarget.value === "/") router.push("/");
     else router.push(`/${e.currentTarget.value}/${id}`);
-    // router.push("/game/" + id);
   };
   const handleCopyLink = () => {
     navigator.clipboard.writeText(FRONT_URL + "/game/" + id);
