@@ -2,8 +2,10 @@ import { fetcherPost } from "@/lib/Helper";
 import { BACK_URL } from "@/lib/config";
 import { rank_Data, rank_res, rank_res_data } from "@/type/Types";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
+import TablePagiNation from "./TablePagiNation";
+
 type Props = {
   rankData: rank_Data;
 };
@@ -28,9 +30,12 @@ function Table({ rankData }: Props) {
   const [search, setSearch] = useState(""); //검색 트리거
   const [pageSize, setPageSize] = useState(10);
   const { data, error, isLoading } = useSWR<rank_res>(
-    `${BACK_URL}/candidates/search?sort=finalWinCount&direction=DESC&size=${pageSize}&page=1${search}`,
+    `${BACK_URL}/candidates/search?sort=finalWinCount&direction=DESC&size=${pageSize}&page=${currentPage}${search}`,
     (url) => fetcherPost(url, rankData)
   );
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [pageSize]);
 
   const wordHandler = (select: string) => {
     setWord(select);
@@ -39,7 +44,8 @@ function Table({ rankData }: Props) {
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
   const rankMember: rank_res_data[] = data!.data;
-
+  const totalPage: number = data!.pageInfo.totalPages;
+  console.log(rankMember, "랭크멤버");
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const trimmedSearchTerm = searchText.trim();
@@ -115,7 +121,9 @@ function Table({ rankData }: Props) {
         <tbody>
           {rankMember.map((rank: rank_res_data, i: number) => (
             <tr className="border-hr border" key={rank.id}>
-              <td className="text-center text-gray">{i + 1}</td>
+              <td className="text-center text-gray">
+                {i + 1 + (currentPage - 1) * pageSize}
+              </td>
               <td>
                 <div className="overflow-hidden h-12 flex justify-center ">
                   <Image
@@ -136,20 +144,31 @@ function Table({ rankData }: Props) {
               </td>
               <td className="text-gray text-center">{rank.finalWinCount}</td>
               <td className=" bg-inputGray text-center ">
-                {(
-                  (rank.finalWinCount / rank.matchUpWorldCupCount) *
-                  100
-                ).toFixed(2)}
+                {rank.finalWinCount / rank.matchUpWorldCupCount
+                  ? (
+                      (rank.finalWinCount / rank.matchUpWorldCupCount) *
+                      100
+                    ).toFixed(2)
+                  : 0}
                 %
               </td>
               <td className="text-gray text-center">{rank.winCount}</td>
               <td className="text-gray text-center">
-                {((rank.winCount / rank.matchUpGameCount) * 100).toFixed(2)}%
+                {rank.winCount / rank.matchUpGameCount
+                  ? ((rank.winCount / rank.matchUpGameCount) * 100).toFixed(2)
+                  : 0}
+                %
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      <TablePagiNation
+        currentPage={currentPage}
+        totalPages={totalPage}
+        setCurrentPage={setCurrentPage}
+      />
     </>
   );
 }
