@@ -1,11 +1,13 @@
 import { BACK_URL } from "@/lib/config";
 import Image from "next/image";
 import React, { useRef, useState } from "react";
+import type { Contestant } from "../../type/Types";
 type FormProps = {
   onSubmit?: (nickname: string, message: string) => void;
+  winner?: Contestant;
 };
 
-const Comment: React.FC<FormProps> = ({ onSubmit }) => {
+const Comment: React.FC<FormProps> = ({ onSubmit, winner }) => {
   const isButton = useRef<boolean>(true);
   const [nickname, setNickname] = useState("");
   const [message, setMessage] = useState("");
@@ -19,8 +21,9 @@ const Comment: React.FC<FormProps> = ({ onSubmit }) => {
       const comment = {
         content: message,
         worldCupId: 2,
-        candidateName: "카리나",
+        ...(winner && { candidateName: winner.name }),
       };
+      console.log(comment);
       setNickname("");
       setMessage("");
       fetch(`${BACK_URL}/comments`, {
