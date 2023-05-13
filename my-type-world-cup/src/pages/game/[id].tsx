@@ -90,14 +90,46 @@ const WorldCup = ({ data }: { data: IngameModalData }) => {
   const [isCheck, setIsCheck] = useState<[boolean, number]>([true, 3]); //3은 초기화//4는 끝
   // const [contestants, setContestants] =
   //   useState<Contestant[]>(initialContestants);
-  const matchRef = useRef<Contestant[]>(initialContestants);
+  const matchRef = useRef<Contestant[]>(initialContestants); //게임 캐릭터 넣기
   const [twoPeople, setTwoPeople] = useState<Contestant[]>([]);
   // const [winner, setWinner] = useState<Contestant[]>([]);
   const winnerRef = useRef<Contestant[]>([]);
-
+  console.log(data, "안 데이터");
   useEffect(() => {
     setRound(isModal[1]);
   }, [isModal]);
+
+  const fetchContestants = async (
+    password: string | null = null,
+    teamCount: number = 16
+  ) => {
+    const url = `${BACK_URL}/candidates/random?teamCount=${teamCount}`;
+    const bodyData = {
+      worldCupId: data.id,
+      password: password,
+    };
+    console.log(bodyData, "데이터");
+    const options: RequestInit = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bodyData),
+    };
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Failed to fetch contestants");
+      }
+      const data = await response.json();
+      matchRef.current = data;
+      console.log(data, "안 데이터");
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
 
   const randomIndex = (el: number, length: number) => {
     let num = Math.floor(Math.random() * length);
@@ -115,8 +147,10 @@ const WorldCup = ({ data }: { data: IngameModalData }) => {
 
     const randomContestant1 = matchRef.current[randomIndex1];
     const randomContestant2 = matchRef.current[randomIndex2];
+    console.log(randomContestant1, "안 랜덤", randomContestant2, "안 랜덤2");
     setTwoPeople([randomContestant1, randomContestant2]);
     matchRef.current = matchRef.current.filter(
+      //2명을 빼줌
       (el) => el !== randomContestant1 && el !== randomContestant2
     );
     // console.log(matchRef.current, "안후 매치");
@@ -157,6 +191,7 @@ const WorldCup = ({ data }: { data: IngameModalData }) => {
           />
           {isModal[0] && (
             <Modal
+              fetchContestants={fetchContestants}
               data={data}
               init={init}
               isModal={isModal}
@@ -191,7 +226,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const res = await fetch(`${BACK_URL}/worldcups/${gameId}`);
   const data = await res.json();
-  if (!data) {
+  if (data.status === 404) {
     return { notFound: true };
   }
 
