@@ -16,8 +16,9 @@ const GameButtons = ({
   const [isCopied, setIsCopied] = useState(false);
 
   const buttonHandler = (e: MouseEvent<HTMLButtonElement>) => {
+    console.log(e.currentTarget.value);
     if (e.currentTarget.value === "/") router.push("/");
-    else router.push(`/${e.currentTarget.value}/${id}`);
+    else window.location.href = `/${e.currentTarget.value}/${id}`;
   };
   const handleCopyLink = () => {
     navigator.clipboard.writeText(FRONT_URL + "/game/" + id);

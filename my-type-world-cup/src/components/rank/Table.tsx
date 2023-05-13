@@ -29,8 +29,9 @@ function Table({ rankData }: Props) {
   const [searchText, setSearchText] = useState(""); //작성하면 저장
   const [search, setSearch] = useState(""); //검색 트리거
   const [pageSize, setPageSize] = useState(10);
+  const [sort, setSort] = useState("finalWinCount");
   const { data, error, isLoading } = useSWR<rank_res>(
-    `${BACK_URL}/candidates/search?sort=finalWinCount&direction=DESC&size=${pageSize}&page=${currentPage}${search}`,
+    `${BACK_URL}/candidates/search?sort=${sort}&direction=DESC&size=${pageSize}&page=${currentPage}${search}`,
     (url) => fetcherPost(url, rankData)
   );
   useEffect(() => {
@@ -112,10 +113,44 @@ function Table({ rankData }: Props) {
             <th>순위</th>
             <th>사진</th>
             <th>이름</th>
-            <th>우승</th>
-            <th className="text-main border-b-4 border-main">우승비율</th>
-            <th>승리</th>
-            <th>1:1 승률</th>
+            <th
+              className={
+                sort === "finalWinCount"
+                  ? "text-main border-b-4 border-main"
+                  : ""
+              }
+              onClick={() => {
+                setSort("finalWinCount");
+              }}
+            >
+              우승
+            </th>
+            <th
+              className={
+                sort === "finalWinRatio"
+                  ? "text-main border-b-4 border-main"
+                  : ""
+              }
+              onClick={() => setSort("finalWinRatio")}
+            >
+              우승비율
+            </th>
+            <th
+              className={
+                sort === "winCount" ? "text-main border-b-4 border-main" : ""
+              }
+              onClick={() => setSort("winCount")}
+            >
+              승리
+            </th>
+            <th
+              className={
+                sort === "winRatio" ? "text-main border-b-4 border-main" : ""
+              }
+              onClick={() => setSort("winRatio")}
+            >
+              1:1 승률
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -142,8 +177,22 @@ function Table({ rankData }: Props) {
                     : rank.name}
                 </div>
               </td>
-              <td className="text-gray text-center">{rank.finalWinCount}</td>
-              <td className=" bg-inputGray text-center ">
+              <td
+                className={
+                  sort === "finalWinCount"
+                    ? " bg-inputGray text-center "
+                    : "text-gray text-center"
+                }
+              >
+                {rank.finalWinCount}
+              </td>
+              <td
+                className={
+                  sort === "finalWinRatio"
+                    ? " bg-inputGray text-center "
+                    : "text-gray text-center"
+                }
+              >
                 {rank.finalWinCount / rank.matchUpWorldCupCount
                   ? (
                       (rank.finalWinCount / rank.matchUpWorldCupCount) *
@@ -152,8 +201,22 @@ function Table({ rankData }: Props) {
                   : 0}
                 %
               </td>
-              <td className="text-gray text-center">{rank.winCount}</td>
-              <td className="text-gray text-center">
+              <td
+                className={
+                  sort === "winCount"
+                    ? " bg-inputGray text-center "
+                    : "text-gray text-center"
+                }
+              >
+                {rank.winCount}
+              </td>
+              <td
+                className={
+                  sort === "winRatio"
+                    ? " bg-inputGray text-center "
+                    : "text-gray text-center"
+                }
+              >
                 {rank.winCount / rank.matchUpGameCount
                   ? ((rank.winCount / rank.matchUpGameCount) * 100).toFixed(2)
                   : 0}
