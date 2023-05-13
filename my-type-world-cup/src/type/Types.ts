@@ -4,6 +4,12 @@ type Candidate = {
   image: string;
 };
 
+type result_data = {
+  id: number;
+  matchUpGameCount: number;
+  winCount: number;
+};
+
 type MainWorldcup = {
   id: number;
   title: string;
@@ -36,6 +42,7 @@ type IngameModalData = {
 type Round = 32 | 16 | 8 | 4 | 2;
 
 type Contestant = {
+  id: number;
   name: string;
   image: string;
 };
@@ -69,8 +76,37 @@ type rank_res_pageInfo = {
   totalPages: number;
   last: boolean;
 };
+type Comment_list_data = {
+  id: number;
+  content: string;
+  candidateName: string;
+  likesCount: number;
+  isLiked: boolean;
+  createdAt: string;
+  modifiedAt: string;
+  memberId: number | null;
+  nickname: string | null;
+  worldCupId: number;
+};
+
+type Comment_list_pageInfo = {
+  first: boolean;
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
+};
+
+type Comment_list = {
+  data: Comment_list_data[];
+  pageInfo: Comment_list_pageInfo;
+};
 
 export type {
+  Comment_list,
+  Comment_list_data,
+  Comment_list_pageInfo,
   rank_Data,
   rank_res,
   rank_res_data,
@@ -82,4 +118,5 @@ export type {
   Candidate,
   PageInfo,
   IngameModalData,
+  result_data,
 };
