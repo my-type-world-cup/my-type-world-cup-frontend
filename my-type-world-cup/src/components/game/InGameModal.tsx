@@ -60,25 +60,28 @@ export default function Modal({
       <p className="mt-2 text-sm break-all w-10/12 font-medium">
         총 {data.candidatesCount}명의 후보 중 {isModal[1]}명과 대결합니다
       </p>
-      <input
-        className="mt-2 sm:mt-4 w-10/12 h-8 px-4 border-[1px] text-sm border-gray "
-        type="password"
-        disabled={data.visibility}
-        maxLength={4} // 최대 4자리까지 입력 가능하도록 설정
-        pattern="[0-9]*" // 숫자만 입력 가능하도록 설정
-        placeholder={
-          data.visibility ? "비밀번호는 없습니다" : "비밀번호를 입력해주세요"
-        }
-        onChange={(e) => {
-          setPassword(e.target.value);
-          setError(false);
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handleClick(password, isModal[1]);
+      {!data.visibility && (
+        <input
+          className="mt-2 sm:mt-4 w-10/12 h-8 px-4 border-[1px] text-sm border-gray "
+          type="password"
+          disabled={data.visibility}
+          maxLength={4} // 최대 4자리까지 입력 가능하도록 설정
+          pattern="[0-9]*" // 숫자만 입력 가능하도록 설정
+          placeholder={
+            data.visibility ? "비밀번호는 없습니다" : "비밀번호를 입력해주세요"
           }
-        }}
-      />
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setError(false);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleClick(password, isModal[1]);
+            }
+          }}
+        />
+      )}
+
       {!data.visibility &&
         (error ? (
           <div className="ml-2 flex gap-1 w-10/12 text-error text-sm mt-1">
