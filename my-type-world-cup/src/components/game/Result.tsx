@@ -1,15 +1,18 @@
-import type { Contestant } from "@/pages/game/[id]";
 import Image from "next/image";
-import Router from "next/router";
 import { MutableRefObject } from "react";
+import type { Contestant, rank_Data } from "../../type/Types";
 import GameSet from "../all/GameSet";
+import Table from "../rank/Table";
 type Props = {
   winnerRef: MutableRefObject<Contestant[]>;
+  id: number;
 };
 
-export default function Result({ winnerRef }: Props) {
-  const router = Router;
-
+export default function Result({ winnerRef, id }: Props) {
+  const rankData: rank_Data = {
+    worldCupId: id,
+    password: null,
+  };
   return (
     <>
       <div className="h-auto mt-28 ">
@@ -22,14 +25,15 @@ export default function Result({ winnerRef }: Props) {
             className="duration-300"
           />
         </div>
-        <h3 className="my-4 text-black mx-8 text-center text-xl font-bold">
+        <h3 className="mt-3 mb-1 mx-8 text-center text-main text-2xl font-bold">
           {winnerRef.current[0].name}
         </h3>
 
-        <h3 className="text-center text-2xl mb-12  ">
+        <h3 className="text-center text-xl -mb-14  ">
           여자 아이돌 월드컵 우승자
         </h3>
-        <GameSet />
+        <Table rankData={rankData} />
+        <GameSet id={id} winner={winnerRef.current[0]} />
       </div>
     </>
   );

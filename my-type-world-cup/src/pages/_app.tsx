@@ -5,7 +5,7 @@ import Head from "next/head";
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <div className="bg-hover flex justify-center items-center overflow-hidden mt-[-1px]">
+    <div className="bg-hover flex justify-center items-center mt-[-1px]">
       <Head>
         <title>이상형 월드컵</title>
         <meta name="description" content="당신만의 이상형을 찾아주세요!." />

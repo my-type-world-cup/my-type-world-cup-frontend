@@ -1,9 +1,10 @@
 //game start button
 
+import { FRONT_URL } from "@/lib/config";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { MouseEvent, useState } from "react";
-import ShareModal from "./ShareModal";
+import ShareModal from "../all/ShareModal";
 const GameButtons = ({
   isreload = false,
   id,
@@ -16,12 +17,11 @@ const GameButtons = ({
 
   const buttonHandler = (e: MouseEvent<HTMLButtonElement>) => {
     console.log(e.currentTarget.value);
-    router.push(`/${e.currentTarget.value}/${id}`);
-    // router.push("/game/" + id);
+    if (e.currentTarget.value === "/") router.push("/");
+    else window.location.href = `/${e.currentTarget.value}/${id}`;
   };
   const handleCopyLink = () => {
-    console.log("하이");
-    navigator.clipboard.writeText(window.location.href + "game/" + id);
+    navigator.clipboard.writeText(FRONT_URL + "/game/" + id);
     setIsCopied(true);
     setTimeout(() => {
       setIsCopied(false);
@@ -29,7 +29,7 @@ const GameButtons = ({
   };
 
   return (
-    <div className="flex items-center justify-center mx-auto mt-4 h-10 w-full text-lg text-white font-medium">
+    <div className="flex items-center justify-center mx-auto mt-4 h-10 w-full text-sm sm:text-lg text-white font-medium">
       <button
         type="button"
         value={"game"}
@@ -39,15 +39,34 @@ const GameButtons = ({
         <Image src="/icon/start.svg" alt="start" width={17} height={20} />
         <p>{isreload ? "다시하기" : "시작하기"}</p>
       </button>
-      <button
-        type="button"
-        value={"rank"}
-        onClick={(e) => buttonHandler(e)}
-        className="bg-main px-2 sm:px-4  h-10 flex items-center space-x-2 mx-2 rounded-lg hover:scale-110 cursor-pointer"
-      >
-        <Image src="/icon/ranking.svg" alt="ranking" width={27} height={27} />
-        <p>랭킹보기</p>
-      </button>
+
+      {isreload ? (
+        <button
+          type="button"
+          value={"/"}
+          onClick={(e) => buttonHandler(e)}
+          className="bg-main px-2 sm:px-4  h-10 flex items-center space-x-2 mx-2 rounded-lg hover:scale-110 cursor-pointer"
+        >
+          <Image
+            src="/icon/whiteTrophy.svg"
+            alt="ranking"
+            width={23}
+            height={23}
+          />
+          <p>홈화면</p>
+        </button>
+      ) : (
+        <button
+          type="button"
+          value={"rank"}
+          onClick={(e) => buttonHandler(e)}
+          className="bg-main px-2 sm:px-4  h-10 flex items-center space-x-2 mx-2 rounded-lg hover:scale-110 cursor-pointer"
+        >
+          <Image src="/icon/ranking.svg" alt="ranking" width={27} height={27} />
+          <p>랭킹보기</p>
+        </button>
+      )}
+
       <button
         type="button"
         value={"share"}
@@ -57,7 +76,13 @@ const GameButtons = ({
         <Image src="/icon/share.svg" alt="ranking" width={18} height={25} />
         <p>공유</p>
       </button>
-      {<ShareModal message="복사되었습니다" isCopied={isCopied} />}
+      {
+        <ShareModal
+          message="복사되었습니다"
+          isCopied={isCopied}
+          setIsCopied={setIsCopied}
+        />
+      }
     </div>
   );
 };

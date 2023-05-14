@@ -1,13 +1,19 @@
-import type { Contestant, Round } from "@/type/Types";
+import { rank_result_fetch } from "@/api/post_rank";
+import type { Contestant, Round, result_data } from "@/type/Types";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Dispatch, MutableRefObject, SetStateAction, useRef } from "react";
-
+import {
+  Dispatch,
+  MutableRefObject,
+  SetStateAction,
+  useRef,
+  useState,
+} from "react";
 type Props = {
   isModal: [boolean, Round];
   twoPeople: Contestant[];
   randomContestant: () => void;
-
+  setIsModal: Dispatch<SetStateAction<[boolean, Round]>>;
   winnerRef: MutableRefObject<Contestant[]>;
   matchRef: MutableRefObject<Contestant[]>;
   isCheck: [boolean, number];
@@ -18,41 +24,64 @@ export default function InGame({
   isModal,
   twoPeople,
   randomContestant,
-
+  setIsModal,
   winnerRef,
   matchRef,
   isCheck,
   setIsCheck,
 }: Props) {
+  const isResult = useRef<result_data[]>([]);
+  const [count, setCount] = useState<number>(1);
   const isButtonDisabledRef = useRef(false);
   const router = useRouter();
-  const handleClick = (num: number) => {
+  const handleClick = async (num: number) => {
     if (isButtonDisabledRef.current) {
       return;
     }
 
     isButtonDisabledRef.current = true; // 버튼 비활성화
     setIsCheck([false, num]); //이펙트 주고 뽑힌 사람 알려줌
-    //다시 뽑기 진행해야하고,
-    // 원래 상태로 돌려놔야함
-    //이긴 사람들 관리해야함
+    // 패자만 모와서 저장?
+    //패자는 무조건 n경기당 n-1승을함
+    //최종 승자는 마지막에 n경기당 n승임
+    if (num === 0) {
+      winnerRef.current = [...winnerRef.current, twoPeople[0]];
+      isResult.current = [
+        ...isResult.current,
+        { id: twoPeople[1].id, matchUpGameCount: count, winCount: count - 1 },
+      ];
+    } else if (num === 1) {
+      winnerRef.current = [...winnerRef.current, twoPeople[1]];
+      isResult.current = [
+        ...isResult.current,
+        { id: twoPeople[0].id, matchUpGameCount: count, winCount: count - 1 },
+      ];
+    }
 
-    //여기서 업데이트했을때 속도를 로직을 확인해야함
-
-    winnerRef.current = [...winnerRef.current, twoPeople[num]];
     if (matchRef.current.length === 0 && winnerRef.current.length === 1) {
       // endRef.current = true;
-      console.log("끝");
+      isResult.current = isResult.current.concat([
+        {
+          id: winnerRef.current[0].id,
+          matchUpGameCount: count,
+          winCount: count,
+        },
+      ]);
+      console.log(isResult, "결과");
+
+      const result_boolean = await rank_result_fetch(isResult.current);
+      console.log(result_boolean, "결과");
       setIsCheck([true, 4]); //원위치
       return;
     } else if (matchRef.current.length === 0) {
+      //다음 라운드로 넘어가기
+      setCount((prev) => prev + 1);
+      setIsModal((prev) => [prev[0], (prev[1] / 2) as Round]);
       matchRef.current = winnerRef.current;
       winnerRef.current = [];
     }
-    console.log(winnerRef.current, matchRef.current);
 
     setTimeout(() => {
-      console.log(winnerRef.current, matchRef.current, "타이머");
       setIsCheck([true, 3]); //원위치
       randomContestant(); //다시뽑기
       isButtonDisabledRef.current = false; // 버튼 활성화
@@ -66,7 +95,7 @@ export default function InGame({
   return (
     <div>
       <h2 className="pt-4 text-white text-xl text-center">
-        여자 아이돌 월드컵 {isModal[1]}강
+        여자 아이돌 월드컵 {isModal[1] === 2 ? `결승` : `${isModal[1]}강`}
       </h2>
       <div
         className="relative flex justify-center pt-2 items-center overflow-hidden h-[280px]  mx-12 "

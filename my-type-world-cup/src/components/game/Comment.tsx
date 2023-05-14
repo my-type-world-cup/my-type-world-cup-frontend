@@ -1,30 +1,59 @@
+import { BACK_URL } from "@/lib/config";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import type { Contestant } from "../../type/Types";
 type FormProps = {
   onSubmit?: (nickname: string, message: string) => void;
+  winner?: Contestant;
 };
 
-const Form: React.FC<FormProps> = ({ onSubmit }) => {
+const Comment: React.FC<FormProps> = ({ onSubmit, winner }) => {
+  const isButton = useRef<boolean>(true);
   const [nickname, setNickname] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (message && isButton.current) {
+      isButton.current = false;
 
-    setNickname("");
-    setMessage("");
+      console.log(message, nickname);
+      const comment = {
+        content: message,
+        worldCupId: 2,
+        ...(winner && { candidateName: winner.name }),
+      };
+      console.log(comment);
+      setNickname("");
+      setMessage("");
+      fetch(`${BACK_URL}/comments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(comment),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.error(error));
+      isButton.current = true;
+    }
   };
 
   return (
     <form
-      className="flex flex-col bg-inputGray mt-12 px-4 py-8 "
+      className="flex flex-col bg-inputGray mt-4 px-4 pt-4 pb-8 "
       onSubmit={handleSubmit}
     >
+      <label htmlFor="comment-input" className="mb-2 font-light text-lg">
+        닉네임
+      </label>
       <input
-        placeholder="닉네임"
+        placeholder="익명"
         className=" border-gray border rounded-md py-2 px-3 mb-2"
         value={nickname}
         onChange={(e) => setNickname(e.target.value)}
+        disabled
       />
       <label htmlFor="comment-input" className="mb-2 font-light text-lg">
         댓글 쓰기
@@ -53,4 +82,4 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
   );
 };
 
-export default Form;
+export default Comment;

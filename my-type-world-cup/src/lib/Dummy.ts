@@ -1,4 +1,4 @@
-import type { Contestant } from "@/pages/game/[id]";
+import type { Contestant } from "../type/Types";
 const worldCupDummy: Contestant[] = [
   {
     name: "1번",

@@ -3,7 +3,7 @@
 import { BACK_URL } from "@/lib/config";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 // import { useRecoilState } from "recoil";
 // import { userState } from "@/recoil/userState";
 type DropDownProps = {
@@ -16,6 +16,12 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
   const [isLogin, setIsLogin] = useState(false);
   //   const [user, setUser] = useRecoilState(userState);
 
+  useEffect(() => {
+    const accessToken = router.query.access_token;
+    if (accessToken) {
+      localStorage.setItem("access_token", accessToken as string);
+    }
+  }, [router.query.access_token]);
   const handleLogout = () => {
     router.push("/");
     setIsOpen(false);
@@ -55,7 +61,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
               로그인을 해주세요
             </span>
           </li>
-          {/* <li
+          <li
             className="flex items-center px-4 py-3 cursor-pointer"
             onClick={handleLogout}
           >
@@ -68,9 +74,9 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
               priority
             />
             <span className="ml-3">로그아웃</span>
-          </li> */}
+          </li>
           {/* <hr className="border-gray-200 border-1 mt-12" /> */}
-          {/* <li className="flex items-center px-4 py-3 cursor-pointer">
+          <li className="flex items-center px-4 py-3 cursor-pointer">
             <Image
               src="/icon/person.svg"
               alt="Mypage"
@@ -80,7 +86,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
               priority
             />
             <span className="ml-3">닉네임을 설정해주세요</span>
-          </li> */}
+          </li>
           {!isLogin && (
             <>
               <li className="flex items-center px-4 py-3 cursor-pointer mt-16">
