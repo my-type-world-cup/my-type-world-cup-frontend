@@ -47,7 +47,7 @@ const fetcherDelete = async (url: string, accessToken?: string) =>
   });
 
 const getAccessTokenFromLocalStorage = (): string => {
-  return localStorage.getItem("access_token") || "";
+  return localStorage.getItem("access_token") || "실패";
 };
 
 const getTimeDiffString = (pastTime: string) => {

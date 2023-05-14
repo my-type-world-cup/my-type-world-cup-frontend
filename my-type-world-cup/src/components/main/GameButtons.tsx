@@ -4,7 +4,7 @@ import { FRONT_URL } from "@/lib/config";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { MouseEvent, useState } from "react";
-import ShareModal from "./ShareModal";
+import ShareModal from "../all/ShareModal";
 const GameButtons = ({
   isreload = false,
   id,
@@ -76,7 +76,13 @@ const GameButtons = ({
         <Image src="/icon/share.svg" alt="ranking" width={18} height={25} />
         <p>공유</p>
       </button>
-      {<ShareModal message="복사되었습니다" isCopied={isCopied} />}
+      {
+        <ShareModal
+          message="복사되었습니다"
+          isCopied={isCopied}
+          setIsCopied={setIsCopied}
+        />
+      }
     </div>
   );
 };
