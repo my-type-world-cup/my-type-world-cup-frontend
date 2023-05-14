@@ -10,17 +10,21 @@ type Props = {
 };
 
 export default function GameSet({ id, winner }: Props) {
-  const [accessToken, setAccessToken] = useState<string | null>("");
-
+  const [accessToken, setAccessToken] = useState<string>("");
+  console.log(accessToken);
   useLayoutEffect(() => {
     setAccessToken(getAccessTokenFromLocalStorage());
   }, []);
-
+  console.log("하이");
   return (
     <>
       <GameButtons isreload={true} id={id} />
       <Comment winner={winner} />
-      {accessToken && <CommentList accessToken={accessToken} id={id} />}
+      {accessToken === "실패" ? (
+        <CommentList id={id} />
+      ) : (
+        <CommentList accessToken={accessToken} id={id} />
+      )}
     </>
   );
 }
