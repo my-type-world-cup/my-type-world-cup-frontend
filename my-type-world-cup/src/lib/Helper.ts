@@ -14,13 +14,18 @@ function getInitialRound(candidatesCount: number): Round {
 }
 
 const fetcher = async (url: string) =>
-  await fetch(url).then((res) => res.json());
+  await fetch(url, {
+    headers: {
+      "Cache-Control": "max-age=3600", // 1시간 동안 캐시를 유지합니다.
+    },
+  }).then((res) => res.json());
 
 const fetcherPost = async (url: string, data: any, token?: string) =>
   await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "Cache-Control": "max-age=3600",
       ...(token && { Authorization: `Bearer ${token}` }),
     },
     body: JSON.stringify(data),
@@ -30,6 +35,7 @@ const fetcherToken = async (url: string, token: string | null = null) => {
   const response = await fetch(url, {
     headers: {
       "Content-Type": "application/json",
+      "Cache-Control": "max-age=3600",
       ...(token && { Authorization: `Bearer ${token}` }),
     },
   });
@@ -42,6 +48,7 @@ const fetcherDelete = async (url: string, accessToken?: string) =>
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
+      "Cache-Control": "max-age=3600",
       ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
     },
   });
