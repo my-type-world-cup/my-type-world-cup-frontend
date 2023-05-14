@@ -8,7 +8,7 @@ import ReactCrop, {
   makeAspectCrop,
 } from "react-image-crop";
 import { canvasPreview } from "../../lib/editor/canvasPreview";
-import { useDebounceEffect } from "./useDebounceEffect";
+import { useDebounceEffect } from "../../lib/editor/useDebounceEffect";
 
 import "react-image-crop/dist/ReactCrop.css";
 
