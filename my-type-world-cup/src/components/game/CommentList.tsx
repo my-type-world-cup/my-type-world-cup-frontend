@@ -1,21 +1,23 @@
 import { fetcherToken, getTimeDiffString } from "@/lib/Helper";
 import { BACK_URL } from "@/lib/config";
-import { useRef } from "react";
-
+import { useEffect, useRef, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 import type {
   Comment_list,
   Comment_list_data,
   Comment_list_pageInfo,
 } from "../../type/Types";
+import ShareModal from "../all/ShareModal";
+
 type Props = {
-  accessToken: string;
+  accessToken?: string;
   id?: number;
 };
 const PAGE_SIZE = 10;
 export default function CommentList({ accessToken, id }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
-
+  const [isCopied, setIsCopied] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
   const { data, mutate, size, setSize, isValidating, isLoading } =
     useSWRInfinite<Comment_list>(
       (index) =>
@@ -24,7 +26,10 @@ export default function CommentList({ accessToken, id }: Props) {
         }&size=10&direction=DESC&worldCupId=${id}`,
       (url: string) => fetcherToken(url, accessToken)
     );
-  console.log(data);
+  useEffect(() => {
+    mutate();
+  }, [accessToken, mutate]);
+
   const page: Comment_list_pageInfo =
     data && data[data.length - 1].pageInfo
       ? data[data.length - 1].pageInfo
@@ -59,8 +64,20 @@ export default function CommentList({ accessToken, id }: Props) {
       body: JSON.stringify({ commentId: id }),
     });
     console.log(response, "response");
-    if (response.ok) {
+    if (!response.ok) {
+      setMessage("로그인을 해주세요");
+      setIsCopied(true);
+
       mutate();
+    }
+    if (response.ok) {
+      setMessage("추천하였습니다");
+      setIsCopied(true);
+
+      mutate();
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 1000);
     }
     console.log("gkdl");
   };
@@ -95,19 +112,23 @@ export default function CommentList({ accessToken, id }: Props) {
               </h2>
 
               {comment.isLiked ? (
-                <span
-                  onClick={() => handleDeleteComment(comment.id)}
-                  className="text-sm font-bold hover:scale-105 text-main"
-                >
-                  좋아요 {comment.likesCount}
-                </span>
+                <>
+                  <span
+                    onClick={() => handleDeleteComment(comment.id)}
+                    className="text-sm font-bold hover:scale-105 text-main"
+                  >
+                    좋아요 {comment.likesCount}
+                  </span>
+                </>
               ) : (
-                <span
-                  onClick={() => handleLikeComment(comment.id)}
-                  className="text-gray text-sm hover:font-bold hover:scale-105 hover:text-main"
-                >
-                  좋아요 {comment.likesCount}
-                </span>
+                <>
+                  <span
+                    onClick={() => handleLikeComment(comment.id)}
+                    className="text-gray text-sm hover:font-bold hover:scale-105 hover:text-main"
+                  >
+                    좋아요 {comment.likesCount}
+                  </span>
+                </>
               )}
             </div>
             <p className="mx-4 font-thin text-sm">{comment.content}</p>
@@ -131,6 +152,13 @@ export default function CommentList({ accessToken, id }: Props) {
           </button>
         </div>
       </div>
+      {
+        <ShareModal
+          message={message}
+          isCopied={isCopied}
+          setIsCopied={setIsCopied}
+        />
+      }
     </>
   );
 }
