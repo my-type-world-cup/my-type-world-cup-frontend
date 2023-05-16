@@ -12,9 +12,10 @@ import ShareModal from "../all/ShareModal";
 type Props = {
   accessToken?: string;
   id?: number;
+  rendering: boolean;
 };
 const PAGE_SIZE = 10;
-export default function CommentList({ accessToken, id }: Props) {
+export default function CommentList({ accessToken, id, rendering }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
@@ -28,7 +29,7 @@ export default function CommentList({ accessToken, id }: Props) {
     );
   useEffect(() => {
     mutate();
-  }, [accessToken, mutate]);
+  }, [accessToken, mutate, rendering]);
 
   const page: Comment_list_pageInfo =
     data && data[data.length - 1].pageInfo
@@ -41,11 +42,11 @@ export default function CommentList({ accessToken, id }: Props) {
           size: 0,
           page: 0,
         };
-  console.log(page);
+
   const comments: Comment_list_data[] = data
     ? data.map((v) => v.data).flat()
     : [];
-  console.log(comments, accessToken, id);
+
   //예시는 모두다 배열임
   const isLoadingMore =
     isLoading || (size > 0 && data && typeof data[size - 1] === "undefined"); //로딩중
@@ -54,8 +55,7 @@ export default function CommentList({ accessToken, id }: Props) {
   const isRefreshing = isValidating && data && data.length === size; // 요청중
 
   const handleLikeComment = async (id: number) => {
-    console.log(id, "id", accessToken, "accessToken");
-    const response = await fetch(`${BACK_URL}/likes`, {
+    const response = await fetch(`${BACK_URL}/comments/${id}/likes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +63,7 @@ export default function CommentList({ accessToken, id }: Props) {
       },
       body: JSON.stringify({ commentId: id }),
     });
-    console.log(response, "response");
+
     if (!response.ok) {
       setMessage("로그인을 해주세요");
       setIsCopied(true);
@@ -79,10 +79,9 @@ export default function CommentList({ accessToken, id }: Props) {
         setIsCopied(false);
       }, 1000);
     }
-    console.log("gkdl");
   };
   const handleDeleteComment = async (id: number) => {
-    const response = await fetch(`${BACK_URL}/likes/${id}`, {
+    const response = await fetch(`${BACK_URL}/comments/${id}/likes`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -91,6 +90,13 @@ export default function CommentList({ accessToken, id }: Props) {
     });
     if (response.ok) {
       mutate();
+      setMessage("취소하였습니다");
+      setIsCopied(true);
+
+      mutate();
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 1000);
     }
   };
 

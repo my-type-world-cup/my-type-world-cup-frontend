@@ -1,17 +1,28 @@
 import { BACK_URL } from "@/lib/config";
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import { useRouter } from "next/router";
+import React, { Dispatch, useRef, useState } from "react";
 import type { Contestant } from "../../type/Types";
 type FormProps = {
   onSubmit?: (nickname: string, message: string) => void;
   winner?: Contestant;
+  setRendering: Dispatch<React.SetStateAction<boolean>>;
+  rendering: boolean;
 };
 
-const Comment: React.FC<FormProps> = ({ onSubmit, winner }) => {
+const Comment: React.FC<FormProps> = ({
+  rendering,
+  onSubmit,
+  winner,
+  setRendering,
+}) => {
+  const router = useRouter();
+  const id = Number(router.query.id);
+
   const isButton = useRef<boolean>(true);
   const [nickname, setNickname] = useState("");
   const [message, setMessage] = useState("");
-
+  console.log(winner, "winner", id);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (message && isButton.current) {
@@ -20,7 +31,7 @@ const Comment: React.FC<FormProps> = ({ onSubmit, winner }) => {
       console.log(message, nickname);
       const comment = {
         content: message,
-        worldCupId: 2,
+        worldCupId: id,
         ...(winner && { candidateName: winner.name }),
       };
       console.log(comment);
@@ -34,7 +45,9 @@ const Comment: React.FC<FormProps> = ({ onSubmit, winner }) => {
         body: JSON.stringify(comment),
       })
         .then((response) => response.json())
-        .then((data) => console.log(data))
+        .then((data) => {
+          setRendering(!rendering);
+        })
         .catch((error) => console.error(error));
       isButton.current = true;
     }
