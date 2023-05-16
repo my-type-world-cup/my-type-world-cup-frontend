@@ -2,6 +2,7 @@ import Header from "@/components/all/Header";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import { RecoilRoot } from "recoil";
 import { SWRConfig } from "swr";
 
 function App({ Component, pageProps }: AppProps) {
@@ -23,19 +24,21 @@ function App({ Component, pageProps }: AppProps) {
           이상형 월드컵
         </h2>
       </div>
-      <div className="bg-white max-w-[480px] w-full sm:min-w-[480px] mx-auto sm:mx-20  shadow-lg h-5/6">
-        <Header />
-        <div className="-mt-[63px]">
-          <SWRConfig
-            value={{
-              revalidateOnFocus: false,
-              revalidateOnReconnect: false,
-            }}
-          >
-            <Component {...pageProps} />
-          </SWRConfig>
+      <RecoilRoot>
+        <div className="bg-white max-w-[480px] w-full sm:min-w-[480px] mx-auto sm:mx-20  shadow-lg h-5/6">
+          <Header />
+          <div className="-mt-[63px]">
+            <SWRConfig
+              value={{
+                revalidateOnFocus: false,
+                revalidateOnReconnect: false,
+              }}
+            >
+              <Component {...pageProps} />
+            </SWRConfig>
+          </div>
         </div>
-      </div>
+      </RecoilRoot>
     </div>
   );
 }

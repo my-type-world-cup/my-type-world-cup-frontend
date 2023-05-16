@@ -1,27 +1,37 @@
-//dropdown component for the app
-
+import { fetchUserData } from "@/api/get_user";
 import { BACK_URL } from "@/lib/config";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-// import { useRecoilState } from "recoil";
-// import { userState } from "@/recoil/userState";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { accessTokenState, userState } from "../../lib/atom/atom";
+
 type DropDownProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   isOpen: boolean;
 };
 
 const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
+  const setAccessToken = useSetRecoilState<string | null>(accessTokenState);
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
-  //   const [user, setUser] = useRecoilState(userState);
-
+  const [user, setUser] = useRecoilState(userState);
+  console.log(user);
   useEffect(() => {
     const accessToken = router.query.access_token;
     if (accessToken) {
       localStorage.setItem("access_token", accessToken as string);
+      setAccessToken(accessToken as string);
+      fetchUserData(accessToken as string)
+        .then((data) => {
+          setUser(data);
+          localStorage.setItem("user", JSON.stringify(data));
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
-  }, [router.query.access_token]);
+  }, [router.query.access_token, setAccessToken, setUser]);
   const handleLogout = () => {
     router.push("/");
     setIsOpen(false);
