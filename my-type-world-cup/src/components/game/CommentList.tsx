@@ -10,8 +10,8 @@ import type {
 import ShareModal from "../all/ShareModal";
 
 type Props = {
-  accessToken?: string;
-  id?: number;
+  accessToken: string | null;
+  id: number;
   rendering: boolean;
 };
 const PAGE_SIZE = 10;

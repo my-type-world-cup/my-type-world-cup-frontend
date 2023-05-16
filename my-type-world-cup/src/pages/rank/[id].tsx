@@ -4,7 +4,6 @@ import { rank_Data } from "@/type/Types";
 import { GetStaticPaths, GetStaticProps } from "next";
 
 export default function index({ worldcupId }: { worldcupId: number }) {
-  console.log(worldcupId);
   const rankData: rank_Data = {
     worldCupId: worldcupId,
     password: null,
