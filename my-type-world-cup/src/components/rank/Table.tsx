@@ -117,7 +117,7 @@ function Table({ rankData }: Props) {
               className={
                 sort === "finalWinCount"
                   ? "text-main border-b-4 border-main"
-                  : ""
+                  : "cursor-pointer"
               }
               onClick={() => {
                 setSort("finalWinCount");
@@ -129,7 +129,7 @@ function Table({ rankData }: Props) {
               className={
                 sort === "finalWinRatio"
                   ? "text-main border-b-4 border-main"
-                  : ""
+                  : "cursor-pointer"
               }
               onClick={() => setSort("finalWinRatio")}
             >
@@ -137,7 +137,9 @@ function Table({ rankData }: Props) {
             </th>
             <th
               className={
-                sort === "winCount" ? "text-main border-b-4 border-main" : ""
+                sort === "winCount"
+                  ? "text-main border-b-4 border-main"
+                  : "cursor-pointer"
               }
               onClick={() => setSort("winCount")}
             >
@@ -145,7 +147,9 @@ function Table({ rankData }: Props) {
             </th>
             <th
               className={
-                sort === "winRatio" ? "text-main border-b-4 border-main" : ""
+                sort === "winRatio"
+                  ? "text-main border-b-4 border-main"
+                  : "cursor-pointer"
               }
               onClick={() => setSort("winRatio")}
             >
