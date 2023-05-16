@@ -21,7 +21,7 @@ const Header = () => {
   // 나중에 해당 주소에 맞추어서 갈 수 있도록 수정해야함
   const gamePath = pathname.split("/")[1];
   const page = pages.filter((page) => page.path === gamePath)[0];
-  console.log(pathname, gamePath, page);
+  // console.log(pathname, gamePath, page);
   return (
     <div className="relative">
       <header className="bg-main flex w-full relative z-20 px-4 py-3 items-center justify-between">

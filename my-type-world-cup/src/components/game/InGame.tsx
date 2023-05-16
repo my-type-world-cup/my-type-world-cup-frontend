@@ -67,10 +67,9 @@ export default function InGame({
           winCount: count,
         },
       ]);
-      console.log(isResult, "결과");
 
-      const result_boolean = await rank_result_fetch(isResult.current);
-      console.log(result_boolean, "결과");
+      await rank_result_fetch(isResult.current);
+
       setIsCheck([true, 4]); //원위치
       return;
     } else if (matchRef.current.length === 0) {

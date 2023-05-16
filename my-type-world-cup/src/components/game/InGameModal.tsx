@@ -29,7 +29,7 @@ export default function Modal({
 
   const handleClick = async (password: string | null, teamCount: number) => {
     const success = await fetchContestants(password, teamCount);
-    console.log(success, password);
+
     if (success) {
       randomContestant();
       setIsModal((el) => [false, el[1]]);
