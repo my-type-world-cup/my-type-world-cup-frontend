@@ -1,21 +1,20 @@
-import { useLayoutEffect, useState } from "react";
-import { getAccessTokenFromLocalStorage } from "../../lib/Helper";
+import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { accessTokenState } from "../../lib/atom/atom";
 import type { Contestant } from "../../type/Types";
 import Comment from "../game/Comment";
 import CommentList from "../game/CommentList";
 import GameButtons from "../main/GameButtons";
+
 type Props = {
-  id?: number;
+  id: number;
   winner?: Contestant;
 };
 
 export default function GameSet({ id, winner }: Props) {
-  const [accessToken, setAccessToken] = useState<string>("");
   const [rendering, setRendering] = useState<boolean>(false);
+  const accessToken = useRecoilValue(accessTokenState);
   // console.log(accessToken);
-  useLayoutEffect(() => {
-    setAccessToken(getAccessTokenFromLocalStorage());
-  }, []);
 
   return (
     <>
@@ -25,8 +24,8 @@ export default function GameSet({ id, winner }: Props) {
         setRendering={setRendering}
         rendering={rendering}
       />
-      {accessToken === "실패" ? (
-        <CommentList id={id} rendering={rendering} />
+      {accessToken === null ? (
+        <CommentList accessToken={accessToken} id={id} rendering={rendering} />
       ) : (
         <CommentList accessToken={accessToken} id={id} rendering={rendering} />
       )}
