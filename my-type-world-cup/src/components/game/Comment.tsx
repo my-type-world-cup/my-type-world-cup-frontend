@@ -74,7 +74,6 @@ const Comment: React.FC<FormProps> = ({
     setIsCopied(true);
 
     setTimeout(() => {
-      if (!isCopied) return;
       setIsCopied(false);
     }, 2000);
   };
