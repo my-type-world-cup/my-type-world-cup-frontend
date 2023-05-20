@@ -107,7 +107,7 @@ const WorldCup = ({ data }: { data: IngameModalData }) => {
     password: string | null = null,
     teamCount: number = 16
   ) => {
-    const url = `${BACK_URL}/candidates/random?teamCount=${teamCount}`;
+    const url = `${BACK_URL}/worldcups/${data.id}/candidates/random?teamCount=${teamCount}`;
     const bodyData = {
       worldCupId: data.id,
       password: password,

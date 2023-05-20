@@ -31,9 +31,10 @@ function Table({ rankData }: Props) {
   const [pageSize, setPageSize] = useState(10);
   const [sort, setSort] = useState("finalWinCount");
   const { data, error, isLoading } = useSWR<rank_res>(
-    `${BACK_URL}/candidates/search?sort=${sort}&direction=DESC&size=${pageSize}&page=${currentPage}${search}`,
-    (url) => fetcherPost(url, rankData)
+    `${BACK_URL}/worldcups/${rankData.worldCupId}/candidates?sort=${sort}&direction=DESC&size=${pageSize}&page=${currentPage}${search}`,
+    (url) => fetcherPost(url, { password: rankData.password })
   );
+  console.log(rankData, "랭크데이터");
   useEffect(() => {
     setCurrentPage(1);
   }, [pageSize]);
