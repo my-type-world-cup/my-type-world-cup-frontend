@@ -28,7 +28,7 @@ const TabButtons = ({ isWord, setIsWord }: TabButtonProps) => {
   };
 
   return (
-    <div className="flex mt-3 text-xl sticky top-0 z-40">
+    <div className="flex mt-3 text-xl  z-40">
       {sortButtons.map((button: Tab_buttons) => (
         <button
           key={button.value}
