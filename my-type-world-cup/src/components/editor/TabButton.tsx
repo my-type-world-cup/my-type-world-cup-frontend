@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 
 interface Tab_buttons {
   name: string;
-  value: string;
+  value: Step;
 }
 
 interface TabButtonProps {
@@ -10,11 +10,12 @@ interface TabButtonProps {
   setIsWord: Dispatch<SetStateAction<Step>>;
 }
 
-export type Step = "first" | "second";
+export type Step = "1" | "2" | "3";
 const TabButtons = ({ isWord, setIsWord }: TabButtonProps) => {
   const sortButtons: Tab_buttons[] = [
-    { name: "1. 정보 입력", value: "first" },
-    { name: "2. 사진 추가", value: "second" },
+    { name: "1. 정보 입력", value: "1" },
+    { name: "2. 사진 등록", value: "2" },
+    { name: "3. 이름 입력", value: "3" },
   ];
 
   const sortHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -27,7 +28,7 @@ const TabButtons = ({ isWord, setIsWord }: TabButtonProps) => {
   };
 
   return (
-    <div className="flex mt-8 text-xl">
+    <div className="flex mt-3 text-xl sticky top-0 z-40">
       {sortButtons.map((button: Tab_buttons) => (
         <button
           key={button.value}
