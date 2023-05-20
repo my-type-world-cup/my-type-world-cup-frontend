@@ -89,11 +89,11 @@ export default function Index({}: Props) {
   return (
     <>
       <main className="h-auto shadow-lg -mt-16">
-        <div className="flex justify-center items-center flex-col mt-24 ">
+        <div className="flex justify-center items-center flex-col mt-24 pb-[25px]">
           <Image
-            src="/icon/blueDolphin.svg"
+            src="/icon/blueDolphin2.svg"
             alt="one"
-            width={100}
+            width={150}
             height={250}
           />
           <h3 className="text-xl mt-4">Dolphin를 이용해주셔서 감사합니다</h3>

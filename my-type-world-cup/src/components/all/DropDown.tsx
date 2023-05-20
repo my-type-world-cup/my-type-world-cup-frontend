@@ -74,7 +74,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
   return (
     <>
       <div
-        className=" bg-main shadow-lg w-3/4 h-screen z-20 absolute top-0 right-0 transition-transform duration-300"
+        className=" bg-main shadow-lg w-3/4 h-screen z-50 absolute top-0 right-0 transition-transform duration-300"
         style={{
           opacity: isOpen ? "1" : "0",
           position: "absolute",
@@ -203,7 +203,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
                   height={34}
                   priority
                 />
-                <span className="ml-3">Guest 로그인</span>
+                <span className="ml-3">추가 Oauth 준비중</span>
               </li>
             </>
           )}
