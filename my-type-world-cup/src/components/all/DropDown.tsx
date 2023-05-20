@@ -97,7 +97,9 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
                 height={31}
                 priority
               />
-              <span className="ml-3">로그인을 해주세요</span>
+              <span className="ml-3">
+                {isLogin ? "뒤로 가기" : "로그인을 해주세요"}
+              </span>
             </li>
           ) : (
             <>
