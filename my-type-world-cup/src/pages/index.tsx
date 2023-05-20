@@ -46,13 +46,15 @@ export default function Home({}: {}) {
   const isLoadingMore =
     isLoading || (size > 0 && data && typeof data[size - 1] === "undefined"); //로딩중
 
+  if (!data) return <div ref={containerRef}>로딩중</div>;
+
   // 더이상 없을때 체크
   const isRefreshing = isValidating && data && data.length === size; // 요청중
 
   return (
     <>
       <main
-        className="flex h-screen flex-col pt-4 overflow-y-scroll relative mt-20"
+        className="flex h-screen flex-col overflow-y-scroll relative pt-20"
         ref={containerRef}
       >
         <SearchBar setSearch={setSearch} />
@@ -60,9 +62,11 @@ export default function Home({}: {}) {
           <SortButtons setSort={setSort} sort={sort} />
         </div>
         <article className="w-full h-auto ">
-          {worldcups.map((v) => (
-            <Card key={v.id} worldcup={v} />
-          ))}
+          {data ? (
+            worldcups.map((v) => <Card key={v.id} worldcup={v} />)
+          ) : (
+            <div>로딩중입니다.</div>
+          )}
         </article>
       </main>
     </>
