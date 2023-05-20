@@ -103,6 +103,17 @@ type Comment_list = {
   pageInfo: Comment_list_pageInfo;
 };
 
+type Post_worldcup = {
+  title: string;
+  description: string;
+  password: string | null;
+  candidatePostDtos: Array<{
+    name: string;
+    image: string;
+    thumb: string;
+  }>;
+};
+
 export type {
   Comment_list,
   Comment_list_data,
@@ -117,6 +128,7 @@ export type {
   MainWorldcup,
   Candidate,
   PageInfo,
+  Post_worldcup,
   IngameModalData,
   result_data,
 };
