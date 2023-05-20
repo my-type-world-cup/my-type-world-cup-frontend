@@ -50,8 +50,9 @@ export default function ImageEditor() {
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
   const [scale, setScale] = useState(1);
   const [rotate, setRotate] = useState(0);
-  const [aspect, setAspect] = useState<number | undefined>(3 / 4);
+  const [aspect, setAspect] = useState<number | undefined>(9 / 16);
 
+  //파일 읽음
   function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
       console.log(e.target.files);
@@ -63,11 +64,11 @@ export default function ImageEditor() {
       });
     }
   }
-
+  //이미지 로드
   function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
     if (aspect) {
       const { width, height } = e.currentTarget;
-      console.log(width, height);
+      console.log(width, height, aspect);
       console.log(centerAspectCrop(width, height, aspect));
       setCrop(centerAspectCrop(width, height, aspect));
     }
@@ -127,20 +128,24 @@ export default function ImageEditor() {
   // }
 
   return (
-    <div className="mt-20">
+    <div className="mt-10">
       <div className="Crop-Controls">
         <input type="file" onChange={onSelectFile} />
 
-        <div className="mt-4 flex flex-col justify-center">
-          <div className="flex h-8 flex-1 items-center">
-            <label htmlFor="scale-input">Scale : </label>
+        <div className="mt-4 flex flex-col justify-center text-gray">
+          <div className="flex h-8 flex-1 items-center mb-1">
+            <label htmlFor="scale-input" className="w-16">
+              Scale
+            </label>
+            :
             <input
               id="scale-input"
               type="text"
               step="0.1"
               value={scale.toFixed(1)}
               disabled={!imgSrc}
-              className="w-20 border border-gray rounded px-2 py-1 mx-2"
+              className="w-20 border border-gray rounded px-2 py-1 mx-3"
+              readOnly
             />
             <button
               type="button"
@@ -148,27 +153,45 @@ export default function ImageEditor() {
               onClick={() => setScale(scale + 0.1)}
               disabled={!imgSrc}
             >
-              +
+              <Image
+                src="/icon/grayPlus.svg"
+                alt="plus"
+                className="cursor-pointer"
+                width={20}
+                height={18}
+                priority
+              />
             </button>
             <button
               type="button"
-              className="input-button"
+              className="input-button ml-2"
               onClick={() => setScale(scale - 0.1)}
               disabled={!imgSrc}
             >
-              -
+              <Image
+                src="/icon/grayMinus.svg"
+                alt="minus"
+                className="cursor-pointer"
+                width={20}
+                height={18}
+                priority
+              />
             </button>
           </div>
 
-          <div className="flex h-8 flex-1 items-center">
-            <label htmlFor="rotate-input">Rotate : </label>
+          <div className="flex h-8 flex-1 items-center mb-4">
+            <label htmlFor="rotate-input" className="w-16">
+              Rotate
+            </label>
+            :
             <input
               id="rotate-input"
               type="text"
               step="0.1"
               value={rotate}
               disabled={!imgSrc}
-              className="w-20 border border-gray rounded px-2 py-1 mx-2"
+              readOnly
+              className="w-20 border border-gray rounded px-2 py-1 mx-3"
             />
             <button
               type="button"
@@ -176,15 +199,29 @@ export default function ImageEditor() {
               onClick={() => setRotate(rotate + 10)}
               disabled={!imgSrc}
             >
-              +
+              <Image
+                src="/icon/grayPlus.svg"
+                alt="plus"
+                className="cursor-pointer"
+                width={20}
+                height={18}
+                priority
+              />
             </button>
             <button
               type="button"
-              className="input-button"
+              className="input-button ml-2"
               onClick={() => setRotate(rotate - 10)}
               disabled={!imgSrc}
             >
-              -
+              <Image
+                src="/icon/grayMinus.svg"
+                alt="minus"
+                className="cursor-pointer"
+                width={20}
+                height={18}
+                priority
+              />
             </button>
           </div>
         </div>
