@@ -114,7 +114,20 @@ type Post_worldcup = {
   }>;
 };
 
+type Search_Image = {
+  data: string[];
+  pageInfo: {
+    first: boolean;
+    page: number;
+    size: number;
+    totalElements: number;
+    totalPages: number;
+    last: boolean;
+  };
+};
+
 export type {
+  Search_Image,
   Comment_list,
   Comment_list_data,
   Comment_list_pageInfo,
