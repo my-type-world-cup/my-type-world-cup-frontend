@@ -9,7 +9,7 @@ const Card = ({ worldcup }: { worldcup: MainWorldcup }) => {
     <article className="border-main mt-4 mx-4 px-2 border-[1px] pb-4">
       <div className="flex justify-evenly mt-6">
         <div className="w-auto overflow-hidden">
-          <div className="w-[175px] h-[175px] overflow-hidden">
+          <div className="w-[175px] h-[175px] overflow-hidden flex items-center">
             <Image
               src={worldcup.candidateSimpleResponseDtos[0].image}
               alt="연예인 사진"
@@ -22,7 +22,7 @@ const Card = ({ worldcup }: { worldcup: MainWorldcup }) => {
         </div>
 
         <div className="w-auto overflow-hidden">
-          <div className="w-[175px] h-[175px] overflow-hidden flex">
+          <div className="w-[175px] h-[175px] overflow-hidden flex items-center">
             <Image
               src={worldcup.candidateSimpleResponseDtos[1].image}
               alt="1st"
