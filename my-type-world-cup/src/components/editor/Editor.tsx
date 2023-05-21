@@ -15,7 +15,7 @@ const Editor = ({}: EditorProps) => {
   useEffect(() => {
     setPassword(null);
   }, [isPublic]);
-  console.log(worldcup, "worldcup");
+
   const handleSave = () => {
     setWorldcup((el) => ({
       ...el!,

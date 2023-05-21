@@ -38,8 +38,13 @@ function centerAspectCrop(
   );
 }
 
-export default function ImageEditor() {
-  const [imgSrc, setImgSrc] = useState("");
+type Props = {
+  imgSrc: string;
+  setImgSrc: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export default function ImageEditor({ imgSrc, setImgSrc }: Props) {
+  // const [imgSrc, setImgSrc] = useState("");
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const hiddenAnchorRef = useRef<HTMLAnchorElement>(null);
@@ -49,12 +54,12 @@ export default function ImageEditor() {
   const [scale, setScale] = useState(1);
   const [rotate, setRotate] = useState(0);
   const [aspect, setAspect] = useState<number | undefined>(1 / 1);
-  console.log(completedCrop, "completedCrop");
+
   //파일 읽음
   function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
-      console.log(e.target.files);
-      setCrop(undefined); //이미지 간 자르기 미리보기를 업데이트합니다
+      // console.log(e.target.files);
+      // setCrop(undefined); //이미지 간 자르기 미리보기를 업데이트합니다
       const reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       reader.addEventListener("load", () => {
@@ -62,12 +67,12 @@ export default function ImageEditor() {
       });
     }
   }
+
   //이미지 로드
   function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
     if (aspect) {
       const { width, height } = e.currentTarget;
-      console.log(width, height, aspect);
-      console.log(centerAspectCrop(width, height, aspect));
+
       setCrop(centerAspectCrop(width, height, aspect));
     }
   }
@@ -85,7 +90,7 @@ export default function ImageEditor() {
         URL.revokeObjectURL(blobUrlRef.current);
       }
       blobUrlRef.current = URL.createObjectURL(blob);
-      setImgSrc(blobUrlRef.current);
+
       hiddenAnchorRef.current!.href = blobUrlRef.current;
       hiddenAnchorRef.current!.click();
     });
@@ -99,7 +104,6 @@ export default function ImageEditor() {
         imgRef.current &&
         previewCanvasRef.current
       ) {
-        console.log("렌더링~");
         // We use canvasPreview as it's much faster than imgPreview.
         canvasPreview(
           imgRef.current,
@@ -128,8 +132,6 @@ export default function ImageEditor() {
   return (
     <div className="mt-10">
       <div className="Crop-Controls">
-        <input type="file" onChange={onSelectFile} />
-
         <div className="mt-4 flex flex-col justify-center text-gray">
           <div className="flex h-8 flex-1 items-center mb-1">
             <label htmlFor="scale-input" className="w-16">
@@ -235,6 +237,7 @@ export default function ImageEditor() {
             ref={imgRef}
             alt="Crop me"
             src={imgSrc}
+            // className="w-full h-96 object-contain"
             width={500}
             style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
             height={500}
@@ -244,15 +247,15 @@ export default function ImageEditor() {
       )}
       {!!completedCrop && (
         <>
-          <div className="flex items-center">
+          <div className="">
             <canvas
               ref={previewCanvasRef}
               style={{
                 border: "1px solid black",
                 objectFit: "contain",
-                width: "175px",
-                height: "175px",
-                backgroundColor: "blue",
+                width: completedCrop.width,
+                height: completedCrop.height,
+                backgroundColor: "#7ED0FF",
               }}
             />
           </div>

@@ -126,6 +126,18 @@ type Search_Image = {
   };
 };
 
+type Base64 = {
+  data: {
+    id: string;
+    title: string;
+    url_viewer: string;
+    url: string;
+    display_url: string;
+  };
+  status: number;
+  success: boolean;
+};
+
 export type {
   Search_Image,
   Comment_list,
