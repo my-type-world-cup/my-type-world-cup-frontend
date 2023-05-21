@@ -39,9 +39,7 @@ function centerAspectCrop(
 }
 
 export default function ImageEditor() {
-  const [imgSrc, setImgSrc] = useState(
-    "https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2022/08/22/b7903101-048a-4375-bfcd-de61d3e70274.jpg"
-  );
+  const [imgSrc, setImgSrc] = useState("");
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const hiddenAnchorRef = useRef<HTMLAnchorElement>(null);
@@ -50,8 +48,8 @@ export default function ImageEditor() {
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
   const [scale, setScale] = useState(1);
   const [rotate, setRotate] = useState(0);
-  const [aspect, setAspect] = useState<number | undefined>(9 / 16);
-
+  const [aspect, setAspect] = useState<number | undefined>(1 / 1);
+  console.log(completedCrop, "completedCrop");
   //파일 읽음
   function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
@@ -88,8 +86,8 @@ export default function ImageEditor() {
       }
       blobUrlRef.current = URL.createObjectURL(blob);
       setImgSrc(blobUrlRef.current);
-      // hiddenAnchorRef.current!.href = blobUrlRef.current;
-      // hiddenAnchorRef.current!.click();
+      hiddenAnchorRef.current!.href = blobUrlRef.current;
+      hiddenAnchorRef.current!.click();
     });
   }
 
@@ -246,14 +244,15 @@ export default function ImageEditor() {
       )}
       {!!completedCrop && (
         <>
-          <div>
+          <div className="flex items-center">
             <canvas
               ref={previewCanvasRef}
               style={{
                 border: "1px solid black",
                 objectFit: "contain",
-                width: completedCrop.width,
-                height: completedCrop.height,
+                width: "175px",
+                height: "175px",
+                backgroundColor: "blue",
               }}
             />
           </div>
