@@ -2,16 +2,19 @@ import { fetcher } from "@/lib/Helper";
 import { BACK_URL } from "@/lib/config";
 import type { Search_Image } from "@/type/Types";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 import SearchBar from "../main/SearchBar";
 import ImageEditor from "./ImageEditor";
+import SaveList from "./SaveList";
 import SearchImage from "./SearchImages";
 type Props = {};
 
 export default function ImageUpload({}: Props) {
   const [search, setSearch] = useState<string>("");
   const [imgSrc, setImgSrc] = useState("");
+  const [saveList, setSaveList] = useState<string[]>([]);
+  const [onandoff, setOnandoff] = useState<boolean[]>([true, true]);
   const keyword = search.slice(1);
   const { data, mutate, size, setSize, isValidating, isLoading } =
     useSWRInfinite<Search_Image>((index) => {
@@ -22,7 +25,10 @@ export default function ImageUpload({}: Props) {
       return `${BACK_URL}/images?${keyword}&page=${index + 1}&size=20`;
     }, fetcher);
   const searchData: string[] = data ? data.map((v) => v.data).flat() : [];
-
+  useEffect(() => {
+    setSize(1);
+  }, [keyword, setSize]);
+  console.log(size);
   // useEffect(() => {
   //   if (!imgSrc) return;
   // const formData = new FormData();//외부이미지 우리꺼로 바꿔주기
@@ -64,38 +70,79 @@ export default function ImageUpload({}: Props) {
       // console.log(e.target.files);
       // setCrop(undefined); //이미지 간 자르기 미리보기를 업데이트합니다
       const reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
+
       reader.addEventListener("load", () => {
         setImgSrc(reader.result?.toString() || "");
       });
+      reader.readAsDataURL(e.target.files[0]);
     }
   }
 
   return (
-    <section className="mt-12 flex flex-col mx-8 text-lg">
-      <div>
-        <label className=""> 이미지 업로드</label>
-      </div>
-
-      <SearchBar setSearch={setSearch} />
+    <section className=" flex flex-col mx-8 text-lg">
       <div className="flex justify-between">
-        <h1 className="text-xl mb-4">Image List</h1>
+        <div className="flex w-full   mt-4 sm:mt-8 p-2">
+          <h1 className=" sm:text-xl">검색 목록</h1>
+          <Image
+            src="/icon/onandoff.svg"
+            alt="Login"
+            className="cursor-pointer ml-2"
+            width={18}
+            height={18}
+            priority
+            style={{
+              transform: onandoff[1] ? "rotate(-90deg)" : "rotate(0deg)",
+              transition: "all 0.3s ease-in-out",
+            }}
+            onClick={() => {
+              setOnandoff((el) => [el[0], !el[1]]);
+            }}
+          />
+        </div>
+      </div>
+      <div className=" mb-4 p-2">
+        <SearchBar setSearch={setSearch} />
       </div>
       <SearchImage
         data={searchData ? searchData : null}
         setSize={setSize}
         setImgSrc={setImgSrc}
+        keyword={keyword}
+        onandoff={onandoff[1]}
       />
-      <input type="file" onChange={onSelectFile} />
-      {imgSrc && (
-        <Image
-          src={imgSrc}
-          width={250}
-          height={250}
-          alt="Picture of the author"
-        />
-      )}
-      <ImageEditor imgSrc={imgSrc} setImgSrc={setImgSrc} />
+      <h1 className="mt-4 sm:text-xl">이미지 업로드</h1>
+      <input type="file" onChange={onSelectFile} className="mt-4" />
+
+      <ImageEditor
+        imgSrc={imgSrc}
+        setImgSrc={setImgSrc}
+        setSaveList={setSaveList}
+      />
+      <div className="">
+        <div className=" flex  p-2">
+          <label className="sm:text-xl">이미지 업로드</label>
+          <Image
+            src="/icon/onandoff.svg"
+            alt="Login"
+            className="cursor-pointer ml-2"
+            width={18}
+            height={18}
+            priority
+            style={{
+              transform: onandoff[0] ? "rotate(-90deg)" : "rotate(0deg)",
+              transition: "all 0.3s ease-in-out",
+            }}
+            onClick={() => {
+              setOnandoff((el) => [!el[0], el[1]]);
+            }}
+          />
+        </div>
+
+        <SaveList onandoff={onandoff[0]} />
+      </div>
+      <button className="bg-main rounded-md text-white w-full h-12 mt-4 mb-2">
+        최종 확인 하기
+      </button>
     </section>
   );
 }
