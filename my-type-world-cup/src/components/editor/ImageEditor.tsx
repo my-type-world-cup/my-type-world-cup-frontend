@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 import ReactCrop, {
@@ -41,6 +41,7 @@ function centerAspectCrop(
 type Props = {
   imgSrc: string;
   setImgSrc: React.Dispatch<React.SetStateAction<string>>;
+  setSaveList: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 export default function ImageEditor({ imgSrc, setImgSrc }: Props) {
@@ -55,18 +56,23 @@ export default function ImageEditor({ imgSrc, setImgSrc }: Props) {
   const [rotate, setRotate] = useState(0);
   const [aspect, setAspect] = useState<number | undefined>(1 / 1);
 
+  useEffect(() => {
+    setScale(1);
+    setRotate(0);
+    setCrop(undefined);
+  }, [imgSrc]);
   //파일 읽음
-  function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.files && e.target.files.length > 0) {
-      // console.log(e.target.files);
-      // setCrop(undefined); //이미지 간 자르기 미리보기를 업데이트합니다
-      const reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.addEventListener("load", () => {
-        setImgSrc(reader.result?.toString() || "");
-      });
-    }
-  }
+  // function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
+  //   if (e.target.files && e.target.files.length > 0) {
+  //     // console.log(e.target.files);
+  //     // setCrop(undefined); //이미지 간 자르기 미리보기를 업데이트합니다
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(e.target.files[0]);
+  //     reader.addEventListener("load", () => {
+  //       setImgSrc(reader.result?.toString() || "");
+  //     });
+  //   }
+  // }
 
   //이미지 로드
   function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
@@ -130,106 +136,91 @@ export default function ImageEditor({ imgSrc, setImgSrc }: Props) {
   // }
 
   return (
-    <div className="mt-10">
+    <div className="mt-10 mb-4">
       <div className="Crop-Controls">
-        <div className="mt-4 flex flex-col justify-center text-gray">
-          <div className="flex h-8 flex-1 items-center mb-1">
-            <label htmlFor="scale-input" className="w-16">
-              Scale
-            </label>
-            :
-            <input
-              id="scale-input"
-              type="text"
-              step="0.1"
-              value={scale.toFixed(1)}
-              disabled={!imgSrc}
-              className="w-20 border border-gray rounded px-2 py-1 mx-3"
-              readOnly
-            />
-            <button
-              type="button"
-              className="input-button"
-              onClick={() => setScale(scale + 0.1)}
-              disabled={!imgSrc}
-            >
-              <Image
-                src="/icon/grayPlus.svg"
-                alt="plus"
-                className="cursor-pointer"
-                width={20}
-                height={18}
-                priority
-              />
-            </button>
-            <button
-              type="button"
-              className="input-button ml-2"
-              onClick={() => setScale(scale - 0.1)}
-              disabled={!imgSrc}
-            >
-              <Image
-                src="/icon/grayMinus.svg"
-                alt="minus"
-                className="cursor-pointer"
-                width={20}
-                height={18}
-                priority
-              />
-            </button>
-          </div>
+        {!!imgSrc && (
+          <div className="mt-4 flex flex-row text-gray">
+            <div className="flex h-8 mr-4 items-center mb-2">
+              <label htmlFor="scale-input" className="w-16">
+                Scale
+              </label>
+              <button
+                type="button"
+                className="input-button"
+                onClick={() => setScale(scale + 0.1)}
+                disabled={!imgSrc}
+              >
+                <Image
+                  src="/icon/grayPlus.svg"
+                  alt="plus"
+                  className="cursor-pointer"
+                  width={20}
+                  height={18}
+                  priority
+                />
+              </button>
+              <button
+                type="button"
+                className="input-button ml-2"
+                onClick={() => setScale(scale - 0.1)}
+                disabled={!imgSrc}
+              >
+                <Image
+                  src="/icon/grayMinus.svg"
+                  alt="minus"
+                  className="cursor-pointer"
+                  width={20}
+                  height={18}
+                  priority
+                />
+              </button>
+            </div>
 
-          <div className="flex h-8 flex-1 items-center mb-4">
-            <label htmlFor="rotate-input" className="w-16">
-              Rotate
-            </label>
-            :
-            <input
-              id="rotate-input"
-              type="text"
-              step="0.1"
-              value={rotate}
-              disabled={!imgSrc}
-              readOnly
-              className="w-20 border border-gray rounded px-2 py-1 mx-3"
-            />
-            <button
-              type="button"
-              className="input-button"
-              onClick={() => setRotate(rotate + 10)}
-              disabled={!imgSrc}
-            >
-              <Image
-                src="/icon/grayPlus.svg"
-                alt="plus"
-                className="cursor-pointer"
-                width={20}
-                height={18}
-                priority
-              />
-            </button>
-            <button
-              type="button"
-              className="input-button ml-2"
-              onClick={() => setRotate(rotate - 10)}
-              disabled={!imgSrc}
-            >
-              <Image
-                src="/icon/grayMinus.svg"
-                alt="minus"
-                className="cursor-pointer"
-                width={20}
-                height={18}
-                priority
-              />
-            </button>
+            <div className="flex h-8 items-center mb-2">
+              <label htmlFor="rotate-input" className="w-16">
+                Rotate
+              </label>
+
+              <button
+                type="button"
+                className="input-button ml-2"
+                onClick={() => setRotate(rotate + 10)}
+                disabled={!imgSrc}
+              >
+                <Image
+                  src="/icon/grayPlus.svg"
+                  alt="plus"
+                  className="cursor-pointer"
+                  width={20}
+                  height={18}
+                  priority
+                />
+              </button>
+              <button
+                type="button"
+                className="input-button ml-2"
+                onClick={() => setRotate(rotate - 10)}
+                disabled={!imgSrc}
+              >
+                <Image
+                  src="/icon/grayMinus.svg"
+                  alt="minus"
+                  className="cursor-pointer"
+                  width={20}
+                  height={18}
+                  priority
+                />
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
       {!!imgSrc && (
         <ReactCrop
           crop={crop}
-          onChange={(_, percentCrop) => setCrop(percentCrop)}
+          onChange={(c, percentCrop) => {
+            setCrop(percentCrop);
+          }}
           onComplete={(c) => setCompletedCrop(c)}
           aspect={aspect}
         >
@@ -237,7 +228,6 @@ export default function ImageEditor({ imgSrc, setImgSrc }: Props) {
             ref={imgRef}
             alt="Crop me"
             src={imgSrc}
-            // className="w-full h-96 object-contain"
             width={500}
             style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
             height={500}
@@ -255,12 +245,17 @@ export default function ImageEditor({ imgSrc, setImgSrc }: Props) {
                 objectFit: "contain",
                 width: completedCrop.width,
                 height: completedCrop.height,
-                backgroundColor: "#7ED0FF",
+                display: "none",
               }}
             />
           </div>
           <div>
-            <button onClick={onDownloadCropClick}>Download Crop</button>
+            <button
+              onClick={onDownloadCropClick}
+              className="bg-main rounded-md text-white w-full h-12 mt-4 mb-2"
+            >
+              저장하기
+            </button>
             <a
               ref={hiddenAnchorRef}
               download
