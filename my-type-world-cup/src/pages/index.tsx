@@ -54,11 +54,11 @@ export default function Home({}: {}) {
   return (
     <>
       <main
-        className="flex h-screen flex-col overflow-y-scroll relative pt-20"
+        className="flex h-screen flex-col overflow-y-scroll relative pt-24"
         ref={containerRef}
       >
         <SearchBar setSearch={setSearch} />
-        <div className="mt-8 mx-auto">
+        <div className="mt-12 mx-auto">
           <SortButtons setSort={setSort} sort={sort} />
         </div>
         <article className="w-full h-auto ">
