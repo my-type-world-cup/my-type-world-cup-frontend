@@ -126,13 +126,38 @@ type Search_Image = {
   };
 };
 
-type Base64 = {
+type imgbb_result = {
   data: {
     id: string;
     title: string;
     url_viewer: string;
     url: string;
     display_url: string;
+    height: number;
+    width: number;
+    image: {
+      extension: string;
+      filename: string;
+      mime: string;
+      name: string;
+      url: string;
+    };
+    medium: {
+      extension: string;
+      filename: string;
+      mime: string;
+      name: string;
+      url: string;
+    };
+    thumb: {
+      extension: string;
+      filename: string;
+      mime: string;
+      name: string;
+      url: string;
+    };
+
+    size: number;
   };
   status: number;
   success: boolean;
@@ -156,4 +181,5 @@ export type {
   Post_worldcup,
   IngameModalData,
   result_data,
+  imgbb_result,
 };

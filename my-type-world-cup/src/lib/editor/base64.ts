@@ -7,6 +7,7 @@ async function fetchImage(url: string): Promise<string> {
 
     return new Promise<string>((resolve, reject) => {
       const reader: FileReader = new FileReader();
+
       reader.onloadend = () => resolve(reader.result as string);
       reader.onerror = reject;
       reader.readAsDataURL(blob);
@@ -19,7 +20,7 @@ async function fetchImage(url: string): Promise<string> {
 async function convertToBase64(url: string): Promise<string> {
   try {
     const base64Data = await fetchImage(url);
-    console.log(base64Data);
+
     return base64Data;
   } catch (error) {
     console.error("이미지를 가져오는 동안 오류가 발생했습니다:", error);
