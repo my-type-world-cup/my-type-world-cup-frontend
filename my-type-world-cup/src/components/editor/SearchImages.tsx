@@ -1,7 +1,8 @@
 import { convertToBase64, uploadImageToServer } from "@/lib/editor/base64";
 import type { imgbb_result } from "@/type/Types";
 import Image from "next/image";
-import React, { SyntheticEvent, useEffect, useRef } from "react";
+import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
+import BigModal from "../all/BigModal";
 interface ImageListProps {
   onandoff: boolean;
   data: string[] | null;
@@ -17,6 +18,9 @@ const SearchImages: React.FC<ImageListProps> = ({
   keyword,
   onandoff,
 }) => {
+  const [modal, setModal] = useState<boolean>(false);
+  const [img, setImg] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleScroll = () => {
@@ -36,6 +40,7 @@ const SearchImages: React.FC<ImageListProps> = ({
     setSize(1);
     scrollToStart();
   }, [keyword, setSize]);
+  console.log(loading, "loading");
   const handleImageError = (event: SyntheticEvent<HTMLImageElement, Event>) => {
     const target = event.target as HTMLImageElement;
     const parentElement = target.parentElement;
@@ -49,8 +54,14 @@ const SearchImages: React.FC<ImageListProps> = ({
     }
   };
 
+  const modalHandler = (image: string) => {
+    setModal(!modal);
+    setImg(image);
+  };
+
   const uploadHandler = async (image: string) => {
     try {
+      setLoading((el) => !el);
       // await fetch(image)
       //   .then((response) => response.blob())
       //   .then((blob) => {
@@ -61,11 +72,14 @@ const SearchImages: React.FC<ImageListProps> = ({
       //   .catch((error) => {
       //     console.error("Error fetching image:", error);
       //   });
+
       const response: imgbb_result = await uploadImageToServer(image);
 
       convertToBase64(response.data.image.url).then((base64) => {
         setImgSrc(base64);
         console.log("짠");
+        setModal(!modal);
+        setLoading((el) => !el);
       });
     } catch (error) {
       // 에러 처리를 위한 로직 추가
@@ -74,47 +88,57 @@ const SearchImages: React.FC<ImageListProps> = ({
   };
 
   return (
-    <div
-      style={{
-        maxHeight: !onandoff ? "0px" : "500px",
-        overflow: "hidden",
-        transition: "all 1s ease-in-out",
-      }}
-    >
+    <>
       <div
-        className={
-          data && data.length > 0
-            ? "overflow-scroll  bg-white px-2 py-1"
-            : " bg-white border border-hr rounded px-2 py-1"
-        }
-        ref={containerRef}
+        style={{
+          maxHeight: !onandoff ? "0px" : "500px",
+          overflow: "hidden",
+          transition: "all 1s ease-in-out",
+        }}
       >
-        <div className="flex w-fit bg-white">
-          {data && data.length > 0 ? (
-            data.map((imageUrl, index) => (
-              <div
-                key={index}
-                className="w-32 h-44 flex items-center mr-2"
-                onClick={() => uploadHandler(imageUrl)}
-              >
-                <Image
-                  src={imageUrl}
-                  alt={`Image ${index}`}
-                  width={200}
-                  height={200}
-                  className="cursor-pointer"
-                  onError={handleImageError}
-                />
+        <div
+          className={
+            data && data.length > 0
+              ? "overflow-scroll  bg-white px-2 py-1"
+              : " bg-white border border-hr rounded px-2 py-1"
+          }
+          ref={containerRef}
+        >
+          <div className="flex w-fit bg-white">
+            {data && data.length > 0 ? (
+              data.map((imageUrl, index) => (
+                <div
+                  key={index}
+                  className="w-32 h-44 flex items-center mr-2"
+                  onClick={() => modalHandler(imageUrl)}
+                >
+                  <Image
+                    src={imageUrl}
+                    alt={`Image ${index}`}
+                    width={200}
+                    height={200}
+                    className="cursor-pointer"
+                    onError={handleImageError}
+                  />
+                </div>
+              ))
+            ) : (
+              <div className="bg-white h-44 text-gray ">
+                검색 결과가 없습니다.
               </div>
-            ))
-          ) : (
-            <div className="bg-white h-44 text-gray ">
-              검색 결과가 없습니다.
-            </div>
-          )}
+            )}
+          </div>
         </div>
+        <BigModal
+          message="이미지를 선택하시겠습니까?"
+          isCopied={modal}
+          setIsCopied={setModal}
+          img={img}
+          uploadHandler={uploadHandler}
+          loading={loading}
+        />
       </div>
-    </div>
+    </>
   );
 };
 

@@ -252,7 +252,7 @@ export default function ImageEditor({ imgSrc, setImgSrc }: Props) {
           <div>
             <button
               onClick={onDownloadCropClick}
-              className="bg-main rounded-md text-white w-full h-12 mt-4 mb-2"
+              className="bg-main rounded-md hover:scale-110 text-white w-full h-12 mt-4 mb-2"
             >
               저장하기
             </button>

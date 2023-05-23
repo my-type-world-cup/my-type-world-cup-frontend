@@ -13,6 +13,7 @@ type Props = {};
 export default function ImageUpload({}: Props) {
   const [search, setSearch] = useState<string>("");
   const [imgSrc, setImgSrc] = useState("");
+  const [modal, setModal] = useState<boolean>(true);
   const [saveList, setSaveList] = useState<string[]>([]);
   const [onandoff, setOnandoff] = useState<boolean[]>([true, true]);
   const keyword = search.slice(1);
@@ -79,70 +80,72 @@ export default function ImageUpload({}: Props) {
   }
 
   return (
-    <section className=" flex flex-col mx-8 text-lg">
-      <div className="flex justify-between">
-        <div className="flex w-full   mt-4 sm:mt-8 p-2">
-          <h1 className=" sm:text-xl">검색 목록</h1>
-          <Image
-            src="/icon/onandoff.svg"
-            alt="Login"
-            className="cursor-pointer ml-2"
-            width={18}
-            height={18}
-            priority
-            style={{
-              transform: onandoff[1] ? "rotate(-90deg)" : "rotate(0deg)",
-              transition: "all 0.3s ease-in-out",
-            }}
-            onClick={() => {
-              setOnandoff((el) => [el[0], !el[1]]);
-            }}
-          />
+    <>
+      <section className=" flex flex-col mx-8 text-lg relative">
+        <div className="flex justify-between">
+          <div className="flex w-full   mt-4 sm:mt-8 p-2">
+            <h1 className=" sm:text-xl">검색 목록</h1>
+            <Image
+              src="/icon/onandoff.svg"
+              alt="Login"
+              className="cursor-pointer ml-2"
+              width={18}
+              height={18}
+              priority
+              style={{
+                transform: onandoff[1] ? "rotate(-90deg)" : "rotate(0deg)",
+                transition: "all 0.3s ease-in-out",
+              }}
+              onClick={() => {
+                setOnandoff((el) => [el[0], !el[1]]);
+              }}
+            />
+          </div>
         </div>
-      </div>
-      <div className=" mb-4 p-2">
-        <SearchBar setSearch={setSearch} />
-      </div>
-      <SearchImage
-        data={searchData ? searchData : null}
-        setSize={setSize}
-        setImgSrc={setImgSrc}
-        keyword={keyword}
-        onandoff={onandoff[1]}
-      />
-      <h1 className="mt-4 sm:text-xl">이미지 업로드</h1>
-      <input type="file" onChange={onSelectFile} className="mt-4" />
-
-      <ImageEditor
-        imgSrc={imgSrc}
-        setImgSrc={setImgSrc}
-        setSaveList={setSaveList}
-      />
-      <div className="">
-        <div className=" flex  p-2">
-          <label className="sm:text-xl">이미지 업로드</label>
-          <Image
-            src="/icon/onandoff.svg"
-            alt="Login"
-            className="cursor-pointer ml-2"
-            width={18}
-            height={18}
-            priority
-            style={{
-              transform: onandoff[0] ? "rotate(-90deg)" : "rotate(0deg)",
-              transition: "all 0.3s ease-in-out",
-            }}
-            onClick={() => {
-              setOnandoff((el) => [!el[0], el[1]]);
-            }}
-          />
+        <div className=" mb-4 p-2">
+          <SearchBar setSearch={setSearch} />
         </div>
+        <SearchImage
+          data={searchData ? searchData : null}
+          setSize={setSize}
+          setImgSrc={setImgSrc}
+          keyword={keyword}
+          onandoff={onandoff[1]}
+        />
+        <h1 className="mt-4 sm:text-xl">이미지 업로드</h1>
+        <input type="file" onChange={onSelectFile} className="mt-4" />
 
-        <SaveList onandoff={onandoff[0]} />
-      </div>
-      <button className="bg-main rounded-md text-white w-full h-12 mt-4 mb-2">
-        최종 확인 하기
-      </button>
-    </section>
+        <ImageEditor
+          imgSrc={imgSrc}
+          setImgSrc={setImgSrc}
+          setSaveList={setSaveList}
+        />
+        <div className="">
+          <div className=" flex  p-2">
+            <label className="sm:text-xl">이미지 업로드</label>
+            <Image
+              src="/icon/onandoff.svg"
+              alt="Login"
+              className="cursor-pointer ml-2"
+              width={18}
+              height={18}
+              priority
+              style={{
+                transform: onandoff[0] ? "rotate(-90deg)" : "rotate(0deg)",
+                transition: "all 0.3s ease-in-out",
+              }}
+              onClick={() => {
+                setOnandoff((el) => [!el[0], el[1]]);
+              }}
+            />
+          </div>
+
+          <SaveList onandoff={onandoff[0]} />
+        </div>
+        <button className="bg-main rounded-md text-white w-full h-12 mt-4 mb-2 hover:scale-110">
+          최종 확인 하기
+        </button>
+      </section>
+    </>
   );
 }
