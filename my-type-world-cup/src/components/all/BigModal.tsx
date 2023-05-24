@@ -15,6 +15,7 @@ const BigModal = ({
   uploadHandler: (image: string) => void;
   loading: boolean;
 }) => {
+  console.log("ggggg", !!img);
   return (
     <div
       className={
@@ -41,7 +42,7 @@ const BigModal = ({
           transition: "opacity 0.3s ease-out",
         }}
       >
-        {loading ? (
+        {!!img && loading ? (
           <>
             <Image
               src={loadingGif}
@@ -53,7 +54,7 @@ const BigModal = ({
           </>
         ) : (
           <Image
-            src={img}
+            src={img || loadingGif}
             alt={`choiceImage`}
             width={200}
             height={200}
