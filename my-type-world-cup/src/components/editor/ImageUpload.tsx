@@ -1,6 +1,6 @@
 import { fetcher } from "@/lib/Helper";
 import { BACK_URL } from "@/lib/config";
-import type { Search_Image } from "@/type/Types";
+import type { Post_res, Search_Image } from "@/type/Types";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
@@ -8,12 +8,15 @@ import SearchBar from "../main/SearchBar";
 import ImageEditor from "./ImageEditor";
 import SaveList from "./SaveList";
 import SearchImage from "./SearchImages";
-type Props = {};
 
-export default function ImageUpload({}: Props) {
+type Props = {
+  saveWorldcup: Post_res | null;
+};
+
+export default function ImageUpload({ saveWorldcup }: Props) {
   const [search, setSearch] = useState<string>("");
   const [imgSrc, setImgSrc] = useState("");
-
+  console.log(saveWorldcup);
   const [saveList, setSaveList] = useState<string[]>([]);
   const [onandoff, setOnandoff] = useState<boolean[]>([true, true]);
   const keyword = search.slice(1);

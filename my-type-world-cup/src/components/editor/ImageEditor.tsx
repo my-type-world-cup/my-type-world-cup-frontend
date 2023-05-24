@@ -1,17 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
-
+import { blobToServer } from "@/lib/editor/base64";
+import type { imgbb_result } from "@/type/Types";
 import Image from "next/image";
+import React, { useEffect, useRef, useState } from "react";
 import ReactCrop, {
   Crop,
   PixelCrop,
   centerCrop,
   makeAspectCrop,
 } from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
 import { canvasPreview } from "../../lib/editor/canvasPreview";
 import { useDebounceEffect } from "../../lib/editor/useDebounceEffect";
-
-import "react-image-crop/dist/ReactCrop.css";
-
+import BigModal from "../all/BigModal";
 // 이것은 % 비율의 aspect crop을 만들고 중앙 정렬하는 방법을 보여주기 위한 것입니다.
 // 이것은 조금 더 까다로우므로 몇 가지 도우미 함수를 사용합니다.
 
@@ -44,8 +44,11 @@ type Props = {
   setSaveList: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-export default function ImageEditor({ imgSrc, setImgSrc }: Props) {
+export default function ImageEditor({ imgSrc, setImgSrc, setSaveList }: Props) {
   // const [imgSrc, setImgSrc] = useState("");
+  const [modal, setModal] = useState<boolean>(false);
+  const [img, setImg] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const hiddenAnchorRef = useRef<HTMLAnchorElement>(null);
@@ -83,6 +86,33 @@ export default function ImageEditor({ imgSrc, setImgSrc }: Props) {
     }
   }
 
+  const uploadHandler = async (image: string) => {
+    try {
+      setLoading((el) => !el);
+      // await fetch(image)
+      //   .then((response) => response.blob())
+      //   .then((blob) => {
+      //     // Use the image blob as needed
+      //     console.log(blob);
+      //     // Further processing with the blob (e.g., display or save)
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error fetching image:", error);
+      //   });
+
+      const response: imgbb_result = await blobToServer(image);
+      setSaveList((prev) => [response.data.image.url, ...prev]);
+      //tumbㄷ 추가
+      setImgSrc("");
+      console.log("짠");
+      setModal(!modal); //모달 제거
+      setLoading((el) => !el);
+    } catch (error) {
+      // 에러 처리를 위한 로직 추가
+      console.error(error);
+    }
+  };
+
   function onDownloadCropClick() {
     if (!previewCanvasRef.current) {
       throw new Error("Crop canvas does not exist");
@@ -96,9 +126,12 @@ export default function ImageEditor({ imgSrc, setImgSrc }: Props) {
         URL.revokeObjectURL(blobUrlRef.current);
       }
       blobUrlRef.current = URL.createObjectURL(blob);
-
-      hiddenAnchorRef.current!.href = blobUrlRef.current;
-      hiddenAnchorRef.current!.click();
+      setImg(blobUrlRef.current);
+      setModal(!modal);
+      // setSaveList((prev) => [blobUrlRef.current, ...prev]); //convert할 것
+      // hiddenAnchorRef.current!.href = blobUrlRef.current;
+      // hiddenAnchorRef.current!.click();
+      // console.log(blobUrlRef.current);
     });
   }
 
@@ -235,7 +268,7 @@ export default function ImageEditor({ imgSrc, setImgSrc }: Props) {
           />
         </ReactCrop>
       )}
-      {!!completedCrop && (
+      {!!completedCrop && !!imgSrc && (
         <>
           <div className="">
             <canvas
@@ -270,6 +303,14 @@ export default function ImageEditor({ imgSrc, setImgSrc }: Props) {
           </div>
         </>
       )}
+      <BigModal
+        message="이미지를 선택하시겠습니까?"
+        isCopied={modal}
+        setIsCopied={setModal}
+        img={img}
+        uploadHandler={uploadHandler}
+        loading={loading}
+      />
     </div>
   );
 }
