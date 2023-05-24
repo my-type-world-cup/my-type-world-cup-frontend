@@ -7,6 +7,7 @@ const BigModal = ({
   img,
   uploadHandler,
   loading,
+  setLoading,
 }: {
   setIsCopied: React.Dispatch<React.SetStateAction<boolean>>;
   message: string;
@@ -14,8 +15,8 @@ const BigModal = ({
   img: string;
   uploadHandler: (image: string) => void;
   loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  console.log("ggggg", !!img);
   return (
     <div
       className={
@@ -87,7 +88,10 @@ const BigModal = ({
             <div className="flex gap-4 text-white">
               <button
                 className=" hover:scale-125 hover:text-lightBlue"
-                onClick={() => setIsCopied(false)}
+                onClick={() => {
+                  setIsCopied(false);
+                  setLoading(false);
+                }}
               >
                 나가기
               </button>
