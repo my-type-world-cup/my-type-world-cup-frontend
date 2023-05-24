@@ -60,10 +60,6 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
     } else {
       setMessage("로그인을 해주세요");
       setIsCopied(true);
-
-      setTimeout(() => {
-        setIsCopied(false);
-      }, 2000);
     }
   };
 
