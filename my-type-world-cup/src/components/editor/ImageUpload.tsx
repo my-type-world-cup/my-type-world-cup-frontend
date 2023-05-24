@@ -13,7 +13,7 @@ type Props = {};
 export default function ImageUpload({}: Props) {
   const [search, setSearch] = useState<string>("");
   const [imgSrc, setImgSrc] = useState("");
-  const [modal, setModal] = useState<boolean>(true);
+
   const [saveList, setSaveList] = useState<string[]>([]);
   const [onandoff, setOnandoff] = useState<boolean[]>([true, true]);
   const keyword = search.slice(1);
@@ -30,6 +30,7 @@ export default function ImageUpload({}: Props) {
     setSize(1);
   }, [keyword, setSize]);
   console.log(size);
+  console.log(saveList);
   // useEffect(() => {
   //   if (!imgSrc) return;
   // const formData = new FormData();//외부이미지 우리꺼로 바꿔주기
@@ -81,7 +82,7 @@ export default function ImageUpload({}: Props) {
 
   return (
     <>
-      <section className=" flex flex-col mx-8 text-lg relative">
+      <section className=" flex flex-col mx-8 text-lg">
         <div className="flex justify-between">
           <div className="flex w-full   mt-4 sm:mt-8 p-2">
             <h1 className=" sm:text-xl">검색 목록</h1>
@@ -140,7 +141,7 @@ export default function ImageUpload({}: Props) {
             />
           </div>
 
-          <SaveList onandoff={onandoff[0]} />
+          <SaveList onandoff={onandoff[0]} saveList={saveList} />
         </div>
         <button className="bg-main rounded-md text-white w-full h-12 mt-4 mb-2 hover:scale-110">
           최종 확인 하기

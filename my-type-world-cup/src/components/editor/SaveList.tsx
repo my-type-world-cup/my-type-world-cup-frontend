@@ -1,8 +1,10 @@
+import Image from "next/image";
 type Props = {
   onandoff: boolean;
+  saveList: string[];
 };
 
-export default function SaveList({ onandoff }: Props) {
+export default function SaveList({ onandoff, saveList }: Props) {
   return (
     <div
       style={{
@@ -13,29 +15,28 @@ export default function SaveList({ onandoff }: Props) {
     >
       <section
         className={
-          false
-            ? "overflow-scroll bg-white px-2 py-1"
+          saveList.length > 0
+            ? "overflow-scroll bg-white h-48"
             : " bg-white border border-hr rounded px-2 py-1 mb-4 h-36 text-gray"
         }
       >
         <div className="flex w-fit bg-white">
-          {false ? (
-            <div
-            //   key={index}
-            //   className="w-32 h-60 flex items-center mr-2"
-            //   onClick={() => uploadHandler(imageUrl)}
-            >
-              {/* <Image
-                src={imageUrl}
-                alt={`Image ${index}`}
-                width={200}
-                height={200}
-                className="cursor-pointer"
-                onError={handleImageError}
-              /> */}
-            </div>
+          {saveList ? (
+            saveList.map((item, index) => (
+              <div key={index} className="w-32 h-36 flex items-center mr-2">
+                <Image
+                  src={item}
+                  alt={`Image ${index}`}
+                  width={200}
+                  height={200}
+                  className="cursor-pointer"
+                />
+              </div>
+            ))
           ) : (
-            <div className="bg-white">사진을 저장해주세요.</div>
+            <div className="bg-white h-44 text-gray ">
+              저장된 이미지가 없습니다.
+            </div>
           )}
         </div>
       </section>

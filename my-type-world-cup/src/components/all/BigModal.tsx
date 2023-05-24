@@ -19,12 +19,12 @@ const BigModal = ({
     <div
       className={
         isCopied
-          ? "fixed top-0 left-0  w-full h-full z-50 flex justify-center items-center pointer-events-auto"
-          : "fixed top-0 left-0  w-full h-full z-50 flex justify-center items-center pointer-events-none"
+          ? "absolute left-[0px] top-0 w-full h-full z-50 flex justify-center items-center pointer-events-auto"
+          : "absolute left-[0px] top-0 w-full h-full z-50 flex justify-center items-center pointer-events-none"
       }
     >
       <div
-        className="fixed w-full h-full bg-black opacity-50"
+        className="absolute w-full h-full bg-black opacity-50"
         style={{
           opacity: isCopied ? 0.5 : 0,
           transition: "opacity 0.3s ease-out",
@@ -35,7 +35,7 @@ const BigModal = ({
       />
 
       <div
-        className="fixed left-50% lg:right-[36%] bg-main rounded-xl p-4 pt-6 z-50 flex justify-center items-center flex-col"
+        className="fixed top-[25%] bg-main rounded-xl p-4 pt-6 z-50 flex justify-center items-center flex-col"
         style={{
           opacity: isCopied ? 1 : 0,
           transition: "opacity 0.3s ease-out",
@@ -80,15 +80,15 @@ const BigModal = ({
           </>
         ) : (
           <>
-            <p className="p-4 text-white">
-              고화질 사진은 시간이 걸릴 수도 있습니다.
+            <p className="p-4 mt-8 text-white">
+              고화질 사진은 1~2분 소요됩니다
             </p>
             <div className="flex gap-4 text-white">
               <button
                 className=" hover:scale-125 hover:text-lightBlue"
                 onClick={() => setIsCopied(false)}
               >
-                취소하기
+                나가기
               </button>
             </div>
           </>
