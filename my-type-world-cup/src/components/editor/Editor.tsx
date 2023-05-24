@@ -3,9 +3,12 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { accessTokenState, postWorldcup } from "../../lib/atom/atom";
 import type { Post_req, Post_res } from "../../type/Types";
-interface EditorProps {}
+import type { Step } from "./TabButton";
+interface EditorProps {
+  setIsWord: React.Dispatch<React.SetStateAction<Step>>;
+}
 
-const Editor = ({}: EditorProps) => {
+const Editor = ({ setIsWord }: EditorProps) => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [isPublic, setIsPublic] = useState<boolean>(true);
@@ -18,15 +21,19 @@ const Editor = ({}: EditorProps) => {
   }, [isPublic]);
 
   const handleSave = () => {
-    if (accessToken !== null) {
+    if (accessToken !== null && !!title && !!description) {
       const worldcup: Post_req = {
         title: title,
         description: description,
         password: password ? password : null,
       };
+      setTitle("");
+      setDescription("");
+      setPassword(null);
       post_worldcup(accessToken!, worldcup!).then((res) => {
         setWorldcup(res);
         console.log(res);
+        setIsWord("2");
       });
     }
   };
@@ -61,7 +68,7 @@ const Editor = ({}: EditorProps) => {
         설명
       </label>
       <textarea
-        className="border-[1px] border-main mt-1 outline-none"
+        className="border-[1px] border-main mt-1 outline-none p-2"
         value={description}
         onChange={(event) => setDescription(event.target.value)}
         rows={3}
