@@ -103,15 +103,17 @@ type Comment_list = {
   pageInfo: Comment_list_pageInfo;
 };
 
-type Post_worldcup = {
+type Post_req = {
   title: string;
   description: string;
   password: string | null;
-  candidatePostDtos: Array<{
-    name: string;
-    image: string;
-    thumb: string;
-  }>;
+};
+type Post_res = {
+  id: number;
+  title: string;
+  description: string;
+  password: string | null;
+  memberId: number;
 };
 
 type Search_Image = {
@@ -124,6 +126,13 @@ type Search_Image = {
     totalPages: number;
     last: boolean;
   };
+};
+
+type Save_data = {
+  name: string;
+  image: string;
+  thumb: string;
+  worldCupId: number;
 };
 
 type imgbb_result = {
@@ -178,7 +187,8 @@ export type {
   MainWorldcup,
   Candidate,
   PageInfo,
-  Post_worldcup,
+  Post_req,
+  Post_res,
   IngameModalData,
   result_data,
   imgbb_result,
