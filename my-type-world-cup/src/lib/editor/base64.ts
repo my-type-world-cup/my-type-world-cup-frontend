@@ -54,6 +54,7 @@ function blobToServer(imgSrc: string) {
     .then((response) => response.blob())
     .then((blob) => {
       const formData = new FormData();
+
       formData.append("image", blob);
       formData.append("key", IMGBB_KEY);
 
@@ -73,4 +74,27 @@ function blobToServer(imgSrc: string) {
     });
 }
 
-export { convertToBase64, uploadImageToServer, blobToServer };
+const deleteImage = async (deleteUrl: string) => {
+  try {
+    const formData = new FormData();
+
+    formData.append("key", IMGBB_KEY);
+    const response = await fetch(deleteUrl, {
+      method: "DELETE",
+      body: formData,
+    });
+
+    if (response.ok) {
+      console.log("Image deleted successfully");
+      // 이미지가 성공적으로 삭제되었을 때 실행할 코드 작성
+    } else {
+      console.error("Failed to delete image:", response.status);
+      // 이미지 삭제 실패시 실행할 코드 작성
+    }
+  } catch (error) {
+    console.error("Failed to delete image:", error);
+    // 이미지 삭제 실패시 실행할 코드 작성
+  }
+};
+
+export { deleteImage, convertToBase64, uploadImageToServer, blobToServer };

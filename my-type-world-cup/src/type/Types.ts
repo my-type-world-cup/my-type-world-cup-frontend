@@ -173,6 +173,7 @@ type imgbb_result = {
 };
 
 export type {
+  Save_data,
   Search_Image,
   Comment_list,
   Comment_list_data,
