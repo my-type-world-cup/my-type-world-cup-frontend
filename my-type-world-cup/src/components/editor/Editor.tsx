@@ -1,28 +1,34 @@
+import { post_worldcup } from "@/api/user";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { postWorldcup } from "../../lib/atom/atom";
-import type { Post_worldcup } from "../../type/Types";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { accessTokenState, postWorldcup } from "../../lib/atom/atom";
+import type { Post_req, Post_res } from "../../type/Types";
 interface EditorProps {}
 
 const Editor = ({}: EditorProps) => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [isPublic, setIsPublic] = useState<boolean>(false);
+  const [isPublic, setIsPublic] = useState<boolean>(true);
   const [password, setPassword] = useState<string | null>(null);
-  const [worldcup, setWorldcup] = useRecoilState<Post_worldcup | null>(
-    postWorldcup
-  );
+  const [worldcup, setWorldcup] = useRecoilState<Post_res | null>(postWorldcup);
+  const accessToken = useRecoilValue(accessTokenState);
+  console.log(worldcup, accessToken, "worldcup");
   useEffect(() => {
     setPassword(null);
   }, [isPublic]);
 
   const handleSave = () => {
-    setWorldcup((el) => ({
-      ...el!,
-      title: title,
-      description: description,
-      password: password ? password : null,
-    }));
+    if (accessToken !== null) {
+      const worldcup: Post_req = {
+        title: title,
+        description: description,
+        password: password ? password : null,
+      };
+      post_worldcup(accessToken!, worldcup!).then((res) => {
+        setWorldcup(res);
+        console.log(res);
+      });
+    }
   };
 
   const handlePublicChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -33,6 +39,7 @@ const Editor = ({}: EditorProps) => {
     setTitle("");
     setDescription("");
     setPassword(null);
+    setWorldcup(null);
   };
 
   return (
