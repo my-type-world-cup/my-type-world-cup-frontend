@@ -1,6 +1,6 @@
 import { fetcher } from "@/lib/Helper";
 import { BACK_URL } from "@/lib/config";
-import type { Post_res, Search_Image } from "@/type/Types";
+import type { Post_res, Save_data, Search_Image } from "@/type/Types";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
@@ -8,16 +8,23 @@ import SearchBar from "../main/SearchBar";
 import ImageEditor from "./ImageEditor";
 import SaveList from "./SaveList";
 import SearchImage from "./SearchImages";
+import type { Step } from "./TabButton";
 
 type Props = {
   saveWorldcup: Post_res | null;
+  setIsWord: React.Dispatch<React.SetStateAction<Step>>;
+  accessToken: string | null;
 };
 
-export default function ImageUpload({ saveWorldcup }: Props) {
+export default function ImageUpload({
+  saveWorldcup,
+  setIsWord,
+  accessToken,
+}: Props) {
   const [search, setSearch] = useState<string>("");
   const [imgSrc, setImgSrc] = useState("");
-  console.log(saveWorldcup);
-  const [saveList, setSaveList] = useState<string[]>([]);
+  console.log(saveWorldcup?.id, "이거야이거");
+  const [saveList, setSaveList] = useState<Save_data[]>([]);
   const [onandoff, setOnandoff] = useState<boolean[]>([true, true]);
   const keyword = search.slice(1);
   const { data, mutate, size, setSize, isValidating, isLoading } =
@@ -34,41 +41,13 @@ export default function ImageUpload({ saveWorldcup }: Props) {
   }, [keyword, setSize]);
   console.log(size);
   console.log(saveList);
-  // useEffect(() => {
-  //   if (!imgSrc) return;
-  // const formData = new FormData();//외부이미지 우리꺼로 바꿔주기
-  // formData.append("image", imgSrc);
-  // formData.append("key", IMGBB_KEY);
 
-  // fetch(IMGBB_URL, {
-  //   method: "POST",
-  //   body: formData,
-  // })
-  //   .then((res) => res.json())
-  //   .then((res) => console.log(res))
-  //   .catch((err) => console.error(err));
-
-  // convertToBase64(
-  //   "https://i.ibb.co/pfqH7sS/0000600297-001-20230309163602830.jpg"
-  // ).then((res) => setImgSrc(res));
-
-  // fetch(imgSrc)//이미지 보내기
-  //   .then((response) => response.blob())
-  //   .then((blob) => {
-  //     // Blob 객체를 사용하여 API 요청 보내기
-  //     const formData = new FormData();
-  //     formData.append("image", blob);
-  //     formData.append("key", IMGBB_KEY);
-
-  //     fetch(IMGBB_URL, {
-  //       method: "POST",
-  //       body: formData,
-  //     })
-  //       .then((res) => res.json())
-  //       .then((res) => console.log(res))
-  //       .catch((err) => console.error(err));
-  //   });
-  // }, [imgSrc]);
+  useEffect(() => {
+    if (!saveWorldcup) {
+      setIsWord("1");
+    }
+    // deleteImage("https://ibb.co/FVM8BWM/8a86410147f09597e85d2dd8f5e60e2a");
+  }, [saveWorldcup, setIsWord]);
 
   function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
@@ -120,9 +99,11 @@ export default function ImageUpload({ saveWorldcup }: Props) {
         <input type="file" onChange={onSelectFile} className="mt-4" />
 
         <ImageEditor
+          accessToken={accessToken}
           imgSrc={imgSrc}
           setImgSrc={setImgSrc}
           setSaveList={setSaveList}
+          id={saveWorldcup?.id}
         />
         <div className="">
           <div className=" flex  p-2">

@@ -1,17 +1,19 @@
+import { post_candidates } from "@/api/user";
 import { blobToServer } from "@/lib/editor/base64";
-import type { imgbb_result } from "@/type/Types";
+import type { imgbb_result, Save_data } from "@/type/Types";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import ReactCrop, {
-  Crop,
-  PixelCrop,
   centerCrop,
+  Crop,
   makeAspectCrop,
+  PixelCrop,
 } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { canvasPreview } from "../../lib/editor/canvasPreview";
 import { useDebounceEffect } from "../../lib/editor/useDebounceEffect";
 import BigModal from "../all/BigModal";
+import ShareModal from "../all/ShareModal";
 // 이것은 % 비율의 aspect crop을 만들고 중앙 정렬하는 방법을 보여주기 위한 것입니다.
 // 이것은 조금 더 까다로우므로 몇 가지 도우미 함수를 사용합니다.
 
@@ -41,10 +43,18 @@ function centerAspectCrop(
 type Props = {
   imgSrc: string;
   setImgSrc: React.Dispatch<React.SetStateAction<string>>;
-  setSaveList: React.Dispatch<React.SetStateAction<string[]>>;
+  setSaveList: React.Dispatch<React.SetStateAction<Save_data[]>>;
+  id: number | undefined;
+  accessToken: string | null;
 };
 
-export default function ImageEditor({ imgSrc, setImgSrc, setSaveList }: Props) {
+export default function ImageEditor({
+  id,
+  imgSrc,
+  setImgSrc,
+  setSaveList,
+  accessToken,
+}: Props) {
   // const [imgSrc, setImgSrc] = useState("");
   const [modal, setModal] = useState<boolean>(false);
   const [img, setImg] = useState<string>("");
@@ -52,12 +62,16 @@ export default function ImageEditor({ imgSrc, setImgSrc, setSaveList }: Props) {
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const hiddenAnchorRef = useRef<HTMLAnchorElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
   const blobUrlRef = useRef("");
   const [crop, setCrop] = useState<Crop>();
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
   const [scale, setScale] = useState(1);
   const [rotate, setRotate] = useState(0);
   const [aspect, setAspect] = useState<number | undefined>(1 / 1);
+  const [modalMessage, setModalMessage] =
+    useState<string>("이름을 작성해주세요");
+  const [isCopied, setIsCopied] = useState<boolean>(false);
 
   useEffect(() => {
     setScale(1);
@@ -76,7 +90,12 @@ export default function ImageEditor({ imgSrc, setImgSrc, setSaveList }: Props) {
   //     });
   //   }
   // }
-
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const name = nameRef.current?.value;
+    console.log("Submitted name:", name);
+    // 여기에서 이름을 처리하거나 다른 작업을 수행합니다.
+  };
   //이미지 로드
   function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
     if (aspect) {
@@ -87,6 +106,7 @@ export default function ImageEditor({ imgSrc, setImgSrc, setSaveList }: Props) {
   }
 
   const uploadHandler = async (image: string) => {
+    //최종 저장
     try {
       setLoading((el) => !el);
       // await fetch(image)
@@ -101,10 +121,26 @@ export default function ImageEditor({ imgSrc, setImgSrc, setSaveList }: Props) {
       //   });
 
       const response: imgbb_result = await blobToServer(image);
-      setSaveList((prev) => [response.data.image.url, ...prev]);
+      const data: Save_data = {
+        name: nameRef.current?.value || "익명",
+        image: response.data.image.url,
+        thumb: response.data.thumb.url,
+        worldCupId: id || 0,
+      };
+      if (!accessToken) throw new Error("accessToken is null");
+      post_candidates(accessToken, data).then((res) => {
+        console.log(res);
+      });
+      setSaveList((prev) => [data, ...prev]);
       //tumbㄷ 추가
+      const name = nameRef.current?.value;
+      console.log("Submitted name:", name);
+      if (nameRef.current) {
+        nameRef.current.value = ""; // 값 초기화
+      }
+
       setImgSrc("");
-      console.log("짠");
+
       setModal(!modal); //모달 제거
       setLoading((el) => !el);
     } catch (error) {
@@ -114,25 +150,32 @@ export default function ImageEditor({ imgSrc, setImgSrc, setSaveList }: Props) {
   };
 
   function onDownloadCropClick() {
-    if (!previewCanvasRef.current) {
-      throw new Error("Crop canvas does not exist");
-    }
+    //저장하기 버튼
+    if (nameRef.current?.value !== "") {
+      console.log(nameRef.current?.value);
+      if (!previewCanvasRef.current) {
+        throw new Error("Crop canvas does not exist");
+      }
 
-    previewCanvasRef.current.toBlob((blob) => {
-      if (!blob) {
-        throw new Error("Failed to create blob");
-      }
-      if (blobUrlRef.current) {
-        URL.revokeObjectURL(blobUrlRef.current);
-      }
-      blobUrlRef.current = URL.createObjectURL(blob);
-      setImg(blobUrlRef.current);
-      setModal(!modal);
-      // setSaveList((prev) => [blobUrlRef.current, ...prev]); //convert할 것
-      // hiddenAnchorRef.current!.href = blobUrlRef.current;
-      // hiddenAnchorRef.current!.click();
-      // console.log(blobUrlRef.current);
-    });
+      previewCanvasRef.current.toBlob((blob) => {
+        if (!blob) {
+          throw new Error("Failed to create blob");
+        }
+        if (blobUrlRef.current) {
+          URL.revokeObjectURL(blobUrlRef.current);
+        }
+        blobUrlRef.current = URL.createObjectURL(blob);
+        setImg(blobUrlRef.current);
+        setModal(!modal);
+        // setSaveList((prev) => [blobUrlRef.current, ...prev]); //convert할 것
+        // hiddenAnchorRef.current!.href = blobUrlRef.current;
+        // hiddenAnchorRef.current!.click();
+        // console.log(blobUrlRef.current);
+      });
+    } else {
+      setModalMessage("이름을 작성해주세요");
+      setIsCopied(!isCopied);
+    }
   }
 
   useDebounceEffect(
@@ -169,7 +212,7 @@ export default function ImageEditor({ imgSrc, setImgSrc, setSaveList }: Props) {
   // }
 
   return (
-    <div className="mt-10 mb-4">
+    <div className="mt-4 mb-4">
       <div className="Crop-Controls">
         {!!imgSrc && (
           <div className="mt-4 flex flex-row text-gray">
@@ -283,6 +326,12 @@ export default function ImageEditor({ imgSrc, setImgSrc, setSaveList }: Props) {
             />
           </div>
           <div>
+            <h3 className="text-xl my-2">이름 입력하기</h3>
+            <input
+              type="text"
+              ref={nameRef}
+              className="w-full py-2 px-4 border border-gray rounded-md focus:outline-none focus:ring-2"
+            />
             <button
               onClick={onDownloadCropClick}
               className="bg-main rounded-md hover:scale-110 text-white w-full h-12 mt-4 mb-2"
@@ -303,13 +352,20 @@ export default function ImageEditor({ imgSrc, setImgSrc, setSaveList }: Props) {
           </div>
         </>
       )}
+
       <BigModal
         message="이미지를 선택하시겠습니까?"
         isCopied={modal}
         setIsCopied={setModal}
+        setLoading={setLoading}
         img={img}
         uploadHandler={uploadHandler}
         loading={loading}
+      />
+      <ShareModal
+        message={modalMessage}
+        isCopied={isCopied}
+        setIsCopied={setIsCopied}
       />
     </div>
   );
