@@ -29,8 +29,10 @@ async function convertToBase64(url: string): Promise<string> {
 }
 function uploadImageToServer(imgSrc: string) {
   const formData = new FormData();
+  const expiration = "60"; // 1 hour expiration time
   formData.append("image", imgSrc);
   formData.append("key", IMGBB_KEY);
+  formData.append("expiration", expiration);
 
   return fetch(IMGBB_URL, {
     method: "POST",
