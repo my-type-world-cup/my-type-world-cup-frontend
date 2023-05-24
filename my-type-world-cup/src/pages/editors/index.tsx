@@ -22,9 +22,15 @@ const WorldCupEditor = () => {
   const content = (() => {
     switch (isWord) {
       case "1":
-        return <Editor />;
+        return <Editor setIsWord={setIsWord} />;
       case "2":
-        return <ImageUpload saveWorldcup={saveWorldcup} />;
+        return (
+          <ImageUpload
+            accessToken={accessToken}
+            saveWorldcup={saveWorldcup}
+            setIsWord={setIsWord}
+          />
+        );
       default:
         return null;
     }

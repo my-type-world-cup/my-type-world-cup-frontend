@@ -1,7 +1,8 @@
+import type { Save_data } from "@/type/Types";
 import Image from "next/image";
 type Props = {
   onandoff: boolean;
-  saveList: string[];
+  saveList: Save_data[];
 };
 
 export default function SaveList({ onandoff, saveList }: Props) {
@@ -16,21 +17,24 @@ export default function SaveList({ onandoff, saveList }: Props) {
       <section
         className={
           saveList.length > 0
-            ? "overflow-scroll bg-white h-48"
+            ? "overflow-scroll bg-white h-48 border border-hr p-2 "
             : " bg-white border border-hr rounded px-2 py-1 mb-4 h-36 text-gray"
         }
       >
         <div className="flex w-fit bg-white">
           {saveList ? (
-            saveList.map((item, index) => (
-              <div key={index} className="w-32 h-36 flex items-center mr-2">
+            saveList.map((item: Save_data, index) => (
+              <div
+                key={index}
+                className="w-32 h-36 flex flex-col items-center mr-2"
+              >
                 <Image
-                  src={item}
+                  src={item.thumb}
                   alt={`Image ${index}`}
                   width={200}
                   height={200}
-                  className="cursor-pointer"
                 />
+                <span className="text-gray">{item.name}</span>
               </div>
             ))
           ) : (

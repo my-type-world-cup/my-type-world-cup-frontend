@@ -133,6 +133,7 @@ const SearchImages: React.FC<ImageListProps> = ({
           message="이미지를 선택하시겠습니까?"
           isCopied={modal}
           setIsCopied={setModal}
+          setLoading={setLoading}
           img={img}
           uploadHandler={uploadHandler}
           loading={loading}
