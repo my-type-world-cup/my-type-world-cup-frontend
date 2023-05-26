@@ -15,7 +15,7 @@ const Editor = ({ setIsWord }: EditorProps) => {
   const [password, setPassword] = useState<string | null>(null);
   const [worldcup, setWorldcup] = useRecoilState<Post_res | null>(postWorldcup);
   const accessToken = useRecoilValue(accessTokenState);
-  console.log(worldcup, accessToken, "worldcup");
+  console.log(worldcup, "worldcup");
   useEffect(() => {
     setPassword(null);
   }, [isPublic]);
@@ -27,14 +27,22 @@ const Editor = ({ setIsWord }: EditorProps) => {
         description: description,
         password: password ? password : null,
       };
-      setTitle("");
-      setDescription("");
-      setPassword(null);
-      post_worldcup(accessToken!, worldcup!).then((res) => {
-        setWorldcup(res);
-        console.log(res);
-        setIsWord("2");
-      });
+
+      post_worldcup(accessToken!, worldcup!)
+        .then((res) => {
+          setWorldcup(res);
+          console.log(res);
+          setTitle("");
+          setDescription("");
+          setPassword(null);
+          setIsWord("2");
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err === 401) {
+            console.log("로그인 해야해~");
+          }
+        });
     }
   };
 
