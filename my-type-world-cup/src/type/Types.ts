@@ -129,6 +129,7 @@ type Search_Image = {
 };
 
 type Save_data = {
+  id?: number;
   name: string;
   image: string;
   thumb: string;

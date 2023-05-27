@@ -6,6 +6,7 @@ type Props = {
 };
 
 export default function SaveList({ onandoff, saveList }: Props) {
+  console.log(saveList, "saveList");
   return (
     <div
       style={{

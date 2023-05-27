@@ -1,8 +1,10 @@
 import { fetcher } from "@/lib/Helper";
+import { saveWorldcups } from "@/lib/atom/atom";
 import { BACK_URL } from "@/lib/config";
 import type { Post_res, Save_data, Search_Image } from "@/type/Types";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import useSWRInfinite from "swr/infinite";
 import SearchBar from "../main/SearchBar";
 import ImageEditor from "./ImageEditor";
@@ -24,7 +26,7 @@ export default function ImageUpload({
   const [search, setSearch] = useState<string>("");
   const [imgSrc, setImgSrc] = useState("");
 
-  const [saveList, setSaveList] = useState<Save_data[]>([]);
+  const [saveList, setSaveList] = useRecoilState<Save_data[]>(saveWorldcups);
   const [onandoff, setOnandoff] = useState<boolean[]>([true, true]);
   const keyword = search.slice(1);
   const { data, mutate, size, setSize, isValidating, isLoading } =
@@ -35,6 +37,7 @@ export default function ImageUpload({
       }
       return `${BACK_URL}/images?${keyword}&page=${index + 1}&size=20`;
     }, fetcher);
+  console.log(saveList, "saveList");
   const searchData: string[] = data ? data.map((v) => v.data).flat() : [];
   useEffect(() => {
     setSize(1);

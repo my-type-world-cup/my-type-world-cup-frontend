@@ -129,10 +129,16 @@ export default function ImageEditor({
       };
       console.log(data, "간다");
       if (!accessToken) throw new Error("accessToken is null");
+
       post_candidates(accessToken, data)
         .then((res) => {
-          console.log(res);
-          setSaveList((prev) => [data, ...prev]);
+          const save = {
+            id: res.id,
+            ...data,
+          };
+          console.log(save, "성공"); //수정해야함
+
+          setSaveList((prev) => [save, ...prev]);
           setImgSrc("");
 
           if (nameRef.current) {
@@ -140,7 +146,7 @@ export default function ImageEditor({
           }
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err, "실패");
           if (err === 401) {
             console.log(accessToken);
             post_refresh(accessToken!);

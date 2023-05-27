@@ -1,4 +1,4 @@
-import type { Post_res } from "@/type/Types";
+import type { Post_res, Save_data } from "@/type/Types";
 import { AtomEffect, atom } from "recoil";
 
 const sessionStorageEffect: <T>(key: string) => AtomEffect<T> =
@@ -41,4 +41,10 @@ export const postWorldcup = atom<Post_res | null>({
   key: "postWorldcup",
   default: null,
   effects: [sessionStorageEffect("post_worldcup")],
+});
+
+export const saveWorldcups = atom<Save_data[]>({
+  key: "save_worldcups",
+  default: [],
+  effects: [sessionStorageEffect("save_worldcups")],
 });
