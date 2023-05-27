@@ -14,6 +14,7 @@ async function fetchImage(url: string): Promise<string> {
     });
   } catch (error) {
     throw new Error("이미지를 가져오는 동안 오류가 발생했습니다: " + error);
+    //에러처리 필요함
   }
 }
 // URL을 Base64 인코딩된 이미지로 변환하기
@@ -27,9 +28,10 @@ async function convertToBase64(url: string): Promise<string> {
     throw error;
   }
 }
+
 function uploadImageToServer(imgSrc: string) {
   const formData = new FormData();
-  const expiration = "60"; // 1 hour expiration time
+  const expiration = "6000"; // 1 hour expiration time
   formData.append("image", imgSrc);
   formData.append("key", IMGBB_KEY);
   formData.append("expiration", expiration);

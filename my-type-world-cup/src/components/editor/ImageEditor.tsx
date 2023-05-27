@@ -1,13 +1,13 @@
-import { post_candidates } from "@/api/user";
+import { post_candidates, post_refresh } from "@/api/user";
 import { blobToServer } from "@/lib/editor/base64";
-import type { imgbb_result, Save_data } from "@/type/Types";
+import type { Save_data, imgbb_result } from "@/type/Types";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import ReactCrop, {
-  centerCrop,
   Crop,
-  makeAspectCrop,
   PixelCrop,
+  centerCrop,
+  makeAspectCrop,
 } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { canvasPreview } from "../../lib/editor/canvasPreview";
@@ -93,7 +93,7 @@ export default function ImageEditor({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const name = nameRef.current?.value;
-    console.log("Submitted name:", name);
+
     // 여기에서 이름을 처리하거나 다른 작업을 수행합니다.
   };
   //이미지 로드
@@ -127,19 +127,29 @@ export default function ImageEditor({
         thumb: response.data.thumb.url,
         worldCupId: id || 0,
       };
+      console.log(data, "간다");
       if (!accessToken) throw new Error("accessToken is null");
-      post_candidates(accessToken, data).then((res) => {
-        console.log(res);
-      });
-      setSaveList((prev) => [data, ...prev]);
+      post_candidates(accessToken, data)
+        .then((res) => {
+          console.log(res);
+          setSaveList((prev) => [data, ...prev]);
+          setImgSrc("");
+
+          if (nameRef.current) {
+            nameRef.current.value = ""; // 값 초기화
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err === 401) {
+            console.log(accessToken);
+            post_refresh(accessToken!);
+            console.log("로그인 해야해~");
+          }
+        });
+
       //tumbㄷ 추가
       const name = nameRef.current?.value;
-      console.log("Submitted name:", name);
-      if (nameRef.current) {
-        nameRef.current.value = ""; // 값 초기화
-      }
-
-      setImgSrc("");
 
       setModal(!modal); //모달 제거
       setLoading((el) => !el);
@@ -152,7 +162,6 @@ export default function ImageEditor({
   function onDownloadCropClick() {
     //저장하기 버튼
     if (nameRef.current?.value !== "") {
-      console.log(nameRef.current?.value);
       if (!previewCanvasRef.current) {
         throw new Error("Crop canvas does not exist");
       }
