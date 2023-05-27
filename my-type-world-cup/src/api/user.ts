@@ -1,5 +1,6 @@
 import type { Post_req, Save_data } from "@/type/Types";
 import { BACK_URL } from "../lib/config";
+
 export async function fetchUserData(accessToken: string) {
   const response = await fetch(`${BACK_URL}/members`, {
     headers: {
@@ -28,6 +29,34 @@ export async function post_worldcup(accessToken: string, worldCup: Post_req) {
   try {
     const response = await fetch(`${BACK_URL}/worldcups`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(worldCup),
+    });
+
+    if (!response.ok) {
+      throw response.status;
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    // 에러 처리
+    console.log(error);
+    throw error; // 필요에 따라 예외를 다시 던지거나 특정 값을 반환할 수 있습니다.
+  }
+}
+
+export async function patch_worldcup(
+  accessToken: string,
+  worldCup: Post_req,
+  id: number
+) {
+  try {
+    const response = await fetch(`${BACK_URL}/worldcups/${id}`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
@@ -82,7 +111,6 @@ export async function post_refresh(accessToken: string) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify({}),
     });
     console.log(response);
     if (!response.ok) {

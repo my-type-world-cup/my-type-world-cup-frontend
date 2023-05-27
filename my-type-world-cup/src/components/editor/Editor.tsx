@@ -1,4 +1,4 @@
-import { post_refresh, post_worldcup } from "@/api/user";
+import { patch_worldcup, post_refresh, post_worldcup } from "@/api/user";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { accessTokenState, postWorldcup } from "../../lib/atom/atom";
@@ -35,28 +35,46 @@ const Editor = ({ setIsWord }: EditorProps) => {
       return;
     }
     if (accessToken !== null && !!title && !!description) {
-      const worldcup: Post_req = {
+      const post_body: Post_req = {
         title: title,
         description: description,
         password: password ? password : null,
       };
-
-      post_worldcup(accessToken!, worldcup!)
-        .then((res) => {
-          setWorldcup(res);
-          console.log(res);
-          setTitle("");
-          setDescription("");
-          setPassword(null);
-          setIsWord("2");
-        })
-        .catch((err) => {
-          console.log(err);
-          if (err === 401) {
-            post_refresh(accessToken!);
-            console.log("로그인 해야해~");
-          }
-        });
+      if (worldcup === null) {
+        post_worldcup(accessToken!, post_body!)
+          .then((res) => {
+            setWorldcup(res);
+            console.log(res);
+            setTitle("");
+            setDescription("");
+            setPassword(null);
+            setIsWord("2");
+          })
+          .catch((err) => {
+            console.log(err);
+            if (err === 401) {
+              post_refresh(accessToken!);
+              console.log("로그인 해야해~");
+            }
+          });
+      } else {
+        patch_worldcup(accessToken!, post_body!, worldcup!.id)
+          .then((res) => {
+            setWorldcup(res);
+            console.log(res);
+            setTitle("");
+            setDescription("");
+            setPassword(null);
+            setIsWord("2");
+          })
+          .catch((err) => {
+            console.log(err);
+            if (err === 401) {
+              post_refresh(accessToken!);
+              console.log("로그인 해야해~");
+            }
+          });
+      }
     }
   };
 
