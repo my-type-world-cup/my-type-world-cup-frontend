@@ -26,7 +26,7 @@ export async function patchMember(accessToken: string, nickname: string) {
 
 export async function post_worldcup(accessToken: string, worldCup: Post_req) {
   try {
-    const response = await fetch(`${BACK_URL}/candidates`, {
+    const response = await fetch(`${BACK_URL}/worldcups`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,15 +52,48 @@ export async function post_candidates(
   accessToken: string,
   candidates: Save_data
 ) {
-  const response = await fetch(`${BACK_URL}/worldcups`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify(candidates),
-  });
-  const data = await response.json();
+  try {
+    const response = await fetch(`${BACK_URL}/candidates`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(candidates),
+    });
+    if (!response.ok) {
+      throw response.status;
+    }
+    const data = await response.json();
 
-  return data;
+    return data;
+  } catch (error) {
+    // 에러 처리
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function post_refresh(accessToken: string) {
+  try {
+    const response = await fetch(`${BACK_URL}/auth/refresh`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({}),
+    });
+    console.log(response);
+    if (!response.ok) {
+      throw response.status;
+    }
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    // 에러 처리
+    console.log(error);
+    throw error;
+  }
 }
