@@ -40,7 +40,7 @@ const SearchImages: React.FC<ImageListProps> = ({
     setSize(1);
     scrollToStart();
   }, [keyword, setSize]);
-  console.log(loading, "loading");
+
   const handleImageError = (event: SyntheticEvent<HTMLImageElement, Event>) => {
     const target = event.target as HTMLImageElement;
     const parentElement = target.parentElement;
@@ -77,7 +77,7 @@ const SearchImages: React.FC<ImageListProps> = ({
 
       convertToBase64(response.data.image.url).then((base64) => {
         setImgSrc(base64);
-        console.log("짠");
+
         setModal(!modal);
         setLoading((el) => !el);
       });

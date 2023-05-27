@@ -23,7 +23,7 @@ export default function ImageUpload({
 }: Props) {
   const [search, setSearch] = useState<string>("");
   const [imgSrc, setImgSrc] = useState("");
-  console.log(saveWorldcup?.id, "이거야이거");
+
   const [saveList, setSaveList] = useState<Save_data[]>([]);
   const [onandoff, setOnandoff] = useState<boolean[]>([true, true]);
   const keyword = search.slice(1);
@@ -39,8 +39,6 @@ export default function ImageUpload({
   useEffect(() => {
     setSize(1);
   }, [keyword, setSize]);
-  console.log(size);
-  console.log(saveList);
 
   useEffect(() => {
     if (!saveWorldcup) {

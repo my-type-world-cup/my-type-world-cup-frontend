@@ -27,7 +27,6 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
     }
   }, [user]);
 
-  console.log(user, accessToken);
   useEffect(() => {
     const accessToken = router.query.access_token;
     if (accessToken) {
@@ -54,7 +53,6 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
   const alram = (word: string) => {
     if (isCopied) return;
     if (user?.nickname) {
-      console.log("하이");
       setIsOpen(false);
       router.push(`/${word}`);
     } else {
