@@ -21,7 +21,19 @@ const Editor = ({ setIsWord }: EditorProps) => {
     setPassword(null);
   }, [isPublic]);
 
+  useEffect(() => {
+    if (worldcup !== null) {
+      setTitle(worldcup.title);
+      setDescription(worldcup.description);
+      setIsPublic(worldcup.password === null);
+      setPassword(worldcup.password);
+    }
+  }, [worldcup]);
   const handleSave = () => {
+    if (!isPublic && password === null) {
+      setIsValid(false);
+      return;
+    }
     if (accessToken !== null && !!title && !!description) {
       const worldcup: Post_req = {
         title: title,
@@ -75,10 +87,12 @@ const Editor = ({ setIsWord }: EditorProps) => {
       className="sm:pt-20 mt-4 sm:mt-8 mx-8 text-lg flex flex-col -pb-20 h-screen"
       // onSubmit={handleSubmit}
     >
-      <label htmlFor="title">제목</label>
+      <label htmlFor="title" className="">
+        제목
+      </label>
       <input
         type="text"
-        className="border-b-[1px] border-main text-gray mt-1 pl-4"
+        className="border-b-[1px] border-main mt-1 pl-2"
         placeholder="이상형 월드컵의 제목을 입력해주세요"
         value={title}
         onChange={(event) => setTitle(event.target.value)}
