@@ -1,4 +1,4 @@
-import { post_worldcup } from "@/api/user";
+import { post_refresh, post_worldcup } from "@/api/user";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { accessTokenState, postWorldcup } from "../../lib/atom/atom";
@@ -15,6 +15,7 @@ const Editor = ({ setIsWord }: EditorProps) => {
   const [password, setPassword] = useState<string | null>(null);
   const [worldcup, setWorldcup] = useRecoilState<Post_res | null>(postWorldcup);
   const accessToken = useRecoilValue(accessTokenState);
+  const [isValid, setIsValid] = useState(true);
   console.log(worldcup, "worldcup");
   useEffect(() => {
     setPassword(null);
@@ -40,6 +41,7 @@ const Editor = ({ setIsWord }: EditorProps) => {
         .catch((err) => {
           console.log(err);
           if (err === 401) {
+            post_refresh(accessToken!);
             console.log("로그인 해야해~");
           }
         });
@@ -57,6 +59,17 @@ const Editor = ({ setIsWord }: EditorProps) => {
     setWorldcup(null);
   };
 
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const inputPassword = event.target.value;
+    // 숫자만 입력받도록 유효성 검사
+    if (inputPassword.length === 4) {
+      setPassword(inputPassword);
+      setIsValid(true); // 유효한 입력값인 경우 isValid를 true로 설정
+    } else {
+      setPassword(inputPassword);
+      setIsValid(false); // 유효하지 않은 입력값인 경우 isValid를 false로 설정
+    }
+  };
   return (
     <div
       className="sm:pt-20 mt-4 sm:mt-8 mx-8 text-lg flex flex-col -pb-20 h-screen"
@@ -91,10 +104,15 @@ const Editor = ({ setIsWord }: EditorProps) => {
             className="border-[1px] border-main text-gray mt-2 w-auto p-1 pl-4"
             maxLength={4}
             disabled={isPublic}
-            placeholder="비밀번호를 입력해주세요"
+            placeholder="비밀번호 4자리를 입력해주세요"
             value={password ? password : ""}
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={handlePasswordChange}
           />
+          {!isValid && (
+            <p className="text-error text-sm mt-1">
+              4자리 숫자를 입력해주세요.
+            </p>
+          )}
         </div>
       )}
       <div className="flex justify-around items-center mt-6">
