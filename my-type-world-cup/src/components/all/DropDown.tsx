@@ -68,7 +68,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
   return (
     <>
       <div
-        className=" bg-main shadow-lg w-3/4 h-screen z-50 absolute top-0 right-0 transition-transform duration-300"
+        className=" bg-main shadow-lg w-3/4 h-screen z-40 absolute top-0 right-0 transition-transform duration-300"
         style={{
           opacity: isOpen ? "1" : "0",
           position: "absolute",

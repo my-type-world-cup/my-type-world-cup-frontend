@@ -16,12 +16,12 @@ const ShareModal = ({
     <div
       className={
         isCopied
-          ? "fixed top-0 left-0  w-full h-full z-50 flex justify-center items-center pointer-events-auto"
-          : "fixed top-0 left-0  w-full h-full z-50 flex justify-center items-center pointer-events-none"
+          ? "absolute top-0 left-0  w-full h-full flex justify-center items-center pointer-events-auto"
+          : "absolute top-0 left-0  w-full h-full flex justify-center items-center pointer-events-none"
       }
     >
       <div
-        className="fixed w-full h-full bg-black opacity-50"
+        className="fixed w-screen left-0 top-0 h-screen  bg-black opacity-50 z-50"
         style={{
           opacity: isCopied ? 0.5 : 0,
           transition: "opacity 0.3s ease-out",
@@ -29,7 +29,7 @@ const ShareModal = ({
         onClick={() => setIsCopied(false)}
       />
       <div
-        className="fixed left-50% lg: right-[38.2%] bg-main rounded-xl z-50 flex justify-center items-center flex-col"
+        className="fixed top-[35%] bg-main rounded-xl z-50 flex justify-center items-center flex-col"
         style={{
           opacity: isCopied ? 1 : 0,
           transition: "opacity 0.3s ease-out",
