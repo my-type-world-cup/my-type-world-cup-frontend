@@ -4,11 +4,13 @@ const BigModal = ({
   message,
   isCopied,
   setIsCopied,
+  setIsMake,
   img,
   uploadHandler,
   loading,
   setLoading,
 }: {
+  setIsMake?: React.Dispatch<React.SetStateAction<boolean>>;
   setIsCopied: React.Dispatch<React.SetStateAction<boolean>>;
   message: string;
   isCopied: boolean;

@@ -47,7 +47,7 @@ function Table({ rankData }: Props) {
   if (isLoading) return <div>loading...</div>;
   const rankMember: rank_res_data[] = data!.data;
   const totalPage: number = data!.pageInfo.totalPages;
-  console.log(rankMember, "랭크멤버");
+
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const trimmedSearchTerm = searchText.trim();

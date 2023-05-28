@@ -18,6 +18,7 @@ const SearchImages: React.FC<ImageListProps> = ({
   keyword,
   onandoff,
 }) => {
+  console.log(data);
   const [modal, setModal] = useState<boolean>(false);
   const [img, setImg] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
