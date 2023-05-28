@@ -1,10 +1,8 @@
 import { fetcherToken } from "@/lib/Helper";
-import { saveWorldcups } from "@/lib/atom/atom";
 import { BACK_URL } from "@/lib/config";
-import type { Post_res, Save_data, Search_Image } from "@/type/Types";
+import type { Post_res, Search_Image } from "@/type/Types";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
 import useSWRInfinite from "swr/infinite";
 import SearchBar from "../main/SearchBar";
 import EditorTable from "./EditorTable";
@@ -27,7 +25,7 @@ export default function ImageUpload({
   console.log(saveWorldcup, "saveWorldcup");
   const [search, setSearch] = useState<string>("");
   const [imgSrc, setImgSrc] = useState("");
-  const [saveList, setSaveList] = useRecoilState<Save_data[]>(saveWorldcups);
+  const [saveList, setSaveList] = useState<number>(0);
   const [onandoff, setOnandoff] = useState<boolean[]>([true, true]);
   const [isMake, setIsMake] = useState<boolean>(false);
   const keyword = search.slice(1);
@@ -78,19 +76,20 @@ export default function ImageUpload({
               password: saveWorldcup?.password || null,
             }}
             accessToken={accessToken}
+            setSaveList={setSaveList}
           />
-          {!(saveList.length >= 4) ? (
+          {!(saveList >= 4) ? (
             <p className="flex justify-between text-sm text-error mx-2 mt-2">
-              <span>현재 후보 수 : {saveList.length}</span>
+              <span>현재 후보 수 : {saveList}</span>
               <span> 최소 4명이 필요합니다.</span>
             </p>
           ) : (
             <div className="flex justify-between text-sm mx-2 mt-2">
-              <span>현재 후보 수 : {saveList.length}</span>
+              <span>현재 후보 수 : {saveList}</span>
               <span> 월드컵이 등록되었습니다</span>
             </div>
           )}
-          {saveList.length >= 4 && (
+          {saveList >= 4 && (
             <button className="bg-main rounded-md text-white w-full h-12 mt-4 mb-2 hover:scale-110">
               최종 확인 하기
             </button>
@@ -208,7 +207,6 @@ export default function ImageUpload({
             accessToken={accessToken}
             imgSrc={imgSrc}
             setImgSrc={setImgSrc}
-            setSaveList={setSaveList}
             id={saveWorldcup?.id}
             setIsMake={setIsMake}
           />

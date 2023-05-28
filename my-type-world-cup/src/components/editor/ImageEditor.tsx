@@ -44,7 +44,7 @@ type Props = {
   imgSrc: string;
   setIsMake: React.Dispatch<React.SetStateAction<boolean>>;
   setImgSrc: React.Dispatch<React.SetStateAction<string>>;
-  setSaveList: React.Dispatch<React.SetStateAction<Save_data[]>>;
+
   id: number | undefined;
   accessToken: string | null;
 };
@@ -53,7 +53,7 @@ export default function ImageEditor({
   id,
   imgSrc,
   setImgSrc,
-  setSaveList,
+
   setIsMake,
   accessToken,
 }: Props) {
@@ -139,7 +139,6 @@ export default function ImageEditor({
           };
           console.log(save, "성공"); //수정해야함
 
-          setSaveList((prev) => [save, ...prev]);
           setImgSrc("");
 
           if (nameRef.current) {
