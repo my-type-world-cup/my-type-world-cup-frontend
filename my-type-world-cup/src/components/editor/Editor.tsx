@@ -5,10 +5,10 @@ import { accessTokenState, postWorldcup } from "../../lib/atom/atom";
 import type { Post_req, Post_res } from "../../type/Types";
 import type { Step } from "./TabButton";
 interface EditorProps {
-  setIsWord: React.Dispatch<React.SetStateAction<Step>>;
+  setIsNumber: React.Dispatch<React.SetStateAction<Step>>;
 }
 
-const Editor = ({ setIsWord }: EditorProps) => {
+const Editor = ({ setIsNumber }: EditorProps) => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [isPublic, setIsPublic] = useState<boolean>(true);
@@ -48,7 +48,7 @@ const Editor = ({ setIsWord }: EditorProps) => {
             setTitle("");
             setDescription("");
             setPassword(null);
-            setIsWord("2");
+            setIsNumber("2");
           })
           .catch((err) => {
             console.log(err);
@@ -65,7 +65,7 @@ const Editor = ({ setIsWord }: EditorProps) => {
             setTitle("");
             setDescription("");
             setPassword(null);
-            setIsWord("2");
+            setIsNumber("2");
           })
           .catch((err) => {
             console.log(err);

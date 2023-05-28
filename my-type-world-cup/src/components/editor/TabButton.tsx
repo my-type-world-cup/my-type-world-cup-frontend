@@ -6,20 +6,20 @@ interface Tab_buttons {
 }
 
 interface TabButtonProps {
-  isWord: Step;
-  setIsWord: Dispatch<SetStateAction<Step>>;
+  isNumber: Step;
+  setIsNumber: Dispatch<SetStateAction<Step>>;
 }
 
 export type Step = "1" | "2" | "3";
-const TabButtons = ({ isWord, setIsWord }: TabButtonProps) => {
+const TabButtons = ({ isNumber, setIsNumber }: TabButtonProps) => {
   const sortButtons: Tab_buttons[] = [
     { name: "1. 정보 입력", value: "1" },
     { name: "2. 사진 등록", value: "2" },
-    { name: "3. 이름 입력", value: "3" },
+    { name: "3. 정보 확인 ", value: "3" },
   ];
 
   const sortHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    setIsWord(e.currentTarget.value as Step); //메모
+    setIsNumber(e.currentTarget.value as Step); //메모
 
     //함수로 구현
     // const sortType = e.currentTarget.value
@@ -35,7 +35,7 @@ const TabButtons = ({ isWord, setIsWord }: TabButtonProps) => {
           onClick={(e) => sortHandler(e)}
           value={button.value}
           className={
-            button.value === isWord
+            button.value === isNumber
               ? "bg-main text-white w-full h-12 p-1"
               : "bg-lightBlue text-gray w-full h-12 p-1"
           }
