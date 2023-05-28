@@ -1,4 +1,5 @@
 import Editor from "@/components/editor/Editor";
+import FinalEditor from "@/components/editor/FinalEditor";
 import ImageUpload from "@/components/editor/ImageUpload";
 import type { Step } from "@/components/editor/TabButton";
 import TabButtons from "@/components/editor/TabButton";
@@ -7,10 +8,11 @@ import { Post_res } from "@/type/Types";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
+
 const WorldCupEditor = () => {
   const saveWorldcup = useRecoilValue<Post_res | null>(postWorldcup);
   const accessToken = useRecoilValue<string | null>(accessTokenState);
-  const [isWord, setIsWord] = useState<Step>("1");
+  const [isNumber, setIsNumber] = useState<Step>("1");
   const router = useRouter();
 
   useEffect(() => {
@@ -20,24 +22,26 @@ const WorldCupEditor = () => {
   }, [accessToken, router]);
 
   const content = (() => {
-    switch (isWord) {
+    switch (isNumber) {
       case "1":
-        return <Editor setIsWord={setIsWord} />;
+        return <Editor setIsNumber={setIsNumber} />;
       case "2":
         return (
           <ImageUpload
             accessToken={accessToken}
             saveWorldcup={saveWorldcup}
-            setIsWord={setIsWord}
+            setIsNumber={setIsNumber}
           />
         );
+      case "3":
+        return <FinalEditor id={saveWorldcup?.id} setIsNumber={setIsNumber} />;
       default:
         return null;
     }
   })();
   return (
     <div className="pt-12 relative">
-      <TabButtons isWord={isWord} setIsWord={setIsWord} />
+      <TabButtons isNumber={isNumber} setIsNumber={setIsNumber} />
 
       {content}
     </div>

@@ -103,6 +103,57 @@ export async function post_candidates(
   }
 }
 
+export async function patch_candidates(
+  accessToken: string,
+  candidates: Save_data
+) {
+  try {
+    const response = await fetch(`${BACK_URL}/candidates/${candidates.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(candidates),
+    });
+    console.log(response);
+    if (!response.ok) {
+      throw response.status;
+    }
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    // 에러 처리
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function delete_candidates(accessToken: string, id: number) {
+  console.log(id, accessToken);
+  try {
+    const response = await fetch(`${BACK_URL}/candidates/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    console.log(response);
+    if (!response.ok) {
+      throw response.status;
+    }
+    // const data = await response.json();
+
+    // return data;
+  } catch (error) {
+    // 에러 처리
+    console.log(error);
+    throw error;
+  }
+}
+
 export async function post_refresh(accessToken: string) {
   try {
     const response = await fetch(`${BACK_URL}/auth/refresh`, {
