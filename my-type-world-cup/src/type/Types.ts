@@ -2,6 +2,7 @@ type Candidate = {
   id: number;
   name: string;
   image: string;
+  thumb: string;
 };
 
 type result_data = {
@@ -134,6 +135,10 @@ type Save_data = {
   image: string;
   thumb: string;
   worldCupId: number;
+  finalWinCount?: number;
+  winCount?: number;
+  matchUpWorldCupCount?: number;
+  matchUpGameCount?: number;
 };
 
 type imgbb_result = {
