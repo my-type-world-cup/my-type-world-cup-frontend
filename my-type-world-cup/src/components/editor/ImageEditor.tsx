@@ -42,6 +42,7 @@ function centerAspectCrop(
 
 type Props = {
   imgSrc: string;
+  setIsMake: React.Dispatch<React.SetStateAction<boolean>>;
   setImgSrc: React.Dispatch<React.SetStateAction<string>>;
   setSaveList: React.Dispatch<React.SetStateAction<Save_data[]>>;
   id: number | undefined;
@@ -53,6 +54,7 @@ export default function ImageEditor({
   imgSrc,
   setImgSrc,
   setSaveList,
+  setIsMake,
   accessToken,
 }: Props) {
   // const [imgSrc, setImgSrc] = useState("");
@@ -131,10 +133,9 @@ export default function ImageEditor({
       if (!accessToken) throw new Error("accessToken is null");
 
       post_candidates(accessToken, data)
-        .then((res) => {
+        .then((res: Save_data) => {
           const save = {
-            id: res.id,
-            ...data,
+            ...res,
           };
           console.log(save, "성공"); //수정해야함
 
@@ -144,6 +145,7 @@ export default function ImageEditor({
           if (nameRef.current) {
             nameRef.current.value = ""; // 값 초기화
           }
+          setIsMake(false);
         })
         .catch((err) => {
           console.log(err, "실패");
@@ -376,6 +378,7 @@ export default function ImageEditor({
         img={img}
         uploadHandler={uploadHandler}
         loading={loading}
+        setIsMake={setIsMake}
       />
       <ShareModal
         message={modalMessage}
