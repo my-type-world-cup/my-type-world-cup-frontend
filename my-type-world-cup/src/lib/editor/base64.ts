@@ -13,7 +13,7 @@ async function fetchImage(url: string): Promise<string> {
       reader.readAsDataURL(blob);
     });
   } catch (error) {
-    throw new Error("이미지를 가져오는 동안 오류가 발생했습니다: " + error);
+    throw new Error("사용할 수 없는 이미지입니다 " + error);
     //에러처리 필요함
   }
 }
