@@ -82,20 +82,38 @@ export async function post_candidates(
   candidates: Save_data
 ) {
   try {
-    const response = await fetch(`${BACK_URL}/candidates`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(candidates),
-    });
-    if (!response.ok) {
-      throw response.status;
-    }
-    const data = await response.json();
+    if (candidates.id) {
+      const response = await fetch(`${BACK_URL}/candidates/${candidates.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(candidates),
+      });
+      console.log(response);
+      if (!response.ok) {
+        throw response.status;
+      }
+      const data = await response.json();
 
-    return data;
+      return data;
+    } else {
+      const response = await fetch(`${BACK_URL}/candidates`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(candidates),
+      });
+      if (!response.ok) {
+        throw response.status;
+      }
+      const data = await response.json();
+
+      return data;
+    }
   } catch (error) {
     // 에러 처리
     console.log(error);
@@ -161,7 +179,9 @@ export async function post_refresh(accessToken: string) {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
+        Cookie: document.cookie,
       },
+      credentials: "include",
     });
     console.log(response);
     if (!response.ok) {
