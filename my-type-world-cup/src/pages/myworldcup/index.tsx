@@ -1,7 +1,7 @@
 import Card from "@/components/main/Card";
 import SearchBar from "@/components/main/SearchBar";
 import SortButtons from "@/components/main/SortButtons";
-import { fetcher } from "@/lib/Helper";
+import { fetcherToken } from "@/lib/Helper";
 import { BACK_URL } from "@/lib/config";
 import { MainWorldcup, WorldcupsResponse } from "@/type/Types";
 import { useRouter } from "next/router";
@@ -32,8 +32,10 @@ export default function Home({}: {}) {
   const { data, mutate, size, setSize, isValidating, isLoading } =
     useSWRInfinite<WorldcupsResponse>(
       (index) =>
-        `${BACK_URL}/worldcups?page=${index + 1}&size=10&sort=${sort}${search}`,
-      fetcher
+        `${BACK_URL}/members/worldcups?page=${
+          index + 1
+        }&size=10&sort=${sort}${search}`,
+      (url: string) => fetcherToken(url, accessToken)
     );
 
   const isReachingEnd = data && data[data.length - 1]?.data.length < PAGE_SIZE;
