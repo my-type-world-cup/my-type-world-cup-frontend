@@ -24,7 +24,7 @@ const Header = () => {
   // console.log(pathname, gamePath, page);
   return (
     <div className="relative">
-      <header className="bg-main flex w-full relative z-30 px-4 py-3 items-center justify-between">
+      <header className="bg-main flex w-full relative z-40 px-4 py-3 items-center justify-between">
         <div className="w-10 h-10">
           <Image
             src="/icon/whiteDolphin2.svg"
