@@ -52,7 +52,7 @@ const BigModal = ({
               alt={"loading"}
               width={200}
               height={200}
-              className="cursor-pointer"
+              className=""
             />
           </>
         ) : (

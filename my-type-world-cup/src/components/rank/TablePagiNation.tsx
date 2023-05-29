@@ -17,27 +17,24 @@ const TablePagiNation: React.FC<PaginationProps> = ({
 
   let startPage = currentPage - pageRange;
   let endPage = currentPage + pageRange;
-  console.log(startPage, endPage, currentPage);
+
   //다시 확인할것
 
   if (startPage < 1) {
-    console.log("1");
     endPage += 1 - startPage;
     startPage = 1;
     if (endPage > totalPages) endPage = totalPages;
   } else if (endPage > totalPages) {
-    console.log("2");
     startPage -= endPage - totalPages;
     endPage = totalPages;
     if (startPage < 1) startPage = 1;
   }
-  console.log(startPage, endPage, currentPage);
 
   const pages = Array.from(
     { length: endPage - startPage + 1 },
     (_, i) => startPage + i
   );
-  console.log(startPage, pages, currentPage);
+
   return (
     <nav>
       <ul className="flex justify-center list-none m-0 p-0 mt-10">
