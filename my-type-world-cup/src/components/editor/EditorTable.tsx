@@ -2,15 +2,16 @@ import { delete_candidates } from "@/api/user";
 import { fetcherPost } from "@/lib/Helper";
 import { BACK_URL } from "@/lib/config";
 import { rank_Data, rank_res, rank_res_data } from "@/type/Types";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import TablePagiNation from "../rank/TablePagiNation";
-
+import TrComponent from "./TrComponent";
 type Props = {
   rankData: rank_Data;
   accessToken: string | null;
   setSaveList: React.Dispatch<React.SetStateAction<number>>;
+  setIsMake: React.Dispatch<React.SetStateAction<boolean>>;
+  setCandidateId: React.Dispatch<React.SetStateAction<number>>;
 };
 
 type Item = {
@@ -26,7 +27,13 @@ const items: Item[] = [
 ];
 
 const PAGE_SIZE_OPTIONS = [5, 10, 20, 30];
-function EditorTable({ rankData, accessToken, setSaveList }: Props) {
+function EditorTable({
+  rankData,
+  accessToken,
+  setSaveList,
+  setIsMake,
+  setCandidateId,
+}: Props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchText, setSearchText] = useState(""); //작성하면 저장
   const [search, setSearch] = useState(""); //검색 트리거
@@ -36,12 +43,12 @@ function EditorTable({ rankData, accessToken, setSaveList }: Props) {
     `${BACK_URL}/worldcups/${rankData.worldCupId}/candidates?sort=${sort}&direction=DESC&size=${pageSize}&page=${currentPage}${search}`,
     (url) => fetcherPost(url, { password: rankData.password })
   );
-  console.log(rankData, "랭크데이터");
+  console.log(data, "랭크데이터");
   useEffect(() => {
     setCurrentPage(1);
   }, [pageSize]);
   useEffect(() => {
-    setSaveList(data!.data.length);
+    if (data) setSaveList(data!.pageInfo.totalElements);
   }, [data, setSaveList]);
 
   if (error) return <div>failed to load</div>;
@@ -71,7 +78,6 @@ function EditorTable({ rankData, accessToken, setSaveList }: Props) {
   };
   const handleModify = (id: number) => {};
 
-  console.log(rankMember, "랭크멤버");
   return (
     <>
       <main className="flex justify-center items-center mt-20 mx-auto">
@@ -122,52 +128,16 @@ function EditorTable({ rankData, accessToken, setSaveList }: Props) {
         </thead>
         <tbody>
           {rankMember.map((rank: rank_res_data, i: number) => (
-            <tr className="border-hr border" key={rank.id}>
-              <td className="text-center text-gray">
-                {i + 1 + (currentPage - 1) * pageSize}
-              </td>
-              <td>
-                <div className="overflow-hidden h-20 flex items-center justify-center">
-                  <Image
-                    className="flex justify-center items-center"
-                    src={rank.image}
-                    alt="start"
-                    width={100}
-                    height={60}
-                  />
-                </div>
-              </td>
-              <td className="text-gray text-center overflow-hidden whitespace-nowrap max-w-xs">
-                <div className="text-ellipsis text-lg font-bold">
-                  {rank.name.length > 7
-                    ? `${rank.name.slice(0, 7)}...`
-                    : rank.name}
-                </div>
-              </td>
-              <td>
-                <div
-                  className={"flex justify-evenly items-center text-center "}
-                >
-                  <Image
-                    src="/icon/picture.svg"
-                    alt="Mypage"
-                    className="cursor-pointer hover:scale-125"
-                    width={30}
-                    height={30}
-                    priority
-                  />
-                  <Image
-                    src="/icon/delete.svg"
-                    alt="Mypage"
-                    className="cursor-pointer hover:scale-125"
-                    width={20}
-                    height={20}
-                    priority
-                    onClick={() => handleDelete(rank.id)}
-                  />
-                </div>
-              </td>
-            </tr>
+            <TrComponent
+              key={rank.id}
+              rank={rank}
+              i={i}
+              currentPage={currentPage}
+              pageSize={pageSize}
+              handleDelete={handleDelete}
+              setIsMake={setIsMake}
+              setCandidateId={setCandidateId}
+            />
           ))}
         </tbody>
       </table>
