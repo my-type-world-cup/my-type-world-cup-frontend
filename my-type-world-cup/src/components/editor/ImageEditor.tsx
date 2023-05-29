@@ -44,18 +44,20 @@ type Props = {
   imgSrc: string;
   setIsMake: React.Dispatch<React.SetStateAction<boolean>>;
   setImgSrc: React.Dispatch<React.SetStateAction<string>>;
-
+  candidateId: number;
   id: number | undefined;
   accessToken: string | null;
+  setCandidateId: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export default function ImageEditor({
   id,
   imgSrc,
   setImgSrc,
-
+  candidateId,
   setIsMake,
   accessToken,
+  setCandidateId,
 }: Props) {
   // const [imgSrc, setImgSrc] = useState("");
   const [modal, setModal] = useState<boolean>(false);
@@ -128,6 +130,7 @@ export default function ImageEditor({
         image: response.data.image.url,
         thumb: response.data.thumb.url,
         worldCupId: id || 0,
+        id: candidateId,
       };
       console.log(data, "간다");
       if (!accessToken) throw new Error("accessToken is null");
@@ -144,6 +147,7 @@ export default function ImageEditor({
           if (nameRef.current) {
             nameRef.current.value = ""; // 값 초기화
           }
+          setCandidateId(0);
           setIsMake(false);
         })
         .catch((err) => {
