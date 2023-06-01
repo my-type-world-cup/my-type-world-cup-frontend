@@ -34,7 +34,7 @@ function Table({ rankData }: Props) {
     `${BACK_URL}/worldcups/${rankData.worldCupId}/candidates?sort=${sort}&direction=DESC&size=${pageSize}&page=${currentPage}${search}`,
     (url) => fetcherPost(url, { password: rankData.password })
   );
-  console.log(rankData, "랭크데이터");
+
   useEffect(() => {
     setCurrentPage(1);
   }, [pageSize]);
@@ -45,6 +45,9 @@ function Table({ rankData }: Props) {
 
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
+  if (data?.data === undefined) return <div>데이터가 없습니다</div>; //비밀번호 체킹
+  console.log(data, "데이터");
+  console.log(rankData, "랭크데이터");
   const rankMember: rank_res_data[] = data!.data;
   const totalPage: number = data!.pageInfo.totalPages;
 
