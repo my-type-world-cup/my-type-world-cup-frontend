@@ -55,7 +55,6 @@ export default function Home({}: {}) {
     };
   }, [isReachingEnd, setSize]);
   const worldcups: MainWorldcup[] = data ? data.map((v) => v.data).flat() : [];
-
   //예시는 모두다 배열임
   const isLoadingMore =
     isLoading || (size > 0 && data && typeof data[size - 1] === "undefined"); //로딩중
@@ -75,7 +74,7 @@ export default function Home({}: {}) {
         </div>
         <article className="w-full h-auto ">
           {worldcups.map((v) => (
-            <Card key={v.id} worldcup={v} />
+            <Card key={v.id} worldcup={v} mine={true} />
           ))}
         </article>
       </main>
