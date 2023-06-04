@@ -1,7 +1,6 @@
 import { fetcherToken } from "@/lib/Helper";
 import { BACK_URL } from "@/lib/config";
 import type { Post_res, Search_Image } from "@/type/Types";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
@@ -100,7 +99,10 @@ export default function ImageUpload({
             </div>
           )}
           <button
-            onClick={() => setIsMake(true)}
+            onClick={() => {
+              setIsMake(true);
+              setCandidateId(0);
+            }}
             className="bg-main rounded-md text-white w-full h-12 mt-8 mb-2 hover:scale-110"
           >
             후보 추가하기
@@ -116,24 +118,11 @@ export default function ImageUpload({
         </section>
       ) : (
         <section className=" flex flex-col mx-8 text-lg mb-4 ">
+          <h1 className="mt-10 sm:text-xl">사진 업로드</h1>
+          <input type="file" onChange={onSelectFile} className="mt-8 mb-4" />
           <div className="flex justify-between">
             <div className="flex w-full   mt-4 sm:mt-8 p-2">
-              <h1 className=" sm:text-xl">검색 목록</h1>
-              <Image
-                src="/icon/onandoff.svg"
-                alt="Login"
-                className="cursor-pointer ml-2"
-                width={18}
-                height={18}
-                priority
-                style={{
-                  transform: onandoff[1] ? "rotate(-90deg)" : "rotate(0deg)",
-                  transition: "all 0.3s ease-in-out",
-                }}
-                onClick={() => {
-                  setOnandoff((el) => [el[0], !el[1]]);
-                }}
-              />
+              <h1 className=" sm:text-xl mb-4">검색 업로드</h1>
             </div>
           </div>
           <div className=" mb-4 p-2">
@@ -146,8 +135,6 @@ export default function ImageUpload({
             keyword={keyword}
             onandoff={onandoff[1]}
           />
-          <h1 className="mt-4 sm:text-xl">이미지 업로드</h1>
-          <input type="file" onChange={onSelectFile} className="mt-4" />
 
           <ImageEditor
             accessToken={accessToken}
@@ -158,33 +145,7 @@ export default function ImageUpload({
             setCandidateId={setCandidateId}
             candidateId={candidateId}
           />
-          {/* <div className="">
-            <div className=" flex  p-2">
-              <label className="sm:text-xl">이미지 업로드</label>
 
-              <Image
-                src="/icon/onandoff.svg"
-                alt="Login"
-                className="cursor-pointer ml-2"
-                width={18}
-                height={18}
-                priority
-                style={{
-                  transform: onandoff[0] ? "rotate(-90deg)" : "rotate(0deg)",
-                  transition: "all 0.3s ease-in-out",
-                }}
-                onClick={() => {
-                  setOnandoff((el) => [!el[0], el[1]]);
-                }}
-              />
-            </div>
-
-            <SaveList
-              onandoff={onandoff[0]}
-              saveList={saveList}
-              accessToken={accessToken}
-            />
-          </div> */}
           <button
             onClick={() => setIsMake(false)}
             className="bg-main rounded-md text-white w-full h-12 mt-1 mb-2 hover:scale-110"
