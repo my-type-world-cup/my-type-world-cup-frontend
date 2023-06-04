@@ -234,7 +234,7 @@ export default function ImageEditor({
   return (
     <div className="mt-4 mb-4">
       <div className="Crop-Controls">
-        {!!imgSrc && (
+        {!!imgSrc ? (
           <div className="mt-4 flex flex-row text-gray">
             <div className="flex h-8 mr-4 items-center mb-2">
               <label htmlFor="scale-input" className="w-16">
@@ -309,6 +309,12 @@ export default function ImageEditor({
               </button>
             </div>
           </div>
+        ) : (
+          <h2 className="h-64 flex justify-center items-center">
+            <span className="text-main"> 로컬 파일 </span> &nbsp; 혹은 &nbsp;
+            <span className="text-main">검색</span>을 통해 이미지를
+            등록해주세요!
+          </h2>
         )}
       </div>
       {!!imgSrc && (
