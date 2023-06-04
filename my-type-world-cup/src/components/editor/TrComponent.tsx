@@ -1,7 +1,11 @@
+import { patch_candidates } from "@/api/user";
+import type { Save_data } from "@/type/Types";
 import { rank_res_data } from "@/type/Types";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import loadingGif from "../../../public/icon/loading.gif";
+import EventModal from "../all/EventModal";
+import ZoomedImage from "../all/ZoomImage";
 type Props = {
   rank: rank_res_data;
   i: number;
@@ -10,8 +14,10 @@ type Props = {
   handleDelete: (id: number) => void;
   setIsMake: React.Dispatch<React.SetStateAction<boolean>>;
   setCandidateId: React.Dispatch<React.SetStateAction<number>>;
+  accessToken: string | null;
 };
-
+type DeleteHandler = (id: number) => void;
+type Handler = () => void;
 export default function TrComponent({
   rank,
   i,
@@ -20,14 +26,59 @@ export default function TrComponent({
   setIsMake,
   handleDelete,
   setCandidateId,
+  accessToken,
 }: Props) {
+  const [text, setText] = useState<string>(rank.name);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [savedText, setSavedText] = useState<string>("");
+  const [isEditing, setIsEditing] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isCopied, setIsCopied] = useState<boolean>(false);
+
+  const [zoomed, setZoomed] = useState<boolean>(false);
+  const [patch, setPatch] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
+
+  useEffect(() => {
+    if (!isEditing && inputRef.current) {
+      inputRef.current.focus();
+      console.log("하이");
+    }
+  }, [isEditing]);
+
+  useEffect(() => {
+    setText(rank.name);
+  }, [rank.name]);
 
   const handler = () => {
     setIsMake(true);
     setCandidateId(rank.id);
     // 후보로 바꿔야함,
     // 아이디 넘겨줘야함
+  };
+  const handleClick = () => {
+    setIsEditing(!isEditing);
+    setSavedText(text);
+  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+  };
+  const handleSave = () => {
+    setSavedText(text);
+    setIsEditing(!isEditing);
+    const data: Save_data = { ...rank, name: text };
+    patch_candidates(accessToken || "없음", data)
+      .then((res) => {
+        console.log(res, "res");
+      })
+      .catch((err) => {
+        console.log(err, "err");
+      });
+  };
+
+  const handleCancel = () => {
+    setIsEditing(!isEditing);
+    setText(savedText);
   };
 
   return (
@@ -38,15 +89,16 @@ export default function TrComponent({
       <td>
         <div className="relative overflow-hidden h-20 flex items-center justify-center">
           <Image
-            className="z-20"
+            className="cursor-pointer z-20"
             src={rank.image}
             alt="start"
             width={100}
             height={60}
+            onClick={() => setZoomed(!zoomed)}
             onLoadingComplete={() => setIsLoading(true)}
             priority
           />
-          {isLoading && (
+          {!isLoading && (
             <div className="absolute z-10">
               <Image
                 src={loadingGif}
@@ -59,31 +111,82 @@ export default function TrComponent({
           )}
         </div>
       </td>
-      <td className="text-gray text-center overflow-hidden whitespace-nowrap max-w-xs">
-        <div className="text-ellipsis text-lg font-bold">
-          {rank.name.length > 7 ? `${rank.name.slice(0, 7)}...` : rank.name}
-        </div>
+      <td className="text-gray text-center w-32">
+        {isEditing ? (
+          <div
+            className="w-32 truncate text-sm font-bold cursor-pointer hover:underline"
+            onClick={handleClick}
+          >
+            {text}
+          </div>
+        ) : (
+          <input
+            type="text"
+            ref={inputRef}
+            value={text}
+            onChange={handleChange}
+            onBlur={handleCancel}
+            spellCheck={false}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSave();
+              }
+            }}
+            className="w-32 border border-gray p-2"
+          />
+        )}
       </td>
       <td>
         <div className={"flex justify-evenly items-center text-center "}>
           <Image
             src="/icon/picture.svg"
-            alt="Mypage"
-            className="cursor-pointer hover:scale-125"
+            alt="picture"
+            className="cursor-pointer hover:scale-125 mr-2 sm:mr-0"
             width={30}
             height={30}
-            onClick={handler}
+            onClick={() => {
+              setMessage("수정하시겠습니까?");
+
+              setPatch(true);
+            }}
             priority
           />
           <Image
             src="/icon/delete.svg"
-            alt="Mypage"
-            className="cursor-pointer hover:scale-125"
+            alt="delete"
+            className="cursor-pointer hover:scale-125 mr-2 sm:mr-0"
             width={20}
             height={20}
             priority
-            onClick={() => handleDelete(rank.id)}
+            onClick={() => {
+              setMessage("삭제하시겠습니까?");
+
+              setIsCopied(true);
+            }}
           />
+        </div>
+        <div className="w-0" style={{ width: 0, padding: 0 }}>
+          <EventModal
+            isCopied={isCopied}
+            setIsCopied={setIsCopied}
+            message={message}
+            img={rank.thumb}
+            handleDelete={() => handleDelete(rank.id)}
+          />
+          <EventModal
+            isCopied={patch}
+            setIsCopied={setPatch}
+            message="수정하시겠습니까?"
+            img={rank.thumb}
+            handleDelete={() => handler()}
+          />
+          {zoomed && (
+            <ZoomedImage
+              zoomed={zoomed}
+              setZoomed={setZoomed}
+              imageUrl={rank.image}
+            />
+          )}
         </div>
       </td>
     </tr>
