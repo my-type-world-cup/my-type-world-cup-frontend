@@ -80,8 +80,7 @@ function EditorTable({
 
   return (
     <>
-      <main className="flex justify-center items-center mt-20 mx-auto">
-        {/* 검색창 */}
+      <main className="flex justify-center items-center mt-4 mx-auto">
         <form className="mb-4 mr-4" onSubmit={handleSearch}>
           <input
             type="text"
@@ -137,6 +136,7 @@ function EditorTable({
               handleDelete={handleDelete}
               setIsMake={setIsMake}
               setCandidateId={setCandidateId}
+              accessToken={accessToken}
             />
           ))}
         </tbody>

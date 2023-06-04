@@ -70,11 +70,14 @@ export default function ImageUpload({
   const handleMyWorldCup = () => {
     router.push(`/myworldcup`);
   };
-
+  if (!saveWorldcup) {
+    return <></>;
+  }
   return (
     <>
       {!isMake ? (
         <section className=" flex flex-col mx-8 text-lg mb-4 ">
+          <h1 className="mt-20 mb-4 sm:text-xl p-2">후보 목록</h1>
           <EditorTable
             rankData={{
               worldCupId: saveWorldcup?.id || 0,
@@ -110,76 +113,6 @@ export default function ImageUpload({
               최종 확인 하기
             </button>
           )}
-
-          <div className="flex justify-between">
-            <div className="flex w-full   mt-4 sm:mt-8 p-2">
-              <h1 className=" sm:text-xl">검색 목록</h1>
-              <Image
-                src="/icon/onandoff.svg"
-                alt="Login"
-                className="cursor-pointer ml-2"
-                width={18}
-                height={18}
-                priority
-                style={{
-                  transform: onandoff[1] ? "rotate(-90deg)" : "rotate(0deg)",
-                  transition: "all 0.3s ease-in-out",
-                }}
-                onClick={() => {
-                  setOnandoff((el) => [el[0], !el[1]]);
-                }}
-              />
-            </div>
-          </div>
-          <div className=" mb-4 p-2">
-            <SearchBar setSearch={setSearch} />
-          </div>
-          <SearchImage
-            data={searchData ? searchData : null}
-            setSize={setSize}
-            setImgSrc={setImgSrc}
-            keyword={keyword}
-            onandoff={onandoff[1]}
-          />
-          <h1 className="mt-4 sm:text-xl">이미지 업로드</h1>
-          <input type="file" onChange={onSelectFile} className="mt-4" />
-
-          <ImageEditor
-            setIsMake={setIsMake}
-            accessToken={accessToken}
-            imgSrc={imgSrc}
-            setImgSrc={setImgSrc}
-            id={saveWorldcup?.id}
-            candidateId={candidateId}
-            setCandidateId={setCandidateId}
-          />
-          <div className="">
-            <div className=" flex  p-2">
-              <label className="sm:text-xl">이미지 업로드</label>
-
-              <Image
-                src="/icon/onandoff.svg"
-                alt="Login"
-                className="cursor-pointer ml-2"
-                width={18}
-                height={18}
-                priority
-                style={{
-                  transform: onandoff[0] ? "rotate(-90deg)" : "rotate(0deg)",
-                  transition: "all 0.3s ease-in-out",
-                }}
-                onClick={() => {
-                  setOnandoff((el) => [!el[0], el[1]]);
-                }}
-              />
-            </div>
-
-            {/* <SaveList
-              onandoff={onandoff[0]}
-              saveList={saveList}
-              accessToken={accessToken}
-            /> */}
-          </div>
         </section>
       ) : (
         <section className=" flex flex-col mx-8 text-lg mb-4 ">
