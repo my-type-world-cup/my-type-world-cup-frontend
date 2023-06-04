@@ -26,6 +26,7 @@ const PAGE_SIZE_OPTIONS = [10, 20, 30];
 function Table({ rankData }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [word, setWord] = useState("");
+
   const [searchText, setSearchText] = useState(""); //작성하면 저장
   const [search, setSearch] = useState(""); //검색 트리거
   const [pageSize, setPageSize] = useState(10);

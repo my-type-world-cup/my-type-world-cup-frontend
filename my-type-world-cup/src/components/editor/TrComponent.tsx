@@ -34,9 +34,9 @@ export default function TrComponent({
   const [isEditing, setIsEditing] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isCopied, setIsCopied] = useState<boolean>(false);
-
+  const [handlerState, setHandlerState] = useState<Handler>(() => {});
   const [zoomed, setZoomed] = useState<boolean>(false);
-  const [patch, setPatch] = useState<boolean>(false);
+
   const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
@@ -146,8 +146,8 @@ export default function TrComponent({
             height={30}
             onClick={() => {
               setMessage("수정하시겠습니까?");
-
-              setPatch(true);
+              setHandlerState(() => handler);
+              setIsCopied(true);
             }}
             priority
           />
@@ -160,7 +160,7 @@ export default function TrComponent({
             priority
             onClick={() => {
               setMessage("삭제하시겠습니까?");
-
+              setHandlerState(() => () => handleDelete(rank.id));
               setIsCopied(true);
             }}
           />
@@ -171,20 +171,14 @@ export default function TrComponent({
             setIsCopied={setIsCopied}
             message={message}
             img={rank.thumb}
-            handleDelete={() => handleDelete(rank.id)}
+            handleDelete={handlerState}
           />
-          <EventModal
-            isCopied={patch}
-            setIsCopied={setPatch}
-            message="수정하시겠습니까?"
-            img={rank.thumb}
-            handleDelete={() => handler()}
-          />
+
           {zoomed && (
             <ZoomedImage
               zoomed={zoomed}
               setZoomed={setZoomed}
-              imageUrl={rank.image}
+              imageUrl={rank.thumb}
             />
           )}
         </div>
