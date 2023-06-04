@@ -64,7 +64,6 @@ export default function TrComponent({
     setText(e.target.value);
   };
   const handleSave = () => {
-    setSavedText(text);
     setIsEditing(!isEditing);
     const data: Save_data = { ...rank, name: text };
     patch_candidates(accessToken || "없음", data)
@@ -90,7 +89,7 @@ export default function TrComponent({
         <div className="relative overflow-hidden h-20 flex items-center justify-center">
           <Image
             className="cursor-pointer z-20"
-            src={rank.image}
+            src={rank.thumb}
             alt="start"
             width={100}
             height={60}
