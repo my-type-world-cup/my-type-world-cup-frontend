@@ -13,9 +13,8 @@ interface TabButtonProps {
 export type Step = "1" | "2" | "3";
 const TabButtons = ({ isNumber, setIsNumber }: TabButtonProps) => {
   const sortButtons: Tab_buttons[] = [
-    { name: "1. 정보 입력", value: "1" },
-    { name: "2. 사진 등록", value: "2" },
-    { name: "3. 정보 확인 ", value: "3" },
+    { name: "정보 입력", value: "1" },
+    { name: "후보 등록", value: "2" },
   ];
 
   const sortHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {

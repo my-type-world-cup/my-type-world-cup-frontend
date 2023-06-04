@@ -34,20 +34,6 @@ const SpanInput = ({
     if (isEditing && inputRef.current) {
       inputRef.current.focus();
     }
-    // if (!isEditing && !value) setValue(save);
-    // if (value !== name && accessToken && !isEditing) {
-    //   console.log("발동");
-    //   patch_candidates(accessToken, { ...item, name: value });
-    //   setSaveList((prev) => {
-    //     const newSave = prev.map((list: Save_data) => {
-    //       if (list.id === item.id) {
-    //         return { ...list, name: value };
-    //       }
-    //       return list;
-    //     });
-    //     return newSave;
-    //   });
-    // }
   }, [isEditing]);
 
   const handleClick = () => {
