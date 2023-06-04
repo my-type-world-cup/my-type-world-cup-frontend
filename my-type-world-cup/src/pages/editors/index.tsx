@@ -1,5 +1,4 @@
 import Editor from "@/components/editor/Editor";
-import FinalEditor from "@/components/editor/FinalEditor";
 import ImageUpload from "@/components/editor/ImageUpload";
 import type { Step } from "@/components/editor/TabButton";
 import TabButtons from "@/components/editor/TabButton";
@@ -33,8 +32,7 @@ const WorldCupEditor = () => {
             setIsNumber={setIsNumber}
           />
         );
-      case "3":
-        return <FinalEditor id={saveWorldcup?.id} setIsNumber={setIsNumber} />;
+
       default:
         return null;
     }
