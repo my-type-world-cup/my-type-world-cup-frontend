@@ -67,6 +67,7 @@ type rank_res_data = {
   matchUpWorldCupCount: number;
   matchUpGameCount: number;
   worldCupId: number;
+  thumb: string;
 };
 
 type rank_res_pageInfo = {
