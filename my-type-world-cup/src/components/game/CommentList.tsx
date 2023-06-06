@@ -93,7 +93,6 @@ export default function CommentList({ accessToken, id, rendering }: Props) {
       setMessage("취소하였습니다");
       setIsCopied(true);
 
-      mutate();
       setTimeout(() => {
         setIsCopied(false);
       }, 1000);
