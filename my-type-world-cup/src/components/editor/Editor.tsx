@@ -16,9 +16,9 @@ const Editor = ({ setIsNumber }: EditorProps) => {
   const [worldcup, setWorldcup] = useRecoilState<Post_res | null>(postWorldcup);
   const accessToken = useRecoilValue(accessTokenState);
   const [isValid, setIsValid] = useState(true);
-  console.log(worldcup, "worldcup");
+
   useEffect(() => {
-    setPassword(null);
+    if (isPublic) setPassword(null);
   }, [isPublic]);
 
   useEffect(() => {
