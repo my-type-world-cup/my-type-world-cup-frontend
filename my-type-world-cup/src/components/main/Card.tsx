@@ -1,13 +1,20 @@
 import type { MainWorldcup } from "@/type/Types";
+
 import Image from "next/image";
 import GameButtons from "./GameButtons";
-
 const Card = ({
   worldcup,
   mine = false,
+
+  handlerDelete = () => {},
+
+  handlerWorldCup = () => {},
 }: {
+  handlerDelete?: (id: number) => void;
   worldcup: MainWorldcup;
   mine?: boolean;
+
+  handlerWorldCup?: (id: number) => void;
 }) => {
   const id = worldcup.id;
 
@@ -59,7 +66,10 @@ const Card = ({
       {mine && (
         <div className="flex flex-col justify-center items-center">
           <div className="my-4 text-white flex justify-evenly">
-            <button className="flex items-center bg-main px-2 sm:px-4  h-10  space-x-2 mx-2 rounded-lg hover:scale-110 cursor-pointer">
+            <button
+              onClick={() => handlerWorldCup(id)}
+              className="flex items-center bg-main px-2 sm:px-4  h-10  space-x-2 mx-2 rounded-lg hover:scale-110 cursor-pointer"
+            >
               <Image
                 src="/icon/white_person.svg"
                 alt="delete"
@@ -70,7 +80,10 @@ const Card = ({
               />
               후보 추가
             </button>
-            <button className="flex items-center bg-main px-2 sm:px-4  h-10 space-x-2 mx-2 rounded-lg hover:scale-110 cursor-pointer">
+            <button
+              onClick={() => handlerDelete(id)}
+              className="flex items-center bg-main px-2 sm:px-4  h-10 space-x-2 mx-2 rounded-lg hover:scale-110 cursor-pointer"
+            >
               <Image
                 src="/icon/white_delete.svg"
                 alt="delete"
