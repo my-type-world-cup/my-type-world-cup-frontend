@@ -77,6 +77,27 @@ export async function patch_worldcup(
   }
 }
 
+export async function delete_worldcup(accessToken: string, id: number) {
+  try {
+    const response = await fetch(`${BACK_URL}/worldcups/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    console.log(response);
+    if (!response.ok) {
+      throw response.status;
+    }
+    return response;
+  } catch (error) {
+    // 에러 처리
+    console.log(error);
+    throw error; // 필요에 따라 예외를 다시 던지거나 특정 값을 반환할 수 있습니다.
+  }
+}
+
 export async function post_candidates(
   accessToken: string,
   candidates: Save_data
@@ -192,6 +213,25 @@ export async function post_refresh(accessToken: string) {
     return data;
   } catch (error) {
     // 에러 처리
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function get_detail(id: number, accessToken: string) {
+  try {
+    const response = await fetch(`${BACK_URL}/worldcups/${id}/details`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    console.log(response);
+    if (!response.ok) {
+      throw response.status;
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
     console.log(error);
     throw error;
   }
