@@ -1,4 +1,5 @@
 import Card from "@/components/main/Card";
+import CardSkeleton from "@/components/main/CardSkeleton";
 import SearchBar from "@/components/main/SearchBar";
 import SortButtons from "@/components/main/SortButtons";
 import { fetcher } from "@/lib/Helper";
@@ -46,8 +47,6 @@ export default function Home({}: {}) {
   const isLoadingMore =
     isLoading || (size > 0 && data && typeof data[size - 1] === "undefined"); //로딩중
 
-  if (!data) return <div ref={containerRef}>로딩중</div>;
-
   // 더이상 없을때 체크
   const isRefreshing = isValidating && data && data.length === size; // 요청중
 
@@ -62,11 +61,11 @@ export default function Home({}: {}) {
           <SortButtons setSort={setSort} sort={sort} />
         </div>
         <article className="w-full h-auto ">
-          {data ? (
-            worldcups.map((v) => <Card key={v.id} worldcup={v} />)
-          ) : (
-            <div>로딩중입니다.</div>
-          )}
+          {data
+            ? worldcups.map((v) => <Card key={v.id} worldcup={v} />)
+            : new Array(10).fill(1).map((_, i) => {
+                return <CardSkeleton key={i} />;
+              })}
         </article>
       </main>
     </>

@@ -1,5 +1,6 @@
 import { delete_worldcup, get_detail } from "@/api/user";
 import Card from "@/components/main/Card";
+import CardSkeleton from "@/components/main/CardSkeleton";
 import SearchBar from "@/components/main/SearchBar";
 import SortButtons from "@/components/main/SortButtons";
 import { fetcherToken } from "@/lib/Helper";
@@ -60,13 +61,11 @@ export default function Home({}: {}) {
   const handlerDelete = async (id: number) => {
     try {
       const res = await delete_worldcup(accessToken || "", id);
-      console.log("됏다~");
-      console.log(res);
+
       mutate();
 
       console.log(res);
     } catch (e) {
-      console.log("안됏다~");
       console.log(e);
     }
   };
@@ -97,15 +96,19 @@ export default function Home({}: {}) {
           <SortButtons setSort={setSort} sort={sort} />
         </div>
         <article className="w-full h-auto ">
-          {worldcups.map((v) => (
-            <Card
-              key={v.id}
-              worldcup={v}
-              mine={true}
-              handlerDelete={handlerDelete}
-              handlerWorldCup={handlerWorldCup}
-            />
-          ))}
+          {data
+            ? worldcups.map((v) => (
+                <Card
+                  key={v.id}
+                  worldcup={v}
+                  mine={true}
+                  handlerDelete={handlerDelete}
+                  handlerWorldCup={handlerWorldCup}
+                />
+              ))
+            : new Array(10).fill(1).map((_, i) => {
+                return <CardSkeleton key={i} />;
+              })}
         </article>
       </main>
     </>

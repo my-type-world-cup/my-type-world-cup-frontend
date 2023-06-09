@@ -75,3 +75,48 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
+
+@keyframes loading {
+  0% {
+    transform: translateX(0);
+  }
+  50%,
+  100% {
+    transform: translateX(460px);
+  }
+}
+
+.skeleton-img::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 100%;
+  background: linear-gradient(to right, #f2f2f2, #ddd, #f2f2f2);
+  animation: loading 2s infinite linear;
+}
+
+.skeleton-img {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton {
+  background-color: #a5a5a5;
+  animation: skeleton-animation 1s infinite linear;
+}
+
+@keyframes skeleton-animation {
+  0% {
+    opacity: 0.2;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 0.2;
+  }
+}

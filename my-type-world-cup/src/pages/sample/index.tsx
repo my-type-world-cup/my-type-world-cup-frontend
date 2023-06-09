@@ -1,9 +1,8 @@
-import { post_refresh } from "@/api/user";
-import { accessTokenState } from "@/lib/atom/atom";
-import { useRecoilValue } from "recoil";
+import CardSkeleton from "@/components/main/CardSkeleton";
 export default function Index() {
-  const accessToken = useRecoilValue<string | null>(accessTokenState);
-  console.log(accessToken);
-  post_refresh(accessToken!);
-  return <div>index</div>;
+  return (
+    <div>
+      <CardSkeleton />
+    </div>
+  );
 }
