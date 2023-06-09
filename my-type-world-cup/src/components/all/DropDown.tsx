@@ -156,7 +156,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
                   height={37}
                   priority
                 />
-                <span className="ml-3">내가 만든 월드컵</span>
+                <span className="ml-3">나만의 월드컵</span>
               </li>
               <li
                 className="flex items-center px-4 py-3 cursor-pointer"

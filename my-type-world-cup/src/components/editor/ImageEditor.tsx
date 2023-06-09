@@ -311,8 +311,8 @@ export default function ImageEditor({
           </div>
         ) : (
           <h2 className="h-64 flex justify-center items-center">
-            <span className="text-main"> 로컬 파일 </span> &nbsp; 혹은 &nbsp;
-            <span className="text-main">검색</span>을 통해 이미지를
+            <span className="text-warning"> 로컬 파일 </span> &nbsp; 혹은 &nbsp;
+            <span className="text-warning">검색</span>을 통해 이미지를
             등록해주세요!
           </h2>
         )}

@@ -112,7 +112,7 @@ export default function ImageUpload({
               onClick={handleMyWorldCup}
               className="bg-main rounded-md text-white w-full h-12 mt-4 mb-2 hover:scale-110"
             >
-              최종 확인 하기
+              나만의 월드컵 보러가기
             </button>
           )}
         </section>
