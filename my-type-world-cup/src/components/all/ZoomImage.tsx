@@ -7,6 +7,7 @@ interface ZoomedImageProps {
   setZoomed: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+//준비물 zoom usestate 와 image
 const ZoomedImage: React.FC<ZoomedImageProps> = ({ imageUrl, setZoomed }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

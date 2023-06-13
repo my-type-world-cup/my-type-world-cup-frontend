@@ -179,11 +179,9 @@ function Table({ rankData }: Props) {
                   />
                 </div>
               </td>
-              <td className="text-gray text-center overflow-hidden whitespace-nowrap max-w-xs">
-                <div className="text-ellipsis text-xs">
-                  {rank.name.length > 7
-                    ? `${rank.name.slice(0, 7)}...`
-                    : rank.name}
+              <td className="text-gray">
+                <div className="truncate w-20 text-center mx-auto text-xs">
+                  {rank.name}
                 </div>
               </td>
               <td
