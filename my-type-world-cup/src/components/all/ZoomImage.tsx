@@ -7,15 +7,8 @@ interface ZoomedImageProps {
   setZoomed: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ZoomedImage: React.FC<ZoomedImageProps> = ({
-  imageUrl,
-  setZoomed,
-  zoomed,
-}) => {
+const ZoomedImage: React.FC<ZoomedImageProps> = ({ imageUrl, setZoomed }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const handleImageClick = () => {
-    setZoomed(true);
-  };
 
   const handleOverlayClick = () => {
     setZoomed(false);
@@ -23,15 +16,15 @@ const ZoomedImage: React.FC<ZoomedImageProps> = ({
 
   return (
     <div
-      className="bg-black bg-opacity-50 absolute left-[0px] top-0 w-full h-full z-50 flex justify-center items-center pointer-events-auto"
+      className="bg-black bg-opacity-50 fixed left-0 top-0 w-full h-full z-50 flex justify-center items-center pointer-events-auto"
       onClick={handleOverlayClick}
     >
       {!isLoading && (
         <Image
           src={loadingGif}
           alt={"loading"}
-          width={350}
-          height={400}
+          width={296}
+          height={296}
           className="absolute"
         />
       )}
