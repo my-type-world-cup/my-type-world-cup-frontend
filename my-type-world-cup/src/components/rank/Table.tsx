@@ -40,10 +40,6 @@ function Table({ rankData }: Props) {
     setCurrentPage(1);
   }, [pageSize]);
 
-  const wordHandler = (select: string) => {
-    setWord(select);
-  };
-
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
   if (data?.data === undefined) return <div>데이터가 없습니다</div>; //비밀번호 체킹
@@ -52,7 +48,9 @@ function Table({ rankData }: Props) {
   const rankMember: rank_res_data[] = data!.data;
   const totalPage: number = data!.pageInfo.totalPages;
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearch = (
+    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLImageElement>
+  ) => {
     e.preventDefault();
     const trimmedSearchTerm = searchText.trim();
 
@@ -62,25 +60,27 @@ function Table({ rankData }: Props) {
       setSearch("");
     }
   };
-  function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
-    console.log(e.key, "이히");
-    if (e.key === "Enter") {
-      const trimmedSearchText = searchText.trim();
-      console.log("하이");
-    }
-  }
 
   return (
     <>
       <main className="flex justify-center items-center mt-20 mx-auto">
         {/* 검색창 */}
-        <form className="mb-4 mr-4" onSubmit={handleSearch}>
+        <form className="mb-4 mr-4 relative" onSubmit={handleSearch}>
           <input
             type="text"
             className="w-full rounded border-gray border-[1px]  p-1"
             placeholder="Search"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
+          />
+          <Image
+            src="/icon/search.svg"
+            alt="Search"
+            className="absolute right-2 top-2 cursor-pointer"
+            width={18}
+            height={18}
+            onClick={handleSearch}
+            priority
           />
         </form>
 

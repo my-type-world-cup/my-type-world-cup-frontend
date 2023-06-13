@@ -2,6 +2,7 @@ import { delete_candidates } from "@/api/user";
 import { fetcherPost } from "@/lib/Helper";
 import { BACK_URL } from "@/lib/config";
 import { rank_Data, rank_res, rank_res_data } from "@/type/Types";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import TablePagiNation from "../rank/TablePagiNation";
@@ -56,7 +57,9 @@ function EditorTable({
   const rankMember: rank_res_data[] = data!.data;
   const totalPage: number = data!.pageInfo.totalPages;
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearch = (
+    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLImageElement>
+  ) => {
     e.preventDefault();
     const trimmedSearchTerm = searchText.trim();
 
@@ -66,28 +69,30 @@ function EditorTable({
       setSearch("");
     }
   };
-  function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
-    console.log(e.key, "이히");
-    if (e.key === "Enter") {
-      const trimmedSearchText = searchText.trim();
-      console.log("하이");
-    }
-  }
+
   const handleDelete = (id: number) => {
     delete_candidates(accessToken || "", id).then(() => mutate());
   };
-  const handleModify = (id: number) => {};
 
   return (
     <>
       <main className="flex justify-center items-center mt-4 mx-auto">
-        <form className="mb-4 mr-4" onSubmit={handleSearch}>
+        <form className="mb-4 mr-4 relative" onSubmit={handleSearch}>
           <input
             type="text"
             className="w-full rounded border-gray border-[1px]  p-1"
             placeholder="Search"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
+          />
+          <Image
+            src="/icon/search.svg"
+            alt="Search"
+            className="absolute right-3 top-2 cursor-pointer"
+            width={20}
+            height={20}
+            onClick={handleSearch}
+            priority
           />
         </form>
 

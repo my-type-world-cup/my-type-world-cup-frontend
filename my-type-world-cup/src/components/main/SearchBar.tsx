@@ -10,7 +10,9 @@ interface Props {
 const SearchBar = ({ setSearch }: Props) => {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearch = (
+    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLImageElement>
+  ) => {
     console.log("히");
     e.preventDefault();
     const trimmedSearchTerm = searchTerm.trim();
@@ -31,19 +33,17 @@ const SearchBar = ({ setSearch }: Props) => {
         <Image
           src="/icon/search.svg"
           alt="Search"
-          className="absolute left-2 pb-2"
+          className="absolute right-4 pb-2 cursor-pointer"
           width={25}
           height={25}
           priority
+          onClick={handleSearch}
         />
         <input
           type="text"
           placeholder="당신의 이상형을 찾아주세요"
-          className="border-b-2 border-b-gray text-gray pb-2 pl-10 text-xl w-[280px] h-10 "
+          className="border-b-2 border-b-gray text-gray pb-2 pl-3 text-xl w-[280px] h-10 "
           onChange={(e) => setSearchTerm(e.target.value)}
-          onKeyDown={(e) => {
-            e.key === "Enter" ? console.log("하이") : null;
-          }}
         />
       </form>
     </div>
