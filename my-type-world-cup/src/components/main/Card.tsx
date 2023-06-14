@@ -20,35 +20,52 @@ const Card = ({
 
   return (
     <article className="border-main mt-4 mx-4 px-2 border-[1px] pb-4">
-      {worldcup.candidateSimpleResponseDtos.length === 2 && (
+      {
         <div className="flex justify-evenly mt-6">
           <div className="w-auto overflow-hidden">
             <div className="w-[175px] h-[175px] overflow-hidden flex items-center">
               <Image
-                src={worldcup.candidateSimpleResponseDtos[0].image}
+                src={
+                  worldcup.candidateSimpleResponseDtos.length === 2
+                    ? worldcup.candidateSimpleResponseDtos[0].image
+                    : "/icon/blueMascot.svg"
+                }
                 alt="연예인 사진"
                 width={1000}
                 height={1000}
                 priority
               />
             </div>
-            <h4 className="text-center font-medium">윈터</h4>
+            <h4 className="text-center font-medium">
+              {worldcup.candidateSimpleResponseDtos.length === 2
+                ? worldcup.candidateSimpleResponseDtos[0].name
+                : "이상형을 추가해주세요"}
+            </h4>
           </div>
 
           <div className="w-auto overflow-hidden">
             <div className="w-[175px] h-[175px] overflow-hidden flex items-center">
               <Image
-                src={worldcup.candidateSimpleResponseDtos[1].image}
+                src={
+                  worldcup.candidateSimpleResponseDtos.length === 2
+                    ? worldcup.candidateSimpleResponseDtos[1].image
+                    : "/icon/blueMascot.svg"
+                }
                 alt="1st"
                 width={1000}
                 height={1000}
                 priority
               />
             </div>
-            <h4 className="text-center font-medium">카리나</h4>
+            <h4 className="text-center font-medium">
+              {" "}
+              {worldcup.candidateSimpleResponseDtos.length === 2
+                ? worldcup.candidateSimpleResponseDtos[1].name
+                : "이상형을 추가해주세요"}
+            </h4>
           </div>
         </div>
-      )}
+      }
 
       <h2 className="flex flex-col items-center mt-3 text-xl font-semibold">
         {worldcup.title}
