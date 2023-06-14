@@ -4,8 +4,8 @@ import { rank_Data, rank_res, rank_res_data } from "@/type/Types";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+import ZoomedImage from "../all/ZoomImage";
 import TablePagiNation from "./TablePagiNation";
-
 type Props = {
   rankData: rank_Data;
 };
@@ -25,7 +25,8 @@ const items: Item[] = [
 const PAGE_SIZE_OPTIONS = [10, 20, 30];
 function Table({ rankData }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [word, setWord] = useState("");
+  const [zoomed, setZoomed] = useState(false);
+  const [image, setImage] = useState("");
 
   const [searchText, setSearchText] = useState(""); //작성하면 저장
   const [search, setSearch] = useState(""); //검색 트리거
@@ -59,6 +60,10 @@ function Table({ rankData }: Props) {
     } else {
       setSearch("");
     }
+  };
+  const zoomedHandler = (image: string) => {
+    setImage(image);
+    setZoomed(true);
   };
 
   return (
@@ -171,11 +176,12 @@ function Table({ rankData }: Props) {
               <td>
                 <div className="overflow-hidden h-12 flex justify-center ">
                   <Image
-                    className="flex justify-center items-center"
+                    className="flex justify-center items-center cursor-pointer"
                     src={rank.image}
                     alt="start"
                     width={60}
                     height={60}
+                    onClick={() => zoomedHandler(rank.image)}
                   />
                 </div>
               </td>
@@ -239,6 +245,9 @@ function Table({ rankData }: Props) {
         totalPages={totalPage}
         setCurrentPage={setCurrentPage}
       />
+      {zoomed && (
+        <ZoomedImage zoomed={zoomed} setZoomed={setZoomed} imageUrl={image} />
+      )}
     </>
   );
 }
