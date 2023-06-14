@@ -32,14 +32,13 @@ export default function Home({}: {}) {
     }
     console.log(accessToken);
   }, [accessToken, router]);
-  const { data, mutate, size, setSize, isValidating, isLoading } =
-    useSWRInfinite<WorldcupsResponse>(
-      (index) =>
-        `${BACK_URL}/members/worldcups?page=${
-          index + 1
-        }&size=10&sort=${sort}${search}`,
-      (url: string) => fetcherToken(url, accessToken)
-    );
+  const { data, mutate, setSize } = useSWRInfinite<WorldcupsResponse>(
+    (index) =>
+      `${BACK_URL}/members/worldcups?page=${
+        index + 1
+      }&size=10&sort=${sort}${search}`,
+    (url: string) => fetcherToken(url, accessToken)
+  );
 
   const isReachingEnd = data && data[data.length - 1]?.data.length < PAGE_SIZE;
   useEffect(() => {
@@ -79,12 +78,7 @@ export default function Home({}: {}) {
   };
   const worldcups: MainWorldcup[] = data ? data.map((v) => v.data).flat() : [];
   //예시는 모두다 배열임
-  const isLoadingMore =
-    isLoading || (size > 0 && data && typeof data[size - 1] === "undefined"); //로딩중
 
-  // 더이상 없을때 체크
-  const isRefreshing = isValidating && data && data.length === size; // 요청중
-  console.log(worldcups, data);
   return (
     <>
       <main
