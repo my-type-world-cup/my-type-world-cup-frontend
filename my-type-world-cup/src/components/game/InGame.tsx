@@ -91,6 +91,7 @@ export default function InGame({
     console.log(isCheck, "끝");
     return <></>;
   }
+
   return (
     <div>
       <h2 className="pt-4 text-white text-xl text-center">
@@ -113,7 +114,7 @@ export default function InGame({
         }}
       >
         <Image
-          src={twoPeople[0].image}
+          src={twoPeople[0].thumb}
           alt="one"
           width={500}
           height={330}
@@ -175,7 +176,7 @@ export default function InGame({
         }}
       >
         <Image
-          src={twoPeople[1].image}
+          src={twoPeople[1].thumb}
           alt="two"
           width={500}
           height={150}
