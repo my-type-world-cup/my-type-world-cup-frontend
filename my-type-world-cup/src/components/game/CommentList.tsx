@@ -120,7 +120,7 @@ export default function CommentList({ accessToken, id, rendering }: Props) {
                 <>
                   <span
                     onClick={() => handleDeleteComment(comment.id)}
-                    className="text-sm font-bold hover:scale-105 text-main"
+                    className="text-sm font-bold hover:scale-105 text-main cursor-pointer"
                   >
                     좋아요 {comment.likesCount}
                   </span>
@@ -129,7 +129,7 @@ export default function CommentList({ accessToken, id, rendering }: Props) {
                 <>
                   <span
                     onClick={() => handleLikeComment(comment.id)}
-                    className="text-gray text-sm hover:font-bold hover:scale-105 hover:text-main"
+                    className="cursor-pointer text-gray text-sm hover:font-bold hover:scale-105 hover:text-main"
                   >
                     좋아요 {comment.likesCount}
                   </span>
