@@ -200,11 +200,10 @@ export async function post_refresh(accessToken: string) {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
-        Cookie: document.cookie,
       },
       credentials: "include",
     });
-    console.log(response);
+
     if (!response.ok) {
       throw response.status;
     }
