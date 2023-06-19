@@ -116,7 +116,7 @@ export default function Modal({
         <div className="mx-4">
           현재 인원이{" "}
           <span className="text-error">{data.candidatesCount}명</span>
-          이어서 게임을 시작할 수 없습니다 후보를 추가해주세요
+          이어서 게임을 시작할 수 없습니다 후보를 등록해주세요
         </div>
       )}
     </div>

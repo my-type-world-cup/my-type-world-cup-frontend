@@ -39,7 +39,7 @@ const Card = ({
             <h4 className="text-center font-medium">
               {worldcup.candidateSimpleResponseDtos.length === 2
                 ? worldcup.candidateSimpleResponseDtos[0].name
-                : "이상형을 추가해주세요"}
+                : "후보를 등록해주세요"}
             </h4>
           </div>
 
@@ -58,10 +58,9 @@ const Card = ({
               />
             </div>
             <h4 className="text-center font-medium">
-              {" "}
               {worldcup.candidateSimpleResponseDtos.length === 2
                 ? worldcup.candidateSimpleResponseDtos[1].name
-                : "이상형을 추가해주세요"}
+                : "이상형을 등록해주세요"}
             </h4>
           </div>
         </div>
