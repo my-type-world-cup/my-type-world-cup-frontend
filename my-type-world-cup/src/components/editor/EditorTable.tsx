@@ -109,12 +109,14 @@ function EditorTable({
               </option>
             ))}
           </select>
-          <label className="font-bold mr-[1px]">개씩 보기</label>
+          <label className="hidden sm:inline-block font-bold mr-[1px]  ">
+            개씩 보기
+          </label>
         </div>
 
         {/* 목록 */}
       </main>
-      <table className=" text-sm mx-2 mb-4">
+      <table className=" text-sm mb-4">
         <colgroup>
           <col className="w-1/12 bg-white" />
 
@@ -147,10 +149,10 @@ function EditorTable({
         </tbody>
       </table>
 
-      {rankMember.length === 0 && (
-        <div className="w-full font-light text-base text-center">
-          등록된 후보가 없습니다. <br />
-          후보 추가 버튼을 이용해주세요
+      {rankMember.length < 4 && (
+        <div className="w-full font-light text-base text-center my-4 sm:my-12">
+          <span className="text-main">추가 버튼</span>을 이용하여&nbsp;
+          <span className="text-main">후보</span>를 등록해주세요.🙌
         </div>
       )}
       <TablePagiNation
