@@ -177,7 +177,7 @@ function Table({ rankData }: Props) {
                 <div className="overflow-hidden h-12 flex justify-center ">
                   <Image
                     className="flex justify-center items-center cursor-pointer"
-                    src={rank.image}
+                    src={rank.thumb}
                     alt="start"
                     width={60}
                     height={60}

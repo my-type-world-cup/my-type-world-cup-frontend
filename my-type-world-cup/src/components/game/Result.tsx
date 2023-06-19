@@ -18,7 +18,7 @@ export default function Result({ winnerRef, id }: Props) {
       <div className="h-auto mt-28 ">
         <div className=" relative flex flex-col justify-center pt-4 items-center overflow-hidden mx-12 h-[300px] ">
           <Image
-            src={winnerRef.current[0].image}
+            src={winnerRef.current[0].thumb}
             alt="one"
             width={500}
             height={330}
