@@ -76,7 +76,9 @@ export default function ImageUpload({
     <>
       {!isMake ? (
         <section className=" flex flex-col mx-8 text-lg mb-4 ">
-          <h1 className="mt-20 mb-4 sm:text-xl p-2">후보 목록</h1>
+          <h1 className="mt-8 sm:mt-12 mb-0 sm:mb-2 sm:text-xl  py-4 font-bold">
+            후보 목록
+          </h1>
           <EditorTable
             rankData={{
               worldCupId: saveWorldcup?.id || 0,
@@ -88,7 +90,7 @@ export default function ImageUpload({
             setCandidateId={setCandidateId}
           />
           {!(saveList >= 4) ? (
-            <p className="flex justify-between text-sm text-error mx-2 mt-2">
+            <p className="flex justify-between text-sm text-error mx-2 mt-8">
               <span>현재 후보 수 : {saveList}</span>
               <span> 최소 4명이 필요합니다.</span>
             </p>
