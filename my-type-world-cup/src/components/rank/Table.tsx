@@ -111,11 +111,11 @@ function Table({ rankData }: Props) {
         <colgroup>
           <col className="w-1/12 bg-white" />
 
-          <col className="w-1/12 bg-white " />
+          <col className="w-2/12 bg-white " />
           <col className="w-2/12 bg-white" />
-          <col className="w-1/12 bg-white" />
-          <col className="w-1/12 bg-white" />
-          <col className="w-1/12 bg-white" />
+          <col className="w-1/12 bg-white mr-1" />
+          <col className="w-1/12 bg-white mr-1" />
+          <col className="w-1/12 bg-white mr-1" />
           <col className="w-1/12 bg-white" />
         </colgroup>
         <thead className="bg-inputGray text-gray ">
