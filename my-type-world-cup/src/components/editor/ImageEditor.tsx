@@ -73,6 +73,7 @@ export default function ImageEditor({
   const [scale, setScale] = useState(1);
   const [rotate, setRotate] = useState(0);
   const [aspect, setAspect] = useState<number | undefined>(1 / 1);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const [modalMessage, setModalMessage] =
     useState<string>("이름을 작성해주세요");
   const [isCopied, setIsCopied] = useState<boolean>(false);
@@ -81,6 +82,9 @@ export default function ImageEditor({
     setScale(1);
     setRotate(0);
     setCrop(undefined);
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   }, [imgSrc]);
   //파일 읽음
   // function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
@@ -220,103 +224,91 @@ export default function ImageEditor({
     [completedCrop, scale, rotate]
   );
 
-  // function handleToggleAspectClick() {
-  //   //비율 조정
-  //   if (aspect) {
-  //     setAspect(undefined);
-  //   } else if (imgRef.current) {
-  //     const { width, height } = imgRef.current;
-  //     setAspect(16 / 9);
-  //     setCrop(centerAspectCrop(width, height, 16 / 9));
-  //   }
-  // }
-
   return (
     <div className="mt-4 mb-4">
-      <div className="Crop-Controls">
-        {!!imgSrc ? (
-          <div className="mt-4 flex flex-row text-gray">
-            <div className="flex h-8 mr-4 items-center mb-2">
-              <label htmlFor="scale-input" className="w-16">
-                Scale
-              </label>
-              <button
-                type="button"
-                className="input-button"
-                onClick={() => setScale(scale + 0.1)}
-                disabled={!imgSrc}
-              >
-                <Image
-                  src="/icon/grayPlus.svg"
-                  alt="plus"
-                  className="cursor-pointer"
-                  width={20}
-                  height={18}
-                  priority
-                />
-              </button>
-              <button
-                type="button"
-                className="input-button ml-2"
-                onClick={() => setScale(scale - 0.1)}
-                disabled={!imgSrc}
-              >
-                <Image
-                  src="/icon/grayMinus.svg"
-                  alt="minus"
-                  className="cursor-pointer"
-                  width={20}
-                  height={18}
-                  priority
-                />
-              </button>
-            </div>
-
-            <div className="flex h-8 items-center mb-2">
-              <label htmlFor="rotate-input" className="w-16">
-                Rotate
-              </label>
-
-              <button
-                type="button"
-                className="input-button ml-2"
-                onClick={() => setRotate(rotate + 10)}
-                disabled={!imgSrc}
-              >
-                <Image
-                  src="/icon/grayPlus.svg"
-                  alt="plus"
-                  className="cursor-pointer"
-                  width={20}
-                  height={18}
-                  priority
-                />
-              </button>
-              <button
-                type="button"
-                className="input-button ml-2"
-                onClick={() => setRotate(rotate - 10)}
-                disabled={!imgSrc}
-              >
-                <Image
-                  src="/icon/grayMinus.svg"
-                  alt="minus"
-                  className="cursor-pointer"
-                  width={20}
-                  height={18}
-                  priority
-                />
-              </button>
-            </div>
+      {!!imgSrc ? (
+        <div className="mt-4 flex flex-row text-gray" ref={scrollRef}>
+          <div className="flex h-8 mr-4 items-center mb-2">
+            <label htmlFor="scale-input" className="w-16">
+              Scale
+            </label>
+            <button
+              type="button"
+              className="input-button"
+              onClick={() => setScale(scale + 0.1)}
+              disabled={!imgSrc}
+            >
+              <Image
+                src="/icon/grayPlus.svg"
+                alt="plus"
+                className="cursor-pointer"
+                width={20}
+                height={18}
+                priority
+              />
+            </button>
+            <button
+              type="button"
+              className="input-button ml-2"
+              onClick={() => setScale(scale - 0.1)}
+              disabled={!imgSrc}
+            >
+              <Image
+                src="/icon/grayMinus.svg"
+                alt="minus"
+                className="cursor-pointer"
+                width={20}
+                height={18}
+                priority
+              />
+            </button>
           </div>
-        ) : (
-          <h2 className="h-64 flex justify-center items-center">
-            <span className="text-warning"> 로컬 파일 </span> &nbsp; 혹은 &nbsp;
-            <span className="text-warning">검색</span>을 통해 이미지를
-            등록해주세요!
-          </h2>
-        )}
-      </div>
+
+          <div className="flex h-8 items-center mb-2">
+            <label htmlFor="rotate-input" className="w-16">
+              Rotate
+            </label>
+
+            <button
+              type="button"
+              className="input-button ml-2"
+              onClick={() => setRotate(rotate + 10)}
+              disabled={!imgSrc}
+            >
+              <Image
+                src="/icon/grayPlus.svg"
+                alt="plus"
+                className="cursor-pointer"
+                width={20}
+                height={18}
+                priority
+              />
+            </button>
+            <button
+              type="button"
+              className="input-button ml-2"
+              onClick={() => setRotate(rotate - 10)}
+              disabled={!imgSrc}
+            >
+              <Image
+                src="/icon/grayMinus.svg"
+                alt="minus"
+                className="cursor-pointer"
+                width={20}
+                height={18}
+                priority
+              />
+            </button>
+          </div>
+        </div>
+      ) : (
+        <h2 className="h-64 flex justify-center items-center">
+          <span className="text-warning"> 로컬 파일 </span> &nbsp; 혹은 &nbsp;
+          <span className="text-warning">검색</span>을 통해 이미지를
+          등록해주세요!
+        </h2>
+      )}
+
       {!!imgSrc && (
         <ReactCrop
           crop={crop}
