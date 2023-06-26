@@ -46,6 +46,7 @@ type Contestant = {
   id: number;
   name: string;
   image: string;
+  thumb: string;
 };
 
 type rank_Data = {
@@ -180,24 +181,24 @@ type imgbb_result = {
 };
 
 export type {
-  Save_data,
-  Search_Image,
+  Candidate,
   Comment_list,
   Comment_list_data,
   Comment_list_pageInfo,
+  Contestant,
+  IngameModalData,
+  MainWorldcup,
+  PageInfo,
+  Post_req,
+  Post_res,
+  Round,
+  Save_data,
+  Search_Image,
+  WorldcupsResponse,
+  imgbb_result,
   rank_Data,
   rank_res,
   rank_res_data,
   rank_res_pageInfo,
-  Contestant,
-  Round,
-  WorldcupsResponse,
-  MainWorldcup,
-  Candidate,
-  PageInfo,
-  Post_req,
-  Post_res,
-  IngameModalData,
   result_data,
-  imgbb_result,
 };
