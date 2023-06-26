@@ -199,7 +199,6 @@ export async function post_refresh(accessToken: string) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
       },
       credentials: "include",
     });
@@ -207,7 +206,7 @@ export async function post_refresh(accessToken: string) {
     if (!response.ok) {
       throw response.status;
     }
-    const data = await response.json();
+    const data = await response;
 
     return data;
   } catch (error) {
