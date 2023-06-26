@@ -53,7 +53,7 @@ const Editor = ({ setIsNumber }: EditorProps) => {
           .catch((err) => {
             console.log(err);
             if (err === 401) {
-              post_refresh(accessToken!);
+              post_refresh();
               console.log("로그인 해야해~");
             }
           });
@@ -70,7 +70,7 @@ const Editor = ({ setIsNumber }: EditorProps) => {
           .catch((err) => {
             console.log(err);
             if (err === 401) {
-              post_refresh(accessToken!);
+              post_refresh();
               console.log("로그인 해야해~");
             }
           });

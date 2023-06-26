@@ -158,7 +158,7 @@ export default function ImageEditor({
           console.log(err, "실패");
           if (err === 401) {
             console.log(accessToken);
-            post_refresh(accessToken!);
+            post_refresh();
             console.log("로그인 해야해~");
           }
         });

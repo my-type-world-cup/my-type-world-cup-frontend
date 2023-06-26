@@ -193,7 +193,7 @@ export async function delete_candidates(accessToken: string, id: number) {
   }
 }
 
-export async function post_refresh(accessToken: string) {
+export async function post_refresh() {
   try {
     const response = await fetch(`${BACK_URL}/auth/refresh`, {
       method: "POST",
