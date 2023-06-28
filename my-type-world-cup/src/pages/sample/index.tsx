@@ -1,8 +1,13 @@
-import CardSkeleton from "@/components/main/CardSkeleton";
+import { post_refresh } from "@/api/user";
+import { accessTokenState } from "@/lib/atom/atom";
+import { useEffect } from "react";
+import { useRecoilValue } from "recoil";
 export default function Index() {
-  return (
-    <div className="mt-20">
-      <CardSkeleton />
-    </div>
-  );
+  const accessToken = useRecoilValue(accessTokenState);
+  useEffect(() => {
+    if (accessToken) {
+      post_refresh();
+    }
+  }, [accessToken]);
+  return <div className="mt-20"></div>;
 }
