@@ -1,15 +1,33 @@
 import { fetchUserData } from "@/api/user";
 import { BACK_URL } from "@/lib/config";
+
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+
 import { useRecoilState } from "recoil";
 import { accessTokenState, userState } from "../../lib/atom/atom";
 import ShareModal from "./ShareModal";
+
 type DropDownProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   isOpen: boolean;
 };
+
+function getAccessToken() {
+  const name = "AccessToken=";
+  const decodedCookie = decodeURIComponent(document.cookie);
+
+  const cookies = decodedCookie.split(";");
+
+  for (let i = 0; i < cookies.length; i++) {
+    let cookie = cookies[i].trim();
+    if (cookie.indexOf(name) === 0) {
+      return cookie.substring(name.length, cookie.length);
+    }
+  }
+  return "";
+}
 
 const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
   const [accessToken, setAccessToken] = useRecoilState<string | null>(
@@ -21,6 +39,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useRecoilState(userState);
   const [isCheck, setIsCheck] = useState(true);
+
   useEffect(() => {
     if (user?.nickname) {
       setIsCheck(false);
@@ -28,7 +47,10 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
   }, [user]);
 
   useEffect(() => {
-    const accessToken = router.query.access_token;
+    console.log(getAccessToken(), "document.cookie");
+
+    const accessToken = getAccessToken();
+
     if (accessToken) {
       setAccessToken(accessToken as string);
       fetchUserData(accessToken as string)
