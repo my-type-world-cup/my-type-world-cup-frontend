@@ -48,3 +48,9 @@ export const saveWorldcups = atom<Save_data[]>({
   default: [],
   effects: [sessionStorageEffect("save_worldcups")],
 });
+
+export const lastPath = atom<string | null>({
+  key: "lastPath",
+  default: null,
+  effects: [sessionStorageEffect("lastPath")],
+});
