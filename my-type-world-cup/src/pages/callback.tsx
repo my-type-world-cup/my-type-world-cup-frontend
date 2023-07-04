@@ -26,6 +26,20 @@ export default function Callback({}: Props) {
     } else {
       router.push("/"); //토큰이 없으면 메인으로 이동
     }
+    const handlePopstate = (event: PopStateEvent) => {
+      const currentUrl = window.location.href;
+
+      if (currentUrl.includes("/callback")) {
+        // 현재 URL에 "/callback"이 포함되어 있는지 확인합니다.
+        window.history.replaceState(null, "", "/"); // 홈으로 이동
+      }
+    };
+
+    window.addEventListener("popstate", handlePopstate);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopstate);
+    };
   }, [router]);
 
   return <div className="mt-40">callback</div>;
