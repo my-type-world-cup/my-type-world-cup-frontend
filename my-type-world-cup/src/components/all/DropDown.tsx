@@ -1,12 +1,11 @@
-import { fetchUserData } from "@/api/user";
 import { BACK_URL } from "@/lib/config";
 
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-import { useRecoilState } from "recoil";
-import { accessTokenState, userState } from "../../lib/atom/atom";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { lastPath, userState } from "../../lib/atom/atom";
 import ShareModal from "./ShareModal";
 
 type DropDownProps = {
@@ -14,25 +13,8 @@ type DropDownProps = {
   isOpen: boolean;
 };
 
-function getAccessToken() {
-  const name = "AccessToken=";
-  const decodedCookie = decodeURIComponent(document.cookie);
-
-  const cookies = decodedCookie.split(";");
-
-  for (let i = 0; i < cookies.length; i++) {
-    let cookie = cookies[i].trim();
-    if (cookie.indexOf(name) === 0) {
-      return cookie.substring(name.length, cookie.length);
-    }
-  }
-  return "";
-}
-
 const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
-  const [accessToken, setAccessToken] = useRecoilState<string | null>(
-    accessTokenState
-  );
+  const setLastPath = useSetRecoilState(lastPath);
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [message, setMessage] = useState("");
   const router = useRouter();
@@ -45,23 +27,23 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
       setIsCheck(false);
     }
   }, [user]);
+  console.log(router.asPath, "router.query");
 
-  useEffect(() => {
-    console.log(getAccessToken(), "document.cookie");
+  // useEffect(() => {
+  //   const accessToken = router.query.access_token;
 
-    const accessToken = getAccessToken();
+  //   if (accessToken) {
+  //     setAccessToken(accessToken as string);
+  //     fetchUserData(accessToken as string)
+  //       .then((data) => {
+  //         setUser(data);
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //       });
+  //   }
+  // }, [router.query.access_token, setAccessToken, setUser]);
 
-    if (accessToken) {
-      setAccessToken(accessToken as string);
-      fetchUserData(accessToken as string)
-        .then((data) => {
-          setUser(data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  }, [router.query.access_token, setAccessToken, setUser]);
   const handlego = (word?: string) => {
     router.push(`/${word}`);
     setIsOpen(false);
@@ -84,6 +66,8 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
   };
 
   const OauthHandler = () => {
+    setLastPath(router.asPath);
+
     window.location.href = `${BACK_URL}/oauth2/authorization/google`;
   };
 

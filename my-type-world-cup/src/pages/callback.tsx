@@ -1,20 +1,32 @@
+import { fetchUserData } from "@/api/user";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { accessTokenState, lastPath, userState } from "../lib/atom/atom";
 type Props = {};
 
-function getAccessToken() {
-  const name = "AccessToken=";
-  const decodedCookie = decodeURIComponent(document.cookie);
+export default function Callback({}: Props) {
+  const setAccessToken = useSetRecoilState(accessTokenState);
+  const lastPathState = useRecoilValue(lastPath);
+  const router = useRouter();
+  const setUser = useSetRecoilState(userState);
 
-  const cookies = decodedCookie.split(";");
-
-  for (let i = 0; i < cookies.length; i++) {
-    let cookie = cookies[i].trim();
-    if (cookie.indexOf(name) === 0) {
-      return cookie.substring(name.length, cookie.length);
+  useEffect(() => {
+    const accessToken = router.query.access_token as string;
+    if (accessToken) {
+      setAccessToken(accessToken as string); //토큰 저장
+      fetchUserData(accessToken as string)
+        .then((data) => {
+          setUser(data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      router.push(lastPathState as string); //이전페이지로 이동
+    } else {
+      router.push("/"); //토큰이 없으면 메인으로 이동
     }
-  }
-  return "";
-}
+  }, [router]);
 
-export default function callback({}: Props) {
   return <div className="mt-40">callback</div>;
 }
