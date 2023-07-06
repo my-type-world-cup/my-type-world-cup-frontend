@@ -22,24 +22,10 @@ export default function Callback({}: Props) {
         .catch((error) => {
           console.error(error);
         });
-      router.push(lastPathState as string); //이전페이지로 이동
+      router.replace(lastPathState as string); //이전페이지로 이동
     } else {
-      router.push("/"); //토큰이 없으면 메인으로 이동
+      router.replace("/"); //토큰이 없으면 메인으로 이동
     }
-    const handlePopstate = (event: PopStateEvent) => {
-      const currentUrl = window.location.href;
-
-      if (currentUrl.includes("/callback")) {
-        // 현재 URL에 "/callback"이 포함되어 있는지 확인합니다.
-        window.history.replaceState(null, "", "/"); // 홈으로 이동
-      }
-    };
-
-    window.addEventListener("popstate", handlePopstate);
-
-    return () => {
-      window.removeEventListener("popstate", handlePopstate);
-    };
   }, [router]);
 
   return <div className="mt-40">callback</div>;
