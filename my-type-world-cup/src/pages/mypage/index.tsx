@@ -96,7 +96,7 @@ export default function Index({}: Props) {
             width={150}
             height={250}
           />
-          <h3 className="text-xl mt-4">Dolphin를 이용해주셔서 감사합니다</h3>
+          <h3 className="text-xl mt-4">Dolpick를 이용해주셔서 감사합니다</h3>
         </div>
 
         <div className="mt-20 mx-8 text-lg flex flex-col">
