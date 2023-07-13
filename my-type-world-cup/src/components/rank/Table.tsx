@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import ZoomedImage from "../all/ZoomImage";
+import ImageContainer from "./ImageContainer";
 import TablePagiNation from "./TablePagiNation";
 type Props = {
   rankData: rank_Data;
@@ -175,13 +176,21 @@ function Table({ rankData }: Props) {
               </td>
               <td>
                 <div className="overflow-hidden h-12 flex justify-center ">
-                  <Image
+                  {/* <Image
                     className="flex justify-center items-center cursor-pointer"
                     src={rank.thumb}
                     alt="start"
                     width={60}
                     height={60}
                     onClick={() => zoomedHandler(rank.image)}
+                    onError={(e) => {
+                      console.log("하이");
+                    }}
+                  /> */}
+                  <ImageContainer
+                    thumb={rank.thumb}
+                    image={rank.image}
+                    zoomedHandler={zoomedHandler}
                   />
                 </div>
               </td>

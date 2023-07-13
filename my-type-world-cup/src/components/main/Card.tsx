@@ -1,6 +1,6 @@
 import type { MainWorldcup } from "@/type/Types";
-
 import Image from "next/image";
+import { useState } from "react";
 import GameButtons from "./GameButtons";
 const Card = ({
   worldcup,
@@ -16,8 +16,9 @@ const Card = ({
 
   handlerWorldCup?: (id: number) => void;
 }) => {
+  const [imageOn, setImageOn] = useState<boolean[]>([true, true]);
   const id = worldcup.id;
-
+  const BlueMascotImage = "/icon/blueMascot.svg";
   return (
     <article className="border-main mt-4 mx-4 px-2 border-[1px] pb-4">
       {
@@ -26,14 +27,18 @@ const Card = ({
             <div className="w-[175px] h-[175px] overflow-hidden flex items-center">
               <Image
                 src={
+                  imageOn[0] &&
                   worldcup.candidateSimpleResponseDtos.length === 2
                     ? worldcup.candidateSimpleResponseDtos[0].image
-                    : "/icon/blueMascot.svg"
+                    : BlueMascotImage
                 }
                 alt="연예인 사진"
                 width={1000}
                 height={1000}
                 priority
+                onError={() => {
+                  setImageOn((bol) => [false, bol[1]]);
+                }}
               />
             </div>
             <h4 className="text-center font-medium">
@@ -47,14 +52,18 @@ const Card = ({
             <div className="w-[175px] h-[175px] overflow-hidden flex items-center">
               <Image
                 src={
+                  imageOn[1] &&
                   worldcup.candidateSimpleResponseDtos.length === 2
                     ? worldcup.candidateSimpleResponseDtos[1].image
-                    : "/icon/blueMascot.svg"
+                    : BlueMascotImage
                 }
                 alt="1st"
                 width={1000}
                 height={1000}
                 priority
+                onError={() => {
+                  setImageOn((bol) => [bol[0], false]);
+                }}
               />
             </div>
             <h4 className="text-center font-medium">
