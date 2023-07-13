@@ -4,10 +4,9 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { lastPath, userState } from "../../lib/atom/atom";
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
+import { accessTokenState, lastPath, userState } from "../../lib/atom/atom";
 import ShareModal from "./ShareModal";
-
 type DropDownProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   isOpen: boolean;
@@ -15,6 +14,7 @@ type DropDownProps = {
 
 const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
   const setLastPath = useSetRecoilState(lastPath);
+  const resetAccessToken = useResetRecoilState(accessTokenState);
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [message, setMessage] = useState("");
   const router = useRouter();
@@ -52,6 +52,9 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
     setUser(null);
     setIsCheck(true);
     setIsOpen(false);
+    setLastPath("/");
+    resetAccessToken();
+    router.push(`/`);
   };
 
   const alram = (word: string) => {
