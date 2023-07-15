@@ -111,8 +111,13 @@ export default function CommentList({ accessToken, id, rendering }: Props) {
               <h2 className="text-black text-sm">
                 {comment.nickname === null ? "익명" : comment.nickname}
                 <span className="ml-2 text-gray">
-                  ({comment.candidateName})&nbsp;&nbsp;
-                  {getTimeDiffString(comment.createdAt)} 전
+                  {comment.candidateName && (
+                    <>
+                      {"(" + comment.candidateName + ")"}
+                      &nbsp;&nbsp;
+                    </>
+                  )}
+                  {getTimeDiffString(comment.createdAt)}
                 </span>
               </h2>
 
