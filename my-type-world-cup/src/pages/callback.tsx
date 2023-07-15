@@ -1,13 +1,13 @@
 import { fetchUserData } from "@/api/user";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { accessTokenState, lastPath, userState } from "../lib/atom/atom";
 type Props = {};
 
 export default function Callback({}: Props) {
   const setAccessToken = useSetRecoilState(accessTokenState);
-  const lastPathState = useRecoilValue(lastPath);
+  const [lastPathState, setlastPathState] = useRecoilState(lastPath);
   const router = useRouter();
   const setUser = useSetRecoilState(userState);
 
@@ -23,8 +23,9 @@ export default function Callback({}: Props) {
           console.error(error);
         });
       router.replace(lastPathState as string); //이전페이지로 이동
+      setlastPathState(null);
     } else {
-      router.replace("/"); //토큰이 없으면 메인으로 이동
+      if (!lastPathState) router.replace("/"); //토큰이 없으면 메인으로 이동
     }
   }, [router]);
 
