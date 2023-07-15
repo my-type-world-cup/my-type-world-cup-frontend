@@ -2,13 +2,23 @@ import type { Post_req, Save_data } from "@/type/Types";
 import { BACK_URL } from "../lib/config";
 
 export async function fetchUserData(accessToken: string) {
-  const response = await fetch(`${BACK_URL}/members`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch(`${BACK_URL}/members`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    if (!response.ok) {
+      throw response.status;
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log("하이");
+    // 에러 처리
+    console.log(error);
+    throw error; // 필요에 따라 예외를 다시 던지거나 특정 값을 반환할 수 있습니다.
+  }
 }
 
 export async function patchMember(accessToken: string, nickname: string) {
@@ -196,7 +206,7 @@ export async function delete_candidates(accessToken: string, id: number) {
 export async function post_refresh() {
   try {
     const response = await fetch(`${BACK_URL}/auth/refresh`, {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
