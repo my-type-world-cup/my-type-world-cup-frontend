@@ -1,9 +1,9 @@
-import { BACK_URL } from "@/lib/config";
+import { post_comments } from "@/api/user";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { Dispatch, useEffect, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { userState } from "../../lib/atom/atom";
+import { accessTokenState, userState } from "../../lib/atom/atom";
 import type { Contestant } from "../../type/Types";
 import ShareModal from "../all/ShareModal";
 
@@ -23,15 +23,15 @@ const Comment: React.FC<FormProps> = ({
   const id = Number(router.query.id);
   const user = useRecoilValue(userState);
   const isButton = useRef<boolean>(true);
-  const [nickname, setNickname] = useState("");
+  const accessToken = useRecoilValue(accessTokenState);
   const [message, setMessage] = useState("");
   const [modalMessage, setmodalMessage] = useState<string>("");
   const [isCopied, setIsCopied] = useState<boolean>(false);
-  const [placeholder, setPlaceholder] = useState<string>("익명");
+  const [nickname, setnickname] = useState<string>("익명");
 
   useEffect(() => {
     if (user?.nickname) {
-      setPlaceholder(user.nickname);
+      setnickname(user.nickname);
     }
   }, [user]);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,22 +40,16 @@ const Comment: React.FC<FormProps> = ({
       isButton.current = false;
 
       console.log(message, nickname);
-      const comment = {
-        content: message,
-        worldCupId: id,
-        ...(winner && { candidateName: winner.name }),
-      };
+      const comment: { content: string; worldCupId: number; winner?: string } =
+        {
+          content: message,
+          worldCupId: id,
+          ...(winner && { candidateName: winner.name }),
+        };
       console.log(comment);
-      setNickname("");
+
       setMessage("");
-      fetch(`${BACK_URL}/comments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(comment),
-      })
-        .then((response) => response.json())
+      post_comments(comment, accessToken)
         .then((data) => {
           setRendering(!rendering);
         })
@@ -90,7 +84,7 @@ const Comment: React.FC<FormProps> = ({
         <div className="w-full" onClick={() => alram()}>
           <input
             type="readonly"
-            placeholder={placeholder}
+            placeholder={nickname}
             className="w-full border-gray border rounded-md py-2 px-3 mb-2"
             value={nickname}
             disabled

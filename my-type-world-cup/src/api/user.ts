@@ -244,3 +244,29 @@ export async function get_detail(id: number, accessToken: string) {
     throw error;
   }
 }
+
+export async function post_comments(
+  comment: { content: string; worldCupId: number; winner?: string },
+  accessToken?: string | null
+) {
+  try {
+    const response = await fetch(`${BACK_URL}/comments`, {
+      method: "POST",
+      headers: {
+        ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(comment),
+    });
+    console.log(response);
+    if (!response.ok) {
+      throw response.status;
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
