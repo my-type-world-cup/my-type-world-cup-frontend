@@ -23,6 +23,53 @@ const items: Item[] = [
   { name: "1대1 승률", value: "winRatio" },
 ];
 
+const rank_res_data_dummy: rank_res_data[] = [
+  {
+    id: 0,
+    name: "",
+    image: "/icon/blueMascot.svg",
+    finalWinCount: 100,
+    winCount: 100,
+    matchUpWorldCupCount: 100,
+    matchUpGameCount: 100,
+    worldCupId: 0,
+    thumb: "/icon/blueMascot.svg",
+  },
+  {
+    id: 1,
+    name: "",
+    image: "/icon/blueMascot.svg",
+    finalWinCount: 0,
+    winCount: 0,
+    matchUpWorldCupCount: 0,
+    matchUpGameCount: 0,
+    worldCupId: 0,
+    thumb: "/icon/blueMascot.svg",
+  },
+  {
+    id: 2,
+    name: "",
+    image: "/icon/blueMascot.svg",
+    finalWinCount: 0,
+    winCount: 0,
+    matchUpWorldCupCount: 0,
+    matchUpGameCount: 0,
+    worldCupId: 0,
+    thumb: "/icon/blueMascot.svg",
+  },
+  {
+    id: 3,
+    name: "",
+    image: "/icon/blueMascot.svg",
+    finalWinCount: 0,
+    winCount: 0,
+    matchUpWorldCupCount: 0,
+    matchUpGameCount: 0,
+    worldCupId: 0,
+    thumb: "/icon/blueMascot.svg",
+  },
+];
+
 const PAGE_SIZE_OPTIONS = [10, 20, 30];
 function Table({ rankData }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -42,13 +89,13 @@ function Table({ rankData }: Props) {
     setCurrentPage(1);
   }, [pageSize]);
 
-  if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
-  if (data?.data === undefined) return <div>데이터가 없습니다</div>; //비밀번호 체킹
+  // if (error) return <div>failed to load</div>;
+  // if (isLoading) return <div>loading...</div>;
+  // if (data?.data === undefined) return <div>데이터가 없습니다</div>; //비밀번호 체킹
   console.log(data, "데이터");
   console.log(rankData, "랭크데이터");
-  const rankMember: rank_res_data[] = data!.data;
-  const totalPage: number = data!.pageInfo.totalPages;
+  const rankMember: rank_res_data[] = data ? data!.data : rank_res_data_dummy;
+  const totalPage: number = data ? data!.pageInfo.totalPages : 1;
 
   const handleSearch = (
     e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLImageElement>
