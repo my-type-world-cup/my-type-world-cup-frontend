@@ -216,7 +216,7 @@ export async function post_refresh() {
     if (!response.ok) {
       throw response.status;
     }
-    const data = await response;
+    const data = await response.json();
 
     return data;
   } catch (error) {
