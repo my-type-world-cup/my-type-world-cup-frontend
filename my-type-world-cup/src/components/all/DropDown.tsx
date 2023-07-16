@@ -27,7 +27,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
       setIsCheck(false);
     }
   }, [user]);
-  console.log(router.asPath, "router.query");
+  // console.log(router.asPath, "router.query");
 
   // useEffect(() => {
   //   const accessToken = router.query.access_token;
@@ -52,7 +52,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
     setUser(null);
     setIsCheck(true);
     setIsOpen(false);
-    setLastPath("/");
+    setLastPath(null);
     resetAccessToken();
     router.push(`/`);
   };
