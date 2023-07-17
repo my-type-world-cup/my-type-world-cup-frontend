@@ -1,4 +1,4 @@
-import { post_candidates, post_refresh } from "@/api/user";
+import { post_candidates } from "@/api/user";
 import { blobToServer } from "@/lib/editor/base64";
 import type { Save_data, imgbb_result } from "@/type/Types";
 import Image from "next/image";
@@ -156,11 +156,11 @@ export default function ImageEditor({
         })
         .catch((err) => {
           console.log(err, "실패");
-          if (err === 401) {
-            console.log(accessToken);
-            post_refresh();
-            console.log("로그인 해야해~");
-          }
+          // if (err === 401) {
+          //   console.log(accessToken);
+          //   post_refresh();
+          //   console.log("로그인 해야해~");
+          // }
         });
 
       //tumbㄷ 추가

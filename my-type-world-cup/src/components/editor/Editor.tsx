@@ -1,4 +1,4 @@
-import { patch_worldcup, post_refresh, post_worldcup } from "@/api/user";
+import { patch_worldcup, post_worldcup } from "@/api/user";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { accessTokenState, postWorldcup } from "../../lib/atom/atom";
@@ -52,10 +52,10 @@ const Editor = ({ setIsNumber }: EditorProps) => {
           })
           .catch((err) => {
             console.log(err);
-            if (err === 401) {
-              post_refresh();
-              console.log("로그인 해야해~");
-            }
+            // if (err === 401) {
+            //   post_refresh();
+            //   console.log("로그인 해야해~");
+            // }
           });
       } else {
         patch_worldcup(accessToken!, post_body!, worldcup!.id)
@@ -69,10 +69,10 @@ const Editor = ({ setIsNumber }: EditorProps) => {
           })
           .catch((err) => {
             console.log(err);
-            if (err === 401) {
-              post_refresh();
-              console.log("로그인 해야해~");
-            }
+            // if (err === 401) {
+            //   post_refresh();
+            //   console.log("로그인 해야해~");
+            // }
           });
       }
     }
