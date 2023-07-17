@@ -8,7 +8,12 @@ export async function fetchUserData(accessToken: string) {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    if (!response.ok) {
+    if (response.status === 401) {
+      // 토큰이 만료되었을 때
+      const refreshedToken = await get_refresh(); // refresh 토큰 요청
+      // refresh 토큰을 사용하여 다시 요청
+      return fetchUserData(refreshedToken.data);
+    } else if (!response.ok) {
       throw response.status;
     }
     const data = await response.json();
@@ -22,17 +27,32 @@ export async function fetchUserData(accessToken: string) {
 }
 
 export async function patchMember(accessToken: string, nickname: string) {
-  const response = await fetch(`${BACK_URL}/members`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify({ nickname: nickname }),
-  });
-  const data = await response.json();
+  try {
+    const response = await fetch(`${BACK_URL}/members`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({ nickname: nickname }),
+    });
 
-  return data;
+    if (response.status === 401) {
+      // 토큰이 만료되었을 때
+      const refreshedToken = await get_refresh(); // refresh 토큰 요청
+      // refresh 토큰을 사용하여 다시 요청
+      return patchMember(refreshedToken.data, nickname);
+    } else if (!response.ok) {
+      throw response.status;
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    // 에러 처리
+    console.log(error);
+    throw error;
+  }
 }
 
 export async function post_worldcup(accessToken: string, worldCup: Post_req) {
@@ -46,7 +66,12 @@ export async function post_worldcup(accessToken: string, worldCup: Post_req) {
       body: JSON.stringify(worldCup),
     });
 
-    if (!response.ok) {
+    if (response.status === 401) {
+      // 토큰이 만료되었을 때
+      const refreshedToken = await get_refresh(); // refresh 토큰 요청
+      // refresh 토큰을 사용하여 다시 요청
+      return post_worldcup(refreshedToken.data, worldCup);
+    } else if (!response.ok) {
       throw response.status;
     }
 
@@ -74,7 +99,12 @@ export async function patch_worldcup(
       body: JSON.stringify(worldCup),
     });
 
-    if (!response.ok) {
+    if (response.status === 401) {
+      // 토큰이 만료되었을 때
+      const refreshedToken = await get_refresh(); // refresh 토큰 요청
+      // refresh 토큰을 사용하여 다시 요청
+      return patch_worldcup(refreshedToken.data, worldCup, id);
+    } else if (!response.ok) {
       throw response.status;
     }
 
@@ -96,10 +126,16 @@ export async function delete_worldcup(accessToken: string, id: number) {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log(response);
-    if (!response.ok) {
+
+    if (response.status === 401) {
+      // 토큰이 만료되었을 때
+      const refreshedToken = await get_refresh(); // refresh 토큰 요청
+      // refresh 토큰을 사용하여 다시 요청
+      return delete_worldcup(refreshedToken.data, id);
+    } else if (!response.ok) {
       throw response.status;
     }
+
     return response;
   } catch (error) {
     // 에러 처리
@@ -114,21 +150,7 @@ export async function post_candidates(
 ) {
   try {
     if (candidates.id) {
-      const response = await fetch(`${BACK_URL}/candidates/${candidates.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify(candidates),
-      });
-      console.log(response);
-      if (!response.ok) {
-        throw response.status;
-      }
-      const data = await response.json();
-
-      return data;
+      return await patch_candidates(accessToken, candidates);
     } else {
       const response = await fetch(`${BACK_URL}/candidates`, {
         method: "POST",
@@ -138,11 +160,17 @@ export async function post_candidates(
         },
         body: JSON.stringify(candidates),
       });
-      if (!response.ok) {
+
+      if (response.status === 401) {
+        // 토큰이 만료되었을 때
+        const refreshedToken = await get_refresh(); // refresh 토큰 요청
+        // refresh 토큰을 사용하여 다시 요청
+        return post_candidates(refreshedToken.data, candidates);
+      } else if (!response.ok) {
         throw response.status;
       }
-      const data = await response.json();
 
+      const data = await response.json();
       return data;
     }
   } catch (error) {
@@ -165,10 +193,16 @@ export async function patch_candidates(
       },
       body: JSON.stringify(candidates),
     });
-    console.log(response);
-    if (!response.ok) {
+
+    if (response.status === 401) {
+      // 토큰이 만료되었을 때
+      const refreshedToken = await get_refresh(); // refresh 토큰 요청
+      // refresh 토큰을 사용하여 다시 요청
+      return patch_candidates(refreshedToken.data, candidates);
+    } else if (!response.ok) {
       throw response.status;
     }
+
     const data = await response.json();
 
     return data;
@@ -180,7 +214,6 @@ export async function patch_candidates(
 }
 
 export async function delete_candidates(accessToken: string, id: number) {
-  console.log(id, accessToken);
   try {
     const response = await fetch(`${BACK_URL}/candidates/${id}`, {
       method: "DELETE",
@@ -189,12 +222,18 @@ export async function delete_candidates(accessToken: string, id: number) {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log(response);
-    if (!response.ok) {
+
+    if (response.status === 401) {
+      // 토큰이 만료되었을 때
+      const refreshedToken = await get_refresh(); // refresh 토큰 요청
+      // refresh 토큰을 사용하여 다시 요청
+      return delete_candidates(refreshedToken.data, id);
+    } else if (!response.ok) {
       throw response.status;
     }
-    // const data = await response.json();
 
+    // 삭제된 후에는 특정 데이터를 반환하지 않으므로 주석 처리합니다.
+    // const data = await response.json();
     // return data;
   } catch (error) {
     // 에러 처리
@@ -203,7 +242,7 @@ export async function delete_candidates(accessToken: string, id: number) {
   }
 }
 
-export async function post_refresh() {
+export async function get_refresh() {
   try {
     const response = await fetch(`${BACK_URL}/auth/refresh`, {
       method: "GET",
@@ -234,7 +273,12 @@ export async function get_detail(id: number, accessToken: string) {
       },
     });
     console.log(response);
-    if (!response.ok) {
+    if (response.status === 401) {
+      // 토큰이 만료되었을 때
+      const refreshedToken = await get_refresh(); // refresh 토큰 요청
+      // refresh 토큰을 사용하여 다시 요청
+      return get_detail(id, refreshedToken.data);
+    } else if (!response.ok) {
       throw response.status;
     }
     const data = await response.json();
@@ -259,7 +303,12 @@ export async function post_comments(
       body: JSON.stringify(comment),
     });
     console.log(response);
-    if (!response.ok) {
+    if (response.status === 401) {
+      // 토큰이 만료되었을 때
+      const refreshedToken = await get_refresh(); // refresh 토큰 요청
+      // refresh 토큰을 사용하여 다시 요청
+      return post_comments(comment, refreshedToken.data);
+    } else if (!response.ok) {
       throw response.status;
     }
 
