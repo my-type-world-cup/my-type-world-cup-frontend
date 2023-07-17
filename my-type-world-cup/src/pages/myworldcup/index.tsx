@@ -69,6 +69,7 @@ export default function Home({}: {}) {
     }
   };
   const handlerWorldCup = (id: number) => {
+    //월드컵 수정
     resetEditor();
     get_detail(id, accessToken || "").then((res) => {
       console.log(res);
