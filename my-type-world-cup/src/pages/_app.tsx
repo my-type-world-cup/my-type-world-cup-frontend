@@ -12,7 +12,10 @@ function App({ Component, pageProps }: AppProps) {
         <title>이상형 월드컵</title>
         <meta name="description" content="당신만의 이상형을 찾아주세요!." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/icon/whitetrophy.svg" />
+        <meta property="og:description" content="내가 원하는 설명" />
+        <meta property="og:title" content="내가 원하는 제목" />
+        <meta property="og:image" content="/icon/start.svg" />
+        <link rel="icon" href="/icon/whiteDolphin2.svg" />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
