@@ -16,7 +16,7 @@ export default function Callback({}: Props) {
 
   useEffect(() => {
     if (accessToken) {
-      fetchUserData(accessToken)
+      fetchUserData(accessToken as string)
         .then((data) => {
           setUser(data);
           if (lastPathState) {
