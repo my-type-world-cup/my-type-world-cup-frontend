@@ -1,7 +1,13 @@
-import type { Post_req, Save_data } from "@/type/Types";
+import type { User } from "@/lib/atom/atom";
+import type {
+  Comment_list_data,
+  Post_req,
+  Post_res,
+  Save_data,
+} from "@/type/Types";
 import { BACK_URL } from "../lib/config";
 
-export async function fetchUserData(accessToken: string) {
+export async function fetchUserData(accessToken: string): Promise<User> {
   try {
     const response = await fetch(`${BACK_URL}/members`, {
       headers: {
@@ -12,7 +18,7 @@ export async function fetchUserData(accessToken: string) {
       // 토큰이 만료되었을 때
       const refreshedToken = await get_refresh(); // refresh 토큰 요청
       // refresh 토큰을 사용하여 다시 요청
-      return fetchUserData(refreshedToken.data);
+      return fetchUserData(refreshedToken.data as string);
     } else if (!response.ok) {
       throw response.status;
     }
@@ -26,7 +32,10 @@ export async function fetchUserData(accessToken: string) {
   }
 }
 
-export async function patchMember(accessToken: string, nickname: string) {
+export async function patchMember(
+  accessToken: string,
+  nickname: string
+): Promise<User> {
   try {
     const response = await fetch(`${BACK_URL}/members`, {
       method: "PATCH",
@@ -55,7 +64,10 @@ export async function patchMember(accessToken: string, nickname: string) {
   }
 }
 
-export async function post_worldcup(accessToken: string, worldCup: Post_req) {
+export async function post_worldcup(
+  accessToken: string,
+  worldCup: Post_req
+): Promise<Post_res> {
   try {
     const response = await fetch(`${BACK_URL}/worldcups`, {
       method: "POST",
@@ -88,7 +100,7 @@ export async function patch_worldcup(
   accessToken: string,
   worldCup: Post_req,
   id: number
-) {
+): Promise<Post_res> {
   try {
     const response = await fetch(`${BACK_URL}/worldcups/${id}`, {
       method: "PATCH",
@@ -117,7 +129,10 @@ export async function patch_worldcup(
   }
 }
 
-export async function delete_worldcup(accessToken: string, id: number) {
+export async function delete_worldcup(
+  accessToken: string,
+  id: number
+): Promise<Response> {
   try {
     const response = await fetch(`${BACK_URL}/worldcups/${id}`, {
       method: "DELETE",
@@ -147,7 +162,7 @@ export async function delete_worldcup(accessToken: string, id: number) {
 export async function post_candidates(
   accessToken: string,
   candidates: Save_data
-) {
+): Promise<Save_data> {
   try {
     if (candidates.id) {
       return await patch_candidates(accessToken, candidates);
@@ -183,7 +198,7 @@ export async function post_candidates(
 export async function patch_candidates(
   accessToken: string,
   candidates: Save_data
-) {
+): Promise<Save_data> {
   try {
     const response = await fetch(`${BACK_URL}/candidates/${candidates.id}`, {
       method: "PATCH",
@@ -213,7 +228,10 @@ export async function patch_candidates(
   }
 }
 
-export async function delete_candidates(accessToken: string, id: number) {
+export async function delete_candidates(
+  accessToken: string,
+  id: number
+): Promise<Response> {
   try {
     const response = await fetch(`${BACK_URL}/candidates/${id}`, {
       method: "DELETE",
@@ -235,6 +253,7 @@ export async function delete_candidates(accessToken: string, id: number) {
     // 삭제된 후에는 특정 데이터를 반환하지 않으므로 주석 처리합니다.
     // const data = await response.json();
     // return data;
+    return response;
   } catch (error) {
     // 에러 처리
     console.log(error);
@@ -242,7 +261,7 @@ export async function delete_candidates(accessToken: string, id: number) {
   }
 }
 
-export async function get_refresh() {
+export async function get_refresh(): Promise<{ data: string }> {
   try {
     const response = await fetch(`${BACK_URL}/auth/refresh`, {
       method: "GET",
@@ -265,7 +284,10 @@ export async function get_refresh() {
   }
 }
 
-export async function get_detail(id: number, accessToken: string) {
+export async function get_detail(
+  id: number,
+  accessToken: string
+): Promise<Post_res> {
   try {
     const response = await fetch(`${BACK_URL}/worldcups/${id}/details`, {
       headers: {
@@ -292,7 +314,7 @@ export async function get_detail(id: number, accessToken: string) {
 export async function post_comments(
   comment: { content: string; worldCupId: number; winner?: string },
   accessToken?: string | null
-) {
+): Promise<Comment_list_data> {
   try {
     const response = await fetch(`${BACK_URL}/comments`, {
       method: "POST",
