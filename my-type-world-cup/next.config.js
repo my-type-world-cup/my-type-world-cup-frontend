@@ -12,7 +12,9 @@ const nextConfig = {
         hostname: "**",
       },
     ],
+    // unoptimized: true,
   },
+  // output: "standalone",
   // ...(process.env.NEXT_PUBLIC_NODE_ENV === "prod" && {
   //   compiler: {
   //     removeConsole: {
