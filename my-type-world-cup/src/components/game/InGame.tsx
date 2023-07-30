@@ -93,35 +93,33 @@ export default function InGame({
   }
 
   return (
-    <div>
-      <h2 className="pt-4 text-white text-xl text-center">
+    <div className="relative">
+      <h2 className="text-white text-xl text-center h-4 mt-4 sm:mt-2">
         여자 아이돌 월드컵 {isModal[1] === 2 ? `결승` : `${isModal[1]}강`}
       </h2>
       <div
-        className="relative flex items-center pt-2 overflow-hidden h-[280px]  mx-12 "
+        className="flex justify-center pt-2 sm:mt-4 mt-6"
         onClick={() => handleClick(0)}
         style={{
           transform: isCheck[0]
             ? "translateY(0%)"
             : isCheck[1] === 0
-            ? "translateY(60%)"
-            : "translateX(150%)",
+            ? "translateY(35%)"
+            : " translateX(150%)",
           transition:
-            !isCheck[0] && isCheck[1] === 0
-              ? "transform 1s ease-in-out"
-              : "transform 0s",
-          visibility: !isCheck[0] && isCheck[1] === 1 ? "hidden" : "visible",
+            !isCheck[0] && isCheck[1] === 0 ? "all 1s ease-in-out" : "all 0s",
+          opacity: !isCheck[0] && isCheck[1] === 1 ? "0" : "1",
         }}
       >
         <Image
-          src={twoPeople[0].thumb}
+          src={twoPeople[0].image}
           alt="one"
-          width={500}
+          width={330}
           height={330}
-          className="cursor-pointer sm:hover:scale-125 duration-300"
+          className="cursor-pointer  sm:hover:scale-105  duration-300"
         />
         <h3
-          className="absolute text-white bottom-10"
+          className="absolute text-white bottom-10 left-1/2 transform -translate-x-1/2 "
           style={{
             textShadow:
               "1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black",
@@ -131,44 +129,28 @@ export default function InGame({
         </h3>
       </div>
       <div
-        className="flex justify-center my-4 sm:my-8"
+        className="absolute top-[53%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20"
         style={{
           transition: "transform 1s ease-in-out",
           visibility: !isCheck[0] ? "hidden" : "visible",
         }}
       >
         <Image
-          src="/icon/arrow.svg"
-          alt="Picture of the author"
-          width={60}
-          height={150}
-          style={{ transform: "scaleY(-1)" }}
-          className="cursor-pointer"
-        />
-
-        <Image
           src="/icon/vs.svg"
           alt="Picture of the author"
-          width={60}
-          height={150}
+          width={40}
+          height={40}
           className="mx-4"
-        />
-        <Image
-          src="/icon/arrow.svg"
-          alt="Picture of the author"
-          width={60}
-          height={150}
-          className="cursor-pointer hover:scale-125"
         />
       </div>
       <div
-        className="flex items-center overflow-hidden mx-12 h-[280px]"
+        className="flex justify-center "
         onClick={() => handleClick(1)}
         style={{
           transform: isCheck[0]
             ? "translateY(0%)"
             : isCheck[1] === 1
-            ? "translateY(-80%)"
+            ? "translateY(-60%)"
             : "translateX(200%)",
           transition:
             !isCheck[0] && isCheck[1] === 1 ? "transform 1s ease-in-out" : "",
@@ -176,15 +158,15 @@ export default function InGame({
         }}
       >
         <Image
-          src={twoPeople[1].thumb}
+          src={twoPeople[1].image}
           alt="two"
-          width={500}
-          height={150}
+          width={330}
+          height={330}
           onClick={() => handleClick(1)}
-          className="cursor-pointer sm:hover:scale-125 duration-300"
+          className="cursor-pointer sm:hover:scale-105 duration-300"
         />
         <h3
-          className="absolute text-white bottom-10"
+          className="absolute text-white bottom-10 left-1/2 transform -translate-x-1/2 "
           style={{
             textShadow:
               "1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black",
