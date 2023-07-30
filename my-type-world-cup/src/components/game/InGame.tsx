@@ -113,9 +113,10 @@ export default function InGame({
       >
         <Image
           src={twoPeople[0].image}
-          alt="one"
+          alt="이상형 1"
           width={330}
           height={330}
+          priority
           className="cursor-pointer  sm:hover:scale-105  duration-300"
         />
         <h3
@@ -159,8 +160,9 @@ export default function InGame({
       >
         <Image
           src={twoPeople[1].image}
-          alt="two"
+          alt="이상형 2"
           width={330}
+          priority
           height={330}
           onClick={() => handleClick(1)}
           className="cursor-pointer sm:hover:scale-105 duration-300"

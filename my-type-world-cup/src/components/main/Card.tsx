@@ -33,8 +33,8 @@ const Card = ({
                     : BlueMascotImage
                 }
                 alt="연예인 사진"
-                width={1000}
-                height={1000}
+                width={175}
+                height={175}
                 priority
                 onError={() => {
                   setImageOn((bol) => [false, bol[1]]);
@@ -58,8 +58,8 @@ const Card = ({
                     : BlueMascotImage
                 }
                 alt="1st"
-                width={1000}
-                height={1000}
+                width={175}
+                height={175}
                 priority
                 onError={() => {
                   setImageOn((bol) => [bol[0], false]);
