@@ -5,9 +5,8 @@ import { getInitialRound } from "@/lib/Helper";
 import { BACK_URL } from "@/lib/config";
 import type { Round } from "@/type/Types";
 import { Contestant, IngameModalData } from "@/type/Types";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import { useEffect, useRef, useState } from "react";
-
 //40명이 있다면 2명을 뽑음
 //32강 너무 헤비?
 //32강이면 총 16번을 뽑고s
@@ -170,22 +169,20 @@ const WorldCup = ({ data }: { data: IngameModalData }) => {
 export default WorldCup;
 
 //두가지 쿠션으로 생각해보자
-export const getStaticPaths: GetStaticPaths = async () => {
-	return {
-		paths: [],
-		fallback: "blocking"
-	};
-};
+export const getServerSideProps: GetServerSideProps = async ({
+	params
+}) => {
+	const gameId = params?.id as string; // 게임 ID를 받습니다.
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-	const gameId = params?.id as string;
-	//worldcups/1
-
+	// 서버로부터 데이터를 요청합니다.
 	const res = await fetch(`${BACK_URL}/worldcups/${gameId}`);
 	const data = await res.json();
+
+	// 데이터 요청이 실패한 경우, notFound를 반환합니다.
 	if (data.status === 404) {
 		return { notFound: true };
 	}
 
+	// 데이터 요청이 성공한 경우, data를 props로 반환합니다.
 	return { props: { data } };
 };
