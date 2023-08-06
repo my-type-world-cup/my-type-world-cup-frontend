@@ -6,6 +6,7 @@ import SortButtons from "@/components/main/SortButtons";
 import { fetcherToken } from "@/lib/Helper";
 import { BACK_URL } from "@/lib/config";
 import { MainWorldcup, WorldcupsResponse } from "@/type/Types";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -102,8 +103,9 @@ export default function Home({}: {}) {
 				<SortButtons setSort={setSort} sort={sort} />
 			</div>
 			<article className='w-full h-auto '>
-				{data
-					? worldcups.map((v) => (
+				{data ? (
+					worldcups.length > 0 ? (
+						worldcups.map((v) => (
 							<Card
 								key={v.id}
 								worldcup={v}
@@ -111,10 +113,31 @@ export default function Home({}: {}) {
 								handlerDelete={handlerDelete}
 								handlerWorldCup={handlerWorldCup}
 							/>
-					  ))
-					: new Array(10).fill(1).map((_, i) => {
-							return <CardSkeleton key={i} />;
-					  })}
+						))
+					) : (
+						<div className='flex justify-center items-center flex-col mt-24 pb-[25px]'>
+							<Image
+								src='/icon/blueDolphin2.svg'
+								alt='one'
+								width={150}
+								height={250}
+							/>
+							<h3 className='text-xl mt-8 text-center leading-loose tracking-wide'>
+								월드컵이 없습니다. <br />
+								<span
+									onClick={() => router.push("/editors")}
+									className='bg-main p-2 text-white cursor-pointer rounded-lg'>
+									후보 추가
+								</span>
+								를 통해 업데이트해주세요
+							</h3>
+						</div>
+					)
+				) : (
+					new Array(10).fill(1).map((_, i) => {
+						return <CardSkeleton key={i} />;
+					})
+				)}
 			</article>
 		</main>
 	);
