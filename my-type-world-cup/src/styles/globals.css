@@ -3,121 +3,95 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Pretendard-Regular";
-  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
-    format("woff");
-  font-weight: normal;
-  font-style: normal;
+	font-family: "Pretendard-Regular";
+	src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+		format("woff");
+	font-weight: normal;
+	font-style: normal;
 }
-/* font-family: 'Noto Sans KR', sans-serif; */
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
-/*  font-family: 'Poppins', sans-serif;*/
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-/*  font-family: 'Be Vietnam Pro', sans-serif;*/
-@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-/* font-family: "GmarketSansBold";*/
-@font-face {
-  font-family: "GmarketSansBold";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff")
-    format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-/* font-family: "LeferiPoint-WhiteObliqueA";*/
-@font-face {
-  font-family: "LeferiPoint-WhiteObliqueA";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-WhiteObliqueA.woff")
-    format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
+
 :root {
-  font-family: "Pretendard-Regular", sans-serif;
-  --pretendard: "Pretendard-Regular", sans-serif;
-  --notoSansKR: "Noto Sans KR", sans-serif;
-  --poppins: "Poppins", sans-serif;
-  --beVietnamPro: "Be Vietnam Pro", sans-serif;
-  --gmarketSansBold: "GmarketSansBold", sans-serif;
-  --leferiPointWhiteObliqueA: "LeferiPoint-WhiteObliqueA", sans-serif;
+	font-family: "Pretendard-Regular", sans-serif;
+	--pretendard: "Pretendard-Regular", sans-serif;
 }
 
 input:focus {
-  outline: none;
-  box-shadow: none;
+	outline: none;
+	box-shadow: none;
 }
 img {
-  filter: brightness(105%) contrast(110%);
+	filter: brightness(105%) contrast(110%);
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+	color: rgb(var(--foreground-rgb));
+	background: linear-gradient(
+			to bottom,
+			transparent,
+			rgb(var(--background-end-rgb))
+		)
+		rgb(var(--background-start-rgb));
 }
 
 ::-webkit-scrollbar {
-  width: 12px;
+	width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #f1f1f1;
+	background-color: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #9a9a9a;
-  border-radius: 8px;
+	background-color: #9a9a9a;
+	border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
+	background-color: #555;
 }
 
 @keyframes loading {
-  0% {
-    transform: translateX(0);
-  }
-  50%,
-  100% {
-    transform: translateX(460px);
-  }
+	0% {
+		transform: translateX(0);
+	}
+	50%,
+	100% {
+		transform: translateX(460px);
+	}
 }
 
 .skeleton-img::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 30px;
-  height: 100%;
-  background: linear-gradient(to right, #f2f2f2, #ddd, #f2f2f2);
-  animation: loading 2s infinite linear;
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 30px;
+	height: 100%;
+	background: linear-gradient(to right, #f2f2f2, #ddd, #f2f2f2);
+	animation: loading 2s infinite linear;
 }
 
 .skeleton-img {
-  background-color: #f2f2f2;
-  position: relative;
-  overflow: hidden;
+	background-color: #f2f2f2;
+	position: relative;
+	overflow: hidden;
 }
 
 .skeleton {
-  background-color: #a5a5a5;
-  animation: skeleton-animation 1s infinite linear;
+	background-color: #a5a5a5;
+	animation: skeleton-animation 1s infinite linear;
 }
 
 @keyframes skeleton-animation {
-  0% {
-    opacity: 0.2;
-  }
+	0% {
+		opacity: 0.2;
+	}
 
-  50% {
-    opacity: 0.5;
-  }
+	50% {
+		opacity: 0.5;
+	}
 
-  100% {
-    opacity: 0.2;
-  }
+	100% {
+		opacity: 0.2;
+	}
 }
