@@ -7,16 +7,6 @@ import type { Round } from "@/type/Types";
 import { Contestant, IngameModalData } from "@/type/Types";
 import { GetServerSideProps } from "next";
 import { useEffect, useRef, useState } from "react";
-//40명이 있다면 2명을 뽑음
-//32강 너무 헤비?
-//32강이면 총 16번을 뽑고s
-//승자는 저장 패자는 삭제
-//-2 해주면서 체킹
-//백업으로 저장
-type Option = {
-	label: string;
-	value: string;
-};
 
 // 수적으면 제한되는 로직 생성해야함
 const WorldCup = ({ data }: { data: IngameModalData }) => {
@@ -130,6 +120,7 @@ const WorldCup = ({ data }: { data: IngameModalData }) => {
 								isCheck={isCheck}
 								setIsCheck={setIsCheck}
 								setIsModal={setIsModal}
+								title={data.title}
 							/>
 						)}
 					</div>
@@ -159,7 +150,11 @@ const WorldCup = ({ data }: { data: IngameModalData }) => {
 			)}
 			{isCheck[1] === 4 && (
 				<>
-					<Result winnerRef={winnerRef} id={data.id} />
+					<Result
+						winnerRef={winnerRef}
+						id={data.id}
+						title={data.title}
+					/>
 				</>
 			)}
 		</div>
