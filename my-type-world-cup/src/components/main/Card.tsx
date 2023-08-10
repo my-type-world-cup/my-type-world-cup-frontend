@@ -103,7 +103,6 @@ const Card = ({
 									className='mr-2 cursor-pointer'
 									width={20}
 									height={20}
-									priority
 								/>
 								후보 추가
 							</button>
@@ -116,7 +115,6 @@ const Card = ({
 									className='mr-2 cursor-pointer'
 									width={20}
 									height={20}
-									priority
 								/>
 								삭제하기
 							</button>

@@ -148,7 +148,6 @@ export default function TrComponent({
 							setHandlerState(() => handler);
 							setIsCopied(true);
 						}}
-						priority
 					/>
 					<Image
 						src='/icon/delete.svg'
@@ -156,7 +155,6 @@ export default function TrComponent({
 						className='cursor-pointer hover:scale-125 mr-2 sm:mr-0'
 						width={20}
 						height={20}
-						priority
 						onClick={() => {
 							setMessage("삭제하시겠습니까?");
 							setHandlerState(() => () => handleDelete(rank.id));
