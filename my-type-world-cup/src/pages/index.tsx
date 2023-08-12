@@ -19,9 +19,9 @@ export default function Home() {
 			<article className='w-full h-auto '>
 				{worldcups.length > 0
 					? worldcups.map((v) => <Card key={v.id} worldcup={v} />)
-					: new Array(10).fill(1).map((_, i) => {
-							return <CardSkeleton key={i} />;
-					  })}
+					: Array.from({ length: 10 }, (_, i) => (
+							<CardSkeleton key={i} />
+					  ))}
 			</article>
 		</main>
 	);
