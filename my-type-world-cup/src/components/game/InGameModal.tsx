@@ -1,26 +1,29 @@
-import type { Round } from "@/type/Types";
+import { fetchContestants } from "@/api/user";
+import type { Contestant, Round } from "@/type/Types";
 import { IngameModalData } from "@/type/Types";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useState } from "react";
+import {
+	Dispatch,
+	MutableRefObject,
+	SetStateAction,
+	useState
+} from "react";
 import GameMenubar from "./GameMenubar";
-
 type Props = {
 	isModal: [boolean, Round];
 	setIsModal: Dispatch<SetStateAction<[boolean, Round]>>;
 	randomContestant: () => void;
 	data: IngameModalData;
 	init: Round;
-	fetchContestants: (
-		password: string | null,
-		teamCount: number
-	) => Promise<boolean>;
+	matchRef: MutableRefObject<Contestant[]>;
 };
 
 export default function Modal({
 	isModal,
 	setIsModal,
 	randomContestant,
-	fetchContestants,
+
+	matchRef,
 	data,
 	init
 }: Props) {
@@ -31,7 +34,12 @@ export default function Modal({
 		password: string | null,
 		teamCount: number
 	) => {
-		const success = await fetchContestants(password, teamCount);
+		const success = await fetchContestants(
+			password,
+			teamCount,
+			data.id,
+			matchRef
+		);
 
 		if (success) {
 			randomContestant();

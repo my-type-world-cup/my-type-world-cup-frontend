@@ -22,38 +22,6 @@ const WorldCup = ({ data }: { data: IngameModalData }) => {
 	const [twoPeople, setTwoPeople] = useState<Contestant[]>([]);
 	const winnerRef = useRef<Contestant[]>([]);
 
-	const fetchContestants = async (
-		password: string | null = null,
-		teamCount: number = 16
-	) => {
-		const url = `${BACK_URL}/worldcups/${data.id}/candidates/random?teamCount=${teamCount}`;
-		const bodyData = {
-			worldCupId: data.id,
-			password: password
-		};
-		console.log(bodyData, "데이터");
-		const options: RequestInit = {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(bodyData)
-		};
-		try {
-			const response = await fetch(url, options);
-			if (!response.ok) {
-				throw new Error("Failed to fetch contestants");
-			}
-			const data = await response.json();
-			matchRef.current = data;
-			console.log(data, "안 데이터");
-			return true;
-		} catch (error) {
-			console.error(error);
-			return false;
-		}
-	};
-
 	const randomIndex = (el: number, length: number) => {
 		let num = Math.floor(Math.random() * length);
 		while (el === num) {
@@ -125,11 +93,11 @@ const WorldCup = ({ data }: { data: IngameModalData }) => {
 					/>
 					{isModal[0] && (
 						<Modal
-							fetchContestants={fetchContestants}
 							data={data}
 							init={init}
 							isModal={isModal}
 							setIsModal={setIsModal}
+							matchRef={matchRef}
 							randomContestant={() => randomContestant()}
 						/>
 					)}
