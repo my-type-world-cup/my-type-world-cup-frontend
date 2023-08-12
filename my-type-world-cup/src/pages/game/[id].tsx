@@ -6,7 +6,7 @@ import { BACK_URL } from "@/lib/config";
 import type { Round } from "@/type/Types";
 import { Contestant, IngameModalData } from "@/type/Types";
 import { GetServerSideProps } from "next";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 // 수적으면 제한되는 로직 생성해야함
 const WorldCup = ({ data }: { data: IngameModalData }) => {
@@ -15,21 +15,15 @@ const WorldCup = ({ data }: { data: IngameModalData }) => {
 		true,
 		init
 	]);
-	const [round, setRound] = useState<Number>(0);
+
 	const [isCheck, setIsCheck] = useState<[boolean, number]>([
 		true,
 		3
 	]); //3은 초기화//4는 끝
-	// const [contestants, setContestants] =
-	//   useState<Contestant[]>(initialContestants);
+	const [animationON, setAnmationON] = useState<boolean>(true);
 	const matchRef = useRef<Contestant[]>([]); //게임 캐릭터 넣기
 	const [twoPeople, setTwoPeople] = useState<Contestant[]>([]);
-	// const [winner, setWinner] = useState<Contestant[]>([]);
 	const winnerRef = useRef<Contestant[]>([]);
-
-	useEffect(() => {
-		setRound(isModal[1]);
-	}, [isModal]);
 
 	const fetchContestants = async (
 		password: string | null = null,
@@ -73,7 +67,6 @@ const WorldCup = ({ data }: { data: IngameModalData }) => {
 	// 겹치지 않는 2명을 계속해서 뽑는 법
 	// 새로운 배열로 업데이트가 되지않음
 	const randomContestant = () => {
-		// console.log(winnerRef.current, "안 위너", matchRef.current, "안 매치");
 		const randomIndex1 = Math.floor(
 			Math.random() * matchRef.current.length
 		);
@@ -96,15 +89,8 @@ const WorldCup = ({ data }: { data: IngameModalData }) => {
 			//2명을 빼줌
 			(el) => el !== randomContestant1 && el !== randomContestant2
 		);
-		// console.log(matchRef.current, "안후 매치");
-		// setContestants((el: Contestant[]) => {
-		//   return el.filter(
-		//     (el) => el !== randomContestant1 && el !== randomContestant2
-		//   );
-		// });
 	};
 
-	// console.log(isCheck, "안 엔드");
 	return (
 		<div className='h-auto shadow-lg'>
 			{isCheck[1] !== 4 && (
@@ -121,6 +107,8 @@ const WorldCup = ({ data }: { data: IngameModalData }) => {
 								setIsCheck={setIsCheck}
 								setIsModal={setIsModal}
 								title={data.title}
+								setAnimationON={setAnmationON}
+								animationON={animationON}
 							/>
 						)}
 					</div>
