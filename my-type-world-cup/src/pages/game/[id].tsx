@@ -15,11 +15,8 @@ const WorldCup = ({ data }: { data: IngameModalData }) => {
 		true,
 		init
 	]);
-
-	const [isCheck, setIsCheck] = useState<[boolean, number]>([
-		true,
-		3
-	]); //3은 초기화//4는 끝
+	const [startON, setStartON] = useState<boolean>(true);
+	const [pickCandidateNum, setPickCandidateNum] = useState<number>(3);
 	const [animationON, setAnmationON] = useState<boolean>(true);
 	const matchRef = useRef<Contestant[]>([]); //게임 캐릭터 넣기
 	const [twoPeople, setTwoPeople] = useState<Contestant[]>([]);
@@ -93,7 +90,7 @@ const WorldCup = ({ data }: { data: IngameModalData }) => {
 
 	return (
 		<div className='h-auto shadow-lg'>
-			{isCheck[1] !== 4 && (
+			{startON && (
 				<div className='relative h-screen shadow-lg z-50'>
 					<div className='bg-sweetBlack w-full h-full overflow-hidden'>
 						{!isModal[0] && (
@@ -103,12 +100,14 @@ const WorldCup = ({ data }: { data: IngameModalData }) => {
 								randomContestant={() => randomContestant()}
 								winnerRef={winnerRef}
 								matchRef={matchRef}
-								isCheck={isCheck}
-								setIsCheck={setIsCheck}
 								setIsModal={setIsModal}
 								title={data.title}
 								setAnimationON={setAnmationON}
 								animationON={animationON}
+								setStartON={setStartON}
+								startON={startON}
+								setPickCandidateNum={setPickCandidateNum}
+								pickCandidateNum={pickCandidateNum}
 							/>
 						)}
 					</div>
@@ -136,7 +135,7 @@ const WorldCup = ({ data }: { data: IngameModalData }) => {
 					)}
 				</div>
 			)}
-			{isCheck[1] === 4 && (
+			{!startON && (
 				<>
 					<Result
 						winnerRef={winnerRef}

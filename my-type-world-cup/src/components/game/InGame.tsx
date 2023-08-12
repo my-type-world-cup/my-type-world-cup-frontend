@@ -15,11 +15,14 @@ type Props = {
 	setIsModal: Dispatch<SetStateAction<[boolean, Round]>>;
 	winnerRef: MutableRefObject<Contestant[]>;
 	matchRef: MutableRefObject<Contestant[]>;
-	isCheck: [boolean, number];
-	setIsCheck: Dispatch<SetStateAction<[boolean, number]>>;
+
 	title: string;
 	animationON: boolean;
 	setAnimationON: Dispatch<SetStateAction<boolean>>;
+	pickCandidateNum: number;
+	setPickCandidateNum: Dispatch<SetStateAction<number>>;
+	startON: boolean;
+	setStartON: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function InGame({
@@ -29,10 +32,13 @@ export default function InGame({
 	setIsModal,
 	winnerRef,
 	matchRef,
-	isCheck,
-	setIsCheck,
+
 	animationON,
 	setAnimationON,
+	setStartON,
+	startON,
+	setPickCandidateNum,
+	pickCandidateNum,
 	title
 }: Props) {
 	const isResult = useRef<result_data[]>([]);
@@ -45,7 +51,8 @@ export default function InGame({
 		}
 		setAnimationON(false);
 		isButtonDisabledRef.current = true; // 버튼 비활성화
-		setIsCheck([false, num]); //이펙트 주고 뽑힌 사람 알려줌
+		setPickCandidateNum(num);
+
 		// 패자만 모와서 저장?
 		//패자는 무조건 n경기당 n-1승을함
 		//최종 승자는 마지막에 n경기당 n승임
@@ -86,7 +93,7 @@ export default function InGame({
 
 			await rank_result_fetch(isResult.current);
 
-			setIsCheck([true, 4]); //원위치
+			setStartON(false);
 			setAnimationON(true);
 			return;
 		} else if (matchRef.current.length === 0) {
@@ -99,14 +106,14 @@ export default function InGame({
 
 		setTimeout(() => {
 			setAnimationON(true);
-			setIsCheck([true, 3]); //원위치
+			// setIsCheck([true, 3]); //원위치.
+			setStartON(true);
 			randomContestant(); //다시뽑기
 			isButtonDisabledRef.current = false; // 버튼 활성화
 		}, 2200);
 	};
 
-	if (isCheck[1] === 4) {
-		console.log(isCheck, "끝");
+	if (!startON) {
 		return <></>;
 	}
 
@@ -121,14 +128,14 @@ export default function InGame({
 				style={{
 					transform: animationON
 						? "translateY(0%)"
-						: isCheck[1] === 0
+						: pickCandidateNum === 0
 						? "translateY(35%)"
 						: " translateX(150%)",
 					transition:
-						!animationON && isCheck[1] === 0
+						!animationON && pickCandidateNum === 0
 							? "all 1s ease-in-out"
 							: "all 0s",
-					opacity: !animationON && isCheck[1] === 1 ? "0" : "1"
+					opacity: !animationON && pickCandidateNum === 1 ? "0" : "1"
 				}}>
 				<Image
 					src={twoPeople[0].image}
@@ -167,15 +174,17 @@ export default function InGame({
 				style={{
 					transform: animationON
 						? "translateY(0%)"
-						: isCheck[1] === 1
+						: pickCandidateNum === 1
 						? "translateY(-60%)"
 						: "translateX(200%)",
 					transition:
-						!animationON && isCheck[1] === 1
+						!animationON && pickCandidateNum === 1
 							? "transform 1s ease-in-out"
 							: "",
 					visibility:
-						!animationON && isCheck[1] === 0 ? "hidden" : "visible"
+						!animationON && pickCandidateNum === 0
+							? "hidden"
+							: "visible"
 				}}>
 				<Image
 					src={twoPeople[1].image}
