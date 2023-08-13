@@ -24,21 +24,19 @@ const Card = ({
 			<div className="flex justify-evenly mt-6">
 				{hasCandidates ? (
 					worldcup.candidateSimpleResponseDtos.map((candidate, index) => (
-						<div key={index} className="w-auto overflow-hidden">
-							<div className="w-[175px] h-[175px] overflow-hidden flex items-center">
-								<Image
-									src={imageOn[index] ? candidate.image : BlueMascotImage}
-									alt={`이상형 월드컵 ${index + 1}위 후보`}
-									width={175}
-									height={175}
-									priority
-									onError={() => {
-										const newImageOn = [...imageOn];
-										newImageOn[index] = false;
-										setImageOn(newImageOn);
-									}}
-								/>
-							</div>
+						<div key={index} className="w-[175px] overflow-hidden">
+							<Image
+								src={imageOn[index] ? candidate.image : BlueMascotImage}
+								alt={`이상형 월드컵 ${index + 1}위 후보`}
+								width={175}
+								height={175}
+								priority
+								onError={() => {
+									const newImageOn = [...imageOn];
+									newImageOn[index] = false;
+									setImageOn(newImageOn);
+								}}
+							/>
 							<h4 className="text-center font-medium">{candidate.name}</h4>
 						</div>
 					))
@@ -60,7 +58,7 @@ const Card = ({
 			<h2 className="flex flex-col items-center mt-3 text-xl font-semibold">
 				{worldcup.title}
 			</h2>
-			<p className="mx-4 text-center">
+			<p className="mx-4 overflow-hidden break-all whitespace-pre-line">
 				{worldcup.description.length > 100
 					? worldcup.description.slice(0, 100) + "..."
 					: worldcup.description}
