@@ -81,16 +81,16 @@ export default function TrComponent({
 	};
 
 	return (
-		<tr className='border-hr border' key={rank.id}>
-			<td className='text-center text-gray'>
+		<tr className="border-hr border" key={rank.id}>
+			<td className="text-center text-gray">
 				{i + 1 + (currentPage - 1) * pageSize}
 			</td>
 			<td>
-				<div className='relative overflow-hidden h-20 flex items-center justify-center'>
+				<div className="relative overflow-hidden h-20 flex items-center justify-center">
 					<Image
-						className='cursor-pointer z-20'
+						className="cursor-pointer z-20"
 						src={rank.thumb}
-						alt='start'
+						alt="start"
 						width={100}
 						height={60}
 						onClick={() => setZoomed(!zoomed)}
@@ -98,28 +98,28 @@ export default function TrComponent({
 						priority
 					/>
 					{!isLoading && (
-						<div className='absolute z-10'>
+						<div className="absolute z-10">
 							<Image
 								src={loadingGif}
 								alt={"loading"}
 								width={200}
 								height={200}
-								className='cursor-pointer'
+								className="cursor-pointer"
 							/>
 						</div>
 					)}
 				</div>
 			</td>
-			<td className='text-gray text-center w-32'>
+			<td className="text-gray text-center w-32">
 				{isEditing ? (
 					<div
-						className='w-32 truncate text-sm font-bold cursor-pointer hover:underline'
+						className="w-32 truncate text-sm font-bold cursor-pointer hover:underline"
 						onClick={handleClick}>
 						{text}
 					</div>
 				) : (
 					<input
-						type='text'
+						type="text"
 						ref={inputRef}
 						value={text}
 						onChange={handleChange}
@@ -130,17 +130,16 @@ export default function TrComponent({
 								handleSave();
 							}
 						}}
-						className='w-32 border border-gray p-2'
+						className="w-32 border border-gray p-2"
 					/>
 				)}
 			</td>
 			<td>
-				<div
-					className={"flex justify-evenly items-center text-center "}>
+				<div className={"flex justify-evenly items-center text-center "}>
 					<Image
-						src='/icon/picture.svg'
-						alt='picture'
-						className='cursor-pointer hover:scale-125 mr-2 sm:mr-0'
+						src="/icon/picture.svg"
+						alt="picture"
+						className="cursor-pointer hover:scale-125 mr-2 sm:mr-0"
 						width={30}
 						height={30}
 						onClick={() => {
@@ -150,9 +149,9 @@ export default function TrComponent({
 						}}
 					/>
 					<Image
-						src='/icon/delete.svg'
-						alt='delete'
-						className='cursor-pointer hover:scale-125 mr-2 sm:mr-0'
+						src="/icon/delete.svg"
+						alt="delete"
+						className="cursor-pointer hover:scale-125 mr-2 sm:mr-0"
 						width={20}
 						height={20}
 						onClick={() => {
@@ -175,7 +174,7 @@ export default function TrComponent({
 					<ZoomedImage
 						zoomed={zoomed}
 						setZoomed={setZoomed}
-						imageUrl={rank.thumb}
+						imageUrl={rank.image}
 					/>
 				)}
 			</td>
