@@ -4,16 +4,20 @@ import type {
 	Contestant,
 	Post_req,
 	Post_res,
-	Save_data
+	Save_data,
+	result_data
 } from "@/type/Types";
 import { MutableRefObject } from "react";
 import { BACK_URL } from "../lib/config";
 
-export async function fetchUserData(
-	accessToken: string
-): Promise<User> {
+const MEMBERS_URL = `${BACK_URL}/members`;
+const WORLDCUPS_URL = `${BACK_URL}/worldcups`;
+const CANDIDATES_URL = `${BACK_URL}/candidates`;
+
+// 사용자 데이터를 가져오는 함수
+export async function fetchUserData(accessToken: string): Promise<User> {
 	try {
-		const response = await fetch(`${BACK_URL}/members`, {
+		const response = await fetch(MEMBERS_URL, {
 			headers: {
 				Authorization: `Bearer ${accessToken}`
 			}
@@ -36,12 +40,13 @@ export async function fetchUserData(
 	}
 }
 
+// 사용자 닉네임을 수정하는 함수
 export async function patchMember(
 	accessToken: string,
 	nickname: string
 ): Promise<User> {
 	try {
-		const response = await fetch(`${BACK_URL}/members`, {
+		const response = await fetch(MEMBERS_URL, {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
@@ -68,12 +73,13 @@ export async function patchMember(
 	}
 }
 
+// 월드컵을 생성하는 함수
 export async function post_worldcup(
 	accessToken: string,
 	worldCup: Post_req
 ): Promise<Post_res> {
 	try {
-		const response = await fetch(`${BACK_URL}/worldcups`, {
+		const response = await fetch(WORLDCUPS_URL, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -100,13 +106,14 @@ export async function post_worldcup(
 	}
 }
 
+// 월드컵을 수정하는 함수
 export async function patch_worldcup(
 	accessToken: string,
 	worldCup: Post_req,
 	id: number
 ): Promise<Post_res> {
 	try {
-		const response = await fetch(`${BACK_URL}/worldcups/${id}`, {
+		const response = await fetch(`${WORLDCUPS_URL}/${id}`, {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
@@ -133,12 +140,13 @@ export async function patch_worldcup(
 	}
 }
 
+// 월드컵을 삭제하는 함수
 export async function delete_worldcup(
 	accessToken: string,
 	id: number
 ): Promise<Response> {
 	try {
-		const response = await fetch(`${BACK_URL}/worldcups/${id}`, {
+		const response = await fetch(`${WORLDCUPS_URL}/${id}`, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
@@ -163,6 +171,7 @@ export async function delete_worldcup(
 	}
 }
 
+// 후보자를 생성하거나 수정하는 함수
 export async function post_candidates(
 	accessToken: string,
 	candidates: Save_data
@@ -171,7 +180,7 @@ export async function post_candidates(
 		if (candidates.id) {
 			return await patch_candidates(accessToken, candidates);
 		} else {
-			const response = await fetch(`${BACK_URL}/candidates`, {
+			const response = await fetch(CANDIDATES_URL, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -199,22 +208,20 @@ export async function post_candidates(
 	}
 }
 
+// 후보자를 수정하는 함수
 export async function patch_candidates(
 	accessToken: string,
 	candidates: Save_data
 ): Promise<Save_data> {
 	try {
-		const response = await fetch(
-			`${BACK_URL}/candidates/${candidates.id}`,
-			{
-				method: "PATCH",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${accessToken}`
-				},
-				body: JSON.stringify(candidates)
-			}
-		);
+		const response = await fetch(`${CANDIDATES_URL}/${candidates.id}`, {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${accessToken}`
+			},
+			body: JSON.stringify(candidates)
+		});
 
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
@@ -235,12 +242,13 @@ export async function patch_candidates(
 	}
 }
 
+// 후보자를 삭제하는 함수
 export async function delete_candidates(
 	accessToken: string,
 	id: number
 ): Promise<Response> {
 	try {
-		const response = await fetch(`${BACK_URL}/candidates/${id}`, {
+		const response = await fetch(`${CANDIDATES_URL}/${id}`, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
@@ -268,6 +276,7 @@ export async function delete_candidates(
 	}
 }
 
+// 리프레시 토큰을 가져오는 함수
 export async function get_refresh(): Promise<{ data: string }> {
 	try {
 		const response = await fetch(`${BACK_URL}/auth/refresh`, {
@@ -291,19 +300,17 @@ export async function get_refresh(): Promise<{ data: string }> {
 	}
 }
 
+// 게임 진행시 모달 정보를 가져오는 함수
 export async function get_detail(
 	id: number,
 	accessToken: string
 ): Promise<Post_res> {
 	try {
-		const response = await fetch(
-			`${BACK_URL}/worldcups/${id}/details`,
-			{
-				headers: {
-					Authorization: `Bearer ${accessToken}`
-				}
+		const response = await fetch(`${WORLDCUPS_URL}/${id}/details`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`
 			}
-		);
+		});
 		console.log(response);
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
@@ -321,6 +328,7 @@ export async function get_detail(
 	}
 }
 
+// 댓글을 생성하는 함수
 export async function post_comments(
 	comment: { content: string; worldCupId: number; winner?: string },
 	accessToken?: string | null
@@ -354,13 +362,14 @@ export async function post_comments(
 	}
 }
 
+// 대회 참가자를 무작위로 가져오는 함수
 export const fetchContestants = async (
 	password: string | null = null,
 	teamCount: number = 16,
 	id: number,
 	matchRef: MutableRefObject<Contestant[]>
-) => {
-	const url = `${BACK_URL}/worldcups/${id}/candidates/random?teamCount=${teamCount}`;
+): Promise<boolean> => {
+	const url = `${WORLDCUPS_URL}/${id}/candidates/random?teamCount=${teamCount}`;
 	const bodyData = {
 		worldCupId: id,
 		password: password
@@ -386,4 +395,19 @@ export const fetchContestants = async (
 		console.error(error);
 		return false;
 	}
+};
+
+// 게임 결과 순위를 업데이트하는 함수
+export const rank_result_fetch = async (
+	args: result_data[]
+): Promise<boolean> => {
+	const loginRes = await fetch(CANDIDATES_URL, {
+		method: "PATCH",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(args)
+	});
+
+	return loginRes.ok;
 };

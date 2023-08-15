@@ -1,4 +1,4 @@
-import { fetcherToken } from "@/lib/Helper";
+import { fetcherToken } from "@/api/swr_fetch";
 import { BACK_URL } from "@/lib/config";
 import type { Post_res, Search_Image } from "@/type/Types";
 import { useRouter } from "next/router";

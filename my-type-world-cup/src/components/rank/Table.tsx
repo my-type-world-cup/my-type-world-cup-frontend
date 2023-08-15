@@ -1,4 +1,4 @@
-import { fetcherPost } from "@/lib/Helper";
+import { fetcherPost } from "@/api/swr_fetch";
 import { BACK_URL } from "@/lib/config";
 import { rank_Data, rank_res, rank_res_data } from "@/type/Types";
 import Image from "next/image";
@@ -94,15 +94,11 @@ function Table({ rankData }: Props) {
 	// if (data?.data === undefined) return <div>데이터가 없습니다</div>; //비밀번호 체킹
 	console.log(data, "데이터");
 	console.log(rankData, "랭크데이터");
-	const rankMember: rank_res_data[] = data
-		? data!.data
-		: rank_res_data_dummy;
+	const rankMember: rank_res_data[] = data ? data!.data : rank_res_data_dummy;
 	const totalPage: number = data ? data!.pageInfo.totalPages : 1;
 
 	const handleSearch = (
-		e:
-			| React.FormEvent<HTMLFormElement>
-			| React.MouseEvent<HTMLImageElement>
+		e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLImageElement>
 	) => {
 		e.preventDefault();
 		const trimmedSearchTerm = searchText.trim();
@@ -120,20 +116,20 @@ function Table({ rankData }: Props) {
 
 	return (
 		<>
-			<main className='flex justify-center items-center mt-20 mx-auto'>
+			<main className="flex justify-center items-center mt-20 mx-auto">
 				{/* 검색창 */}
-				<form className='mb-4 mr-4 relative' onSubmit={handleSearch}>
+				<form className="mb-4 mr-4 relative" onSubmit={handleSearch}>
 					<input
-						type='text'
-						className='w-full rounded border-gray border-[1px]  p-1'
-						placeholder='Search'
+						type="text"
+						className="w-full rounded border-gray border-[1px]  p-1"
+						placeholder="Search"
 						value={searchText}
 						onChange={(e) => setSearchText(e.target.value)}
 					/>
 					<Image
-						src='/icon/search.svg'
-						alt='Search'
-						className='absolute right-2 top-2 cursor-pointer'
+						src="/icon/search.svg"
+						alt="Search"
+						className="absolute right-2 top-2 cursor-pointer"
 						width={18}
 						height={18}
 						onClick={handleSearch}
@@ -141,34 +137,34 @@ function Table({ rankData }: Props) {
 				</form>
 
 				{/* 페이지 당 아이템 수 선택 */}
-				<div className='mb-4'>
+				<div className="mb-4">
 					<select
 						value={pageSize}
 						onChange={(e) => setPageSize(parseInt(e.target.value))}
-						className='ml-2 rounded border-gray-300 py-2 outline-none'>
+						className="ml-2 rounded border-gray-300 py-2 outline-none">
 						{PAGE_SIZE_OPTIONS.map((option) => (
 							<option key={option} value={option}>
 								{option}
 							</option>
 						))}
 					</select>
-					<label className='font-bold mr-[1px]'>개씩 보기</label>
+					<label className="font-bold mr-[1px]">개씩 보기</label>
 				</div>
 
 				{/* 목록 */}
 			</main>
-			<table className=' text-sm mx-2 mb-4'>
+			<table className=" text-sm mx-2 mb-4">
 				<colgroup>
-					<col className='w-1/12 bg-white' />
+					<col className="w-1/12 bg-white" />
 
-					<col className='w-2/12 bg-white ' />
-					<col className='w-2/12 bg-white' />
-					<col className='w-1/12 bg-white mr-1' />
-					<col className='w-1/12 bg-white mr-1' />
-					<col className='w-1/12 bg-white mr-1' />
-					<col className='w-1/12 bg-white' />
+					<col className="w-2/12 bg-white " />
+					<col className="w-2/12 bg-white" />
+					<col className="w-1/12 bg-white mr-1" />
+					<col className="w-1/12 bg-white mr-1" />
+					<col className="w-1/12 bg-white mr-1" />
+					<col className="w-1/12 bg-white" />
 				</colgroup>
-				<thead className='bg-inputGray text-gray '>
+				<thead className="bg-inputGray text-gray ">
 					<tr>
 						<th>순위</th>
 						<th>사진</th>
@@ -215,12 +211,12 @@ function Table({ rankData }: Props) {
 				</thead>
 				<tbody>
 					{rankMember.map((rank: rank_res_data, i: number) => (
-						<tr className='border-hr border' key={rank.id}>
-							<td className='text-center text-gray'>
+						<tr className="border-hr border" key={rank.id}>
+							<td className="text-center text-gray">
 								{i + 1 + (currentPage - 1) * pageSize}
 							</td>
 							<td>
-								<div className='overflow-hidden h-12 flex justify-center '>
+								<div className="overflow-hidden h-12 flex justify-center ">
 									{/* <Image
                     className="flex justify-center items-center cursor-pointer"
                     src={rank.thumb}
@@ -239,8 +235,8 @@ function Table({ rankData }: Props) {
 									/>
 								</div>
 							</td>
-							<td className='text-gray'>
-								<div className='truncate w-20 text-center mx-auto text-xs'>
+							<td className="text-gray">
+								<div className="truncate w-20 text-center mx-auto text-xs">
 									{rank.name}
 								</div>
 							</td>
@@ -260,8 +256,7 @@ function Table({ rankData }: Props) {
 								}>
 								{rank.finalWinCount / rank.matchUpWorldCupCount
 									? (
-											(rank.finalWinCount /
-												rank.matchUpWorldCupCount) *
+											(rank.finalWinCount / rank.matchUpWorldCupCount) *
 											100
 									  ).toFixed(2)
 									: 0}
@@ -282,10 +277,7 @@ function Table({ rankData }: Props) {
 										: "text-gray text-center"
 								}>
 								{rank.winCount / rank.matchUpGameCount
-									? (
-											(rank.winCount / rank.matchUpGameCount) *
-											100
-									  ).toFixed(2)
+									? ((rank.winCount / rank.matchUpGameCount) * 100).toFixed(2)
 									: 0}
 								%
 							</td>
@@ -300,11 +292,7 @@ function Table({ rankData }: Props) {
 				setCurrentPage={setCurrentPage}
 			/>
 			{zoomed && (
-				<ZoomedImage
-					zoomed={zoomed}
-					setZoomed={setZoomed}
-					imageUrl={image}
-				/>
+				<ZoomedImage zoomed={zoomed} setZoomed={setZoomed} imageUrl={image} />
 			)}
 		</>
 	);

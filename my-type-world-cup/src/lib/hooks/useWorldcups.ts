@@ -1,4 +1,4 @@
-import { fetcher, fetcherToken } from "@/lib/Helper";
+import { fetcher, fetcherToken } from "@/api/swr_fetch";
 import { MainWorldcup, WorldcupsResponse } from "@/type/Types";
 import { useEffect, useRef, useState } from "react";
 import useSWRInfinite from "swr/infinite";

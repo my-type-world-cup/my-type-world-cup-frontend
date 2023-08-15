@@ -1,4 +1,4 @@
-import { rank_result_fetch } from "@/api/post_rank";
+import { rank_result_fetch } from "@/api/user";
 import type { Contestant, Round, result_data } from "@/type/Types";
 import Image from "next/image";
 import {
@@ -78,10 +78,7 @@ export default function InGame({
 			];
 		}
 
-		if (
-			matchRef.current.length === 0 &&
-			winnerRef.current.length === 1
-		) {
+		if (matchRef.current.length === 0 && winnerRef.current.length === 1) {
 			// endRef.current = true;
 			isResult.current = isResult.current.concat([
 				{
@@ -118,12 +115,12 @@ export default function InGame({
 	}
 
 	return (
-		<div className='relative'>
-			<h2 className='text-white text-xl text-center h-4 mt-4 sm:mt-2'>
+		<div className="relative">
+			<h2 className="text-white text-xl text-center h-4 mt-4 sm:mt-2">
 				{title} {isModal[1] === 2 ? `결승` : `${isModal[1]}강`}
 			</h2>
 			<div
-				className='flex justify-center pt-2 sm:mt-4 mt-6'
+				className="flex justify-center pt-2 sm:mt-4 mt-6"
 				onClick={() => handleClick(0)}
 				style={{
 					transform: animationON
@@ -139,14 +136,14 @@ export default function InGame({
 				}}>
 				<Image
 					src={twoPeople[0].image}
-					alt='이상형 1'
+					alt="이상형 1"
 					width={330}
 					height={330}
 					priority
-					className='cursor-pointer  sm:hover:scale-105  duration-300'
+					className="cursor-pointer  sm:hover:scale-105  duration-300"
 				/>
 				<h3
-					className='absolute text-white bottom-10 left-1/2 transform -translate-x-1/2 '
+					className="absolute text-white bottom-10 left-1/2 transform -translate-x-1/2 "
 					style={{
 						textShadow:
 							"1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black"
@@ -155,21 +152,21 @@ export default function InGame({
 				</h3>
 			</div>
 			<div
-				className='absolute top-[53%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20'
+				className="absolute top-[53%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20"
 				style={{
 					transition: "transform 1s ease-in-out",
 					visibility: !animationON ? "hidden" : "visible"
 				}}>
 				<Image
-					src='/icon/vs.svg'
-					alt='Picture of the author'
+					src="/icon/vs.svg"
+					alt="Picture of the author"
 					width={40}
 					height={40}
-					className='mx-4'
+					className="mx-4"
 				/>
 			</div>
 			<div
-				className='flex justify-center '
+				className="flex justify-center "
 				onClick={() => handleClick(1)}
 				style={{
 					transform: animationON
@@ -182,21 +179,19 @@ export default function InGame({
 							? "transform 1s ease-in-out"
 							: "",
 					visibility:
-						!animationON && pickCandidateNum === 0
-							? "hidden"
-							: "visible"
+						!animationON && pickCandidateNum === 0 ? "hidden" : "visible"
 				}}>
 				<Image
 					src={twoPeople[1].image}
-					alt='이상형 2'
+					alt="이상형 2"
 					width={330}
 					priority
 					height={330}
 					onClick={() => handleClick(1)}
-					className='cursor-pointer sm:hover:scale-105 duration-300'
+					className="cursor-pointer sm:hover:scale-105 duration-300"
 				/>
 				<h3
-					className='absolute text-white bottom-10 left-1/2 transform -translate-x-1/2 '
+					className="absolute text-white bottom-10 left-1/2 transform -translate-x-1/2 "
 					style={{
 						textShadow:
 							"1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black"
