@@ -75,9 +75,7 @@ export default function ImageUpload({
 	return (
 		<>
 			{!isMake ? (
-				<section
-					className="flex flex-col mx-8 text-lg mb-4 "
-					style={{ height: "calc(100vh - 125px)" }}>
+				<section className="flex flex-col mx-8 text-lg mb-4 pb-24">
 					<h1 className="mt-8 sm:mt-12 mb-0 sm:mb-2 sm:text-xl  py-4 font-bold">
 						후보 목록
 					</h1>
