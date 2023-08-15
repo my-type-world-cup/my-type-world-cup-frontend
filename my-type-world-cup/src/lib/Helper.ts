@@ -41,4 +41,27 @@ const getTimeDiffString = (pastTime: string) => {
 	}
 };
 
-export { getInitialRound, getTimeDiffString };
+const calculatePageRange = (
+	currentPage: number,
+	totalPages: number,
+	pageRange: number
+) => {
+	let startPage = currentPage - pageRange;
+	let endPage = currentPage + pageRange;
+
+	if (startPage < 1) {
+		endPage += 1 - startPage;
+		startPage = 1;
+		if (endPage > totalPages) endPage = totalPages;
+	} else if (endPage > totalPages) {
+		startPage -= endPage - totalPages;
+		endPage = totalPages;
+		if (startPage < 1) startPage = 1;
+	}
+
+	return Array.from(
+		{ length: endPage - startPage + 1 },
+		(_, i) => startPage + i
+	);
+};
+export { calculatePageRange, getInitialRound, getTimeDiffString };
