@@ -63,7 +63,7 @@ const WorldcupList = ({
 								를 통해 업데이트해주세요
 							</>
 						) : (
-								<span className="bg-main p-2 text-white cursor-pointer rounded-lg">
+								<span className="bg-main p-2 text-white rounded-lg">
 									이상형 월드컵 만들기를 통해 업데이트해주세요
 								</span>
 						)}
