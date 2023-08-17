@@ -53,12 +53,20 @@ const WorldcupList = ({
 					/>
 					<h3 className="text-xl mt-8 text-center leading-loose tracking-wide">
 						월드컵이 없습니다. <br />
-						<span
-							onClick={() => router.push("/editors")}
-							className="bg-main p-2 text-white cursor-pointer rounded-lg">
-							후보 추가
-						</span>
-						를 통해 업데이트해주세요
+						{mine ? (
+							<>
+								<button
+									onClick={() => router.push("/editors")}
+									className="bg-main p-2 text-white cursor-pointer rounded-lg">
+									후보 추가
+								</button>
+								를 통해 업데이트해주세요
+							</>
+						) : (
+								<span className="bg-main p-2 text-white cursor-pointer rounded-lg">
+									이상형 월드컵 만들기를 통해 업데이트해주세요
+								</span>
+						)}
 					</h3>
 				</div>
 			)}
