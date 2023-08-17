@@ -35,22 +35,7 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
 			setIsCheck(false);
 		}
 	}, [user]);
-	// console.log(router.asPath, "router.query");
 
-	// useEffect(() => {
-	//   const accessToken = router.query.access_token;
-
-	//   if (accessToken) {
-	//     setAccessToken(accessToken as string);
-	//     fetchUserData(accessToken as string)
-	//       .then((data) => {
-	//         setUser(data);
-	//       })
-	//       .catch((error) => {
-	//         console.error(error);
-	//       });
-	//   }
-	// }, [router.query.access_token, setAccessToken, setUser]);
 
 	const handlego = (word?: string) => {
 		router.push(`/${word}`);
