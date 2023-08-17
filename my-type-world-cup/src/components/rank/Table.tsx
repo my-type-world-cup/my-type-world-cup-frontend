@@ -1,6 +1,6 @@
 import { fetcherPost } from "@/api/swr_fetch";
 import { BACK_URL } from "@/lib/config";
-import { rank_Data, rank_res, rank_res_data } from "@/type/Types";
+import { rank_res, rank_res_data } from "@/type/Types";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
@@ -8,7 +8,8 @@ import ZoomedImage from "../all/ZoomImage";
 import ImageContainer from "./ImageContainer";
 import TablePagiNation from "./TablePagiNation";
 type Props = {
-	rankData: rank_Data;
+	
+	worldcupId:number;
 };
 
 type Item = {
@@ -71,7 +72,7 @@ const rank_res_data_dummy: rank_res_data[] = [
 ];
 
 const PAGE_SIZE_OPTIONS = [10, 20, 30];
-function Table({ rankData }: Props) {
+function Table({ worldcupId }: Props) {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [zoomed, setZoomed] = useState(false);
 	const [image, setImage] = useState("");
@@ -81,8 +82,8 @@ function Table({ rankData }: Props) {
 	const [pageSize, setPageSize] = useState(10);
 	const [sort, setSort] = useState("finalWinCount");
 	const { data, error, isLoading } = useSWR<rank_res>(
-		`${BACK_URL}/worldcups/${rankData.worldCupId}/candidates?sort=${sort}&direction=DESC&size=${pageSize}&page=${currentPage}${search}`,
-		(url) => fetcherPost(url, { password: rankData.password })
+		`${BACK_URL}/worldcups/${worldcupId}/candidates?sort=${sort}&direction=DESC&size=${pageSize}&page=${currentPage}${search}`,
+		(url) => fetcherPost(url, { password: null })
 	);
 
 	useEffect(() => {
@@ -93,7 +94,7 @@ function Table({ rankData }: Props) {
 	// if (isLoading) return <div>loading...</div>;
 	// if (data?.data === undefined) return <div>데이터가 없습니다</div>; //비밀번호 체킹
 	console.log(data, "데이터");
-	console.log(rankData, "랭크데이터");
+
 	const rankMember: rank_res_data[] = data ? data!.data : rank_res_data_dummy;
 	const totalPage: number = data ? data!.pageInfo.totalPages : 1;
 
