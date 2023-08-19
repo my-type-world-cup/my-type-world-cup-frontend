@@ -10,7 +10,7 @@ export default function index({
 	// const rankData: rank_Data = {
 	// 	worldCupId: worldcupId,
 	// 	password: null
-	// };
+	// };  렌더링 고려하여 객체에서 원시값으로 변경
 
 	return (
 		<div className="h-auto shadow-lg ">
