@@ -12,17 +12,17 @@ type Props = {
 	worldcupId:number;
 };
 
-type Item = {
-	name: string;
-	value: string;
-};
+// type ItemValueType = {
+// 	name: string;
+// 	value: string;
+// };
 
-const items: Item[] = [
-	{ name: "우승", value: "finalWinCount" },
-	{ name: "우승비율", value: "finalWinRatio" },
-	{ name: "승리", value: "winCount" },
-	{ name: "1대1 승률", value: "winRatio" }
-];
+// const ItemValue: ItemValueType[] = [
+// 	{ name: "우승", value: "finalWinCount" },
+// 	{ name: "우승비율", value: "finalWinRatio" },
+// 	{ name: "승리", value: "winCount" },
+// 	{ name: "1대1 승률", value: "winRatio" }
+// ];
 
 const rank_res_data_dummy: rank_res_data[] = [
 	{
@@ -72,6 +72,7 @@ const rank_res_data_dummy: rank_res_data[] = [
 ];
 
 const PAGE_SIZE_OPTIONS = [10, 20, 30];
+
 function Table({ worldcupId }: Props) {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [zoomed, setZoomed] = useState(false);
@@ -81,7 +82,7 @@ function Table({ worldcupId }: Props) {
 	const [search, setSearch] = useState(""); //검색 트리거
 	const [pageSize, setPageSize] = useState(10);
 	const [sort, setSort] = useState("finalWinCount");
-	const { data, error, isLoading } = useSWR<rank_res>(
+	const { data,  } = useSWR<rank_res>(
 		`${BACK_URL}/worldcups/${worldcupId}/candidates?sort=${sort}&direction=DESC&size=${pageSize}&page=${currentPage}${search}`,
 		(url) => fetcherPost(url, { password: null })
 	);
