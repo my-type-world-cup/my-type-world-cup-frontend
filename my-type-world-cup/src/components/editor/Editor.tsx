@@ -108,7 +108,7 @@ const Editor = ({ setIsNumber }: EditorProps) => {
 	};
 	return (
 		<div
-			className='sm:pt-20 mt-4 sm:mt-8 mx-8 text-lg flex flex-col -pb-20 h-screen'
+			className='sm:pt-20 mt-4 sm:mt-8 mx-8 text-lg flex flex-col sm:-mb-[138px] h-screen'
 			// onSubmit={handleSubmit}
 		>
 			<label htmlFor='title' className=''>
