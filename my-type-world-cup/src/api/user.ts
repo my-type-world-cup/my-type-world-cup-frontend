@@ -15,7 +15,7 @@ const WORLDCUPS_URL = `${BACK_URL}/worldcups`;
 const CANDIDATES_URL = `${BACK_URL}/candidates`;
 
 // 사용자 데이터를 가져오는 함수
-export async function fetchUserData(accessToken: string): Promise<User> {
+export async function fetchUserData(accessToken: string, retryCount: number = 0): Promise<User> {
 	try {
 		const response = await fetch(MEMBERS_URL, {
 			headers: {
@@ -24,9 +24,12 @@ export async function fetchUserData(accessToken: string): Promise<User> {
 		});
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
+				if (retryCount >= 3) {
+				throw new Error('토큰을 갱신할 수 없습니다.');
+			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return fetchUserData(refreshedToken.data as string);
+			return fetchUserData(refreshedToken.data as string, retryCount+1);
 		} else if (!response.ok) {
 			throw response.status;
 		}
@@ -43,7 +46,8 @@ export async function fetchUserData(accessToken: string): Promise<User> {
 // 사용자 닉네임을 수정하는 함수
 export async function patchMember(
 	accessToken: string,
-	nickname: string
+	nickname: string,
+	retryCount: number = 0
 ): Promise<User> {
 	try {
 		const response = await fetch(MEMBERS_URL, {
@@ -57,9 +61,12 @@ export async function patchMember(
 
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
+				if (retryCount >= 3) {
+				throw new Error('토큰을 갱신할 수 없습니다.');
+			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return patchMember(refreshedToken.data, nickname);
+			return patchMember(refreshedToken.data, nickname, retryCount+1);
 		} else if (!response.ok) {
 			throw response.status;
 		}
@@ -76,7 +83,8 @@ export async function patchMember(
 // 월드컵을 생성하는 함수
 export async function post_worldcup(
 	accessToken: string,
-	worldCup: Post_req
+	worldCup: Post_req,
+	retryCount: number = 0
 ): Promise<Post_res> {
 	try {
 		const response = await fetch(WORLDCUPS_URL, {
@@ -90,9 +98,12 @@ export async function post_worldcup(
 
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
+				if (retryCount >= 3) {
+				throw new Error('토큰을 갱신할 수 없습니다.');
+			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return post_worldcup(refreshedToken.data, worldCup);
+			return post_worldcup(refreshedToken.data, worldCup, retryCount+1);
 		} else if (!response.ok) {
 			throw response.status;
 		}
@@ -110,7 +121,8 @@ export async function post_worldcup(
 export async function patch_worldcup(
 	accessToken: string,
 	worldCup: Post_req,
-	id: number
+	id: number,
+	retryCount: number = 0
 ): Promise<Post_res> {
 	try {
 		const response = await fetch(`${WORLDCUPS_URL}/${id}`, {
@@ -124,9 +136,12 @@ export async function patch_worldcup(
 
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
+				if (retryCount >= 3) {
+				throw new Error('토큰을 갱신할 수 없습니다.');
+			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return patch_worldcup(refreshedToken.data, worldCup, id);
+			return patch_worldcup(refreshedToken.data, worldCup, id, retryCount+1);
 		} else if (!response.ok) {
 			throw response.status;
 		}
@@ -143,7 +158,8 @@ export async function patch_worldcup(
 // 월드컵을 삭제하는 함수
 export async function delete_worldcup(
 	accessToken: string,
-	id: number
+	id: number,
+	retryCount: number = 0
 ): Promise<Response> {
 	try {
 		const response = await fetch(`${WORLDCUPS_URL}/${id}`, {
@@ -156,9 +172,12 @@ export async function delete_worldcup(
 
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
+				if (retryCount >= 3) {
+				throw new Error('토큰을 갱신할 수 없습니다.');
+			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return delete_worldcup(refreshedToken.data, id);
+			return delete_worldcup(refreshedToken.data, id, retryCount+1);
 		} else if (!response.ok) {
 			throw response.status;
 		}
@@ -174,7 +193,8 @@ export async function delete_worldcup(
 // 후보자를 생성하거나 수정하는 함수
 export async function post_candidates(
 	accessToken: string,
-	candidates: Save_data
+	candidates: Save_data,
+	retryCount: number = 0
 ): Promise<Save_data> {
 	try {
 		if (candidates.id) {
@@ -191,9 +211,12 @@ export async function post_candidates(
 
 			if (response.status === 401) {
 				// 토큰이 만료되었을 때
+					if (retryCount >= 3) {
+				throw new Error('토큰을 갱신할 수 없습니다.');
+			}
 				const refreshedToken = await get_refresh(); // refresh 토큰 요청
 				// refresh 토큰을 사용하여 다시 요청
-				return post_candidates(refreshedToken.data, candidates);
+				return post_candidates(refreshedToken.data, candidates, retryCount+1);
 			} else if (!response.ok) {
 				throw response.status;
 			}
@@ -211,7 +234,8 @@ export async function post_candidates(
 // 후보자를 수정하는 함수
 export async function patch_candidates(
 	accessToken: string,
-	candidates: Save_data
+	candidates: Save_data,
+	retryCount: number = 0
 ): Promise<Save_data> {
 	try {
 		const response = await fetch(`${CANDIDATES_URL}/${candidates.id}`, {
@@ -225,9 +249,12 @@ export async function patch_candidates(
 
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
+				if (retryCount >= 3) {
+				throw new Error('토큰을 갱신할 수 없습니다.');
+			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return patch_candidates(refreshedToken.data, candidates);
+			return patch_candidates(refreshedToken.data, candidates, retryCount+1);
 		} else if (!response.ok) {
 			throw response.status;
 		}
@@ -245,7 +272,8 @@ export async function patch_candidates(
 // 후보자를 삭제하는 함수
 export async function delete_candidates(
 	accessToken: string,
-	id: number
+	id: number,
+	retryCount: number = 0,
 ): Promise<Response> {
 	try {
 		const response = await fetch(`${CANDIDATES_URL}/${id}`, {
@@ -258,9 +286,12 @@ export async function delete_candidates(
 
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
+				if (retryCount >= 3) {
+				throw new Error('토큰을 갱신할 수 없습니다.');
+			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return delete_candidates(refreshedToken.data, id);
+			return delete_candidates(refreshedToken.data, id, retryCount+1);
 		} else if (!response.ok) {
 			throw response.status;
 		}
@@ -303,7 +334,8 @@ export async function get_refresh(): Promise<{ data: string }> {
 // 게임 진행시 모달 정보를 가져오는 함수
 export async function get_detail(
 	id: number,
-	accessToken: string
+	accessToken: string,
+	retryCount: number = 0
 ): Promise<Post_res> {
 	try {
 		const response = await fetch(`${WORLDCUPS_URL}/${id}/details`, {
@@ -314,9 +346,12 @@ export async function get_detail(
 		console.log(response);
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
+				if (retryCount >= 3) {
+				throw new Error('토큰을 갱신할 수 없습니다.');
+			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return get_detail(id, refreshedToken.data);
+			return get_detail(id, refreshedToken.data,retryCount+1);
 		} else if (!response.ok) {
 			throw response.status;
 		}
@@ -331,7 +366,8 @@ export async function get_detail(
 // 댓글을 생성하는 함수
 export async function post_comments(
 	comment: { content: string; worldCupId: number; winner?: string },
-	accessToken?: string | null
+	accessToken?: string | null,
+	retryCount: number = 0,
 ): Promise<Comment_list_data> {
 	try {
 		const response = await fetch(`${BACK_URL}/comments`, {
@@ -347,9 +383,12 @@ export async function post_comments(
 		console.log(response);
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
+				if (retryCount >= 3) {
+				throw new Error('토큰을 갱신할 수 없습니다.');
+			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return post_comments(comment, refreshedToken.data);
+			return post_comments(comment, refreshedToken.data, retryCount + 1);
 		} else if (!response.ok) {
 			throw response.status;
 		}

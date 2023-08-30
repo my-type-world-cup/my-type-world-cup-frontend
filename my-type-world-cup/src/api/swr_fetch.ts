@@ -7,7 +7,7 @@ const fetcher = async (url: string) =>
 		}
 	}).then((res) => res.json());
 
-const fetcherPost = async (url: string, Candidatedata: any, token?: string) => {
+const fetcherPost = async (url: string, Candidatedata: any, token?: string, retryCount:number=0) => {
 	try {
 		const response = await fetch(url, {
 			method: "POST",
@@ -20,9 +20,12 @@ const fetcherPost = async (url: string, Candidatedata: any, token?: string) => {
 		});
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
+				if (retryCount >= 3) {
+				throw new Error('토큰을 갱신할 수 없습니다.');
+			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return fetchUserData(refreshedToken.data as string);
+			return fetchUserData(refreshedToken.data as string, retryCount+1);
 		} else if (!response.ok) {
 			throw response.status;
 		}
@@ -34,7 +37,7 @@ const fetcherPost = async (url: string, Candidatedata: any, token?: string) => {
 	}
 };
 
-const fetcherToken = async (url: string, token: string | null = null) => {
+const fetcherToken = async (url: string, token: string | null = null, retryCount:number=0) => {
 	try {
 		const response = await fetch(url, {
 			headers: {
@@ -45,9 +48,12 @@ const fetcherToken = async (url: string, token: string | null = null) => {
 		});
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
+				if (retryCount >= 3) {
+				throw new Error('토큰을 갱신할 수 없습니다.');
+			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return fetchUserData(refreshedToken.data as string);
+			return fetchUserData(refreshedToken.data as string, retryCount+1);
 		} else if (!response.ok) {
 			throw response.status;
 		}
