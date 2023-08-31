@@ -1,9 +1,9 @@
-import { fetcherPost } from "@/api/swr_fetch";
-import { BACK_URL } from "@/lib/config";
-import { rank_res, rank_res_data } from "@/type/Types";
+import { rank_res_data_dummy } from "@/lib/Dummy";
+import { useHandleSearchState } from "@/lib/hooks/useHandleSearchState";
+import useTableStateWithSWRWithSWR from "@/lib/hooks/useTableStateWithSWR";
+import { rank_res_data } from "@/type/Types";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import useSWR from "swr";
+import { useEffect } from "react";
 import ZoomedImage from "../all/ZoomImage";
 import ImageContainer from "./ImageContainer";
 import TablePagiNation from "./TablePagiNation";
@@ -24,93 +24,43 @@ type Props = {
 // 	{ name: "1대1 승률", value: "winRatio" }
 // ];
 
-const rank_res_data_dummy: rank_res_data[] = [
-	{
-		id: 0,
-		name: "",
-		image: "/icon/blueMascot.svg",
-		finalWinCount: 100,
-		winCount: 100,
-		matchUpWorldCupCount: 100,
-		matchUpGameCount: 100,
-		worldCupId: 0,
-		thumb: "/icon/blueMascot.svg"
-	},
-	{
-		id: 1,
-		name: "",
-		image: "/icon/blueMascot.svg",
-		finalWinCount: 0,
-		winCount: 0,
-		matchUpWorldCupCount: 0,
-		matchUpGameCount: 0,
-		worldCupId: 0,
-		thumb: "/icon/blueMascot.svg"
-	},
-	{
-		id: 2,
-		name: "",
-		image: "/icon/blueMascot.svg",
-		finalWinCount: 0,
-		winCount: 0,
-		matchUpWorldCupCount: 0,
-		matchUpGameCount: 0,
-		worldCupId: 0,
-		thumb: "/icon/blueMascot.svg"
-	},
-	{
-		id: 3,
-		name: "",
-		image: "/icon/blueMascot.svg",
-		finalWinCount: 0,
-		winCount: 0,
-		matchUpWorldCupCount: 0,
-		matchUpGameCount: 0,
-		worldCupId: 0,
-		thumb: "/icon/blueMascot.svg"
-	}
-];
 
 const PAGE_SIZE_OPTIONS = [10, 20, 30];
+const SORT_OPTIONS = ["finalWinCount", "finalWinRatio", "winCount", "winRatio"];
+const calculateRatio = (WinCount:number, matchUpWorldCupCount:number) => {
+  return matchUpWorldCupCount? ((WinCount / matchUpWorldCupCount) * 100).toFixed(2) : 0;
+};
+
 
 function Table({ worldcupId }: Props) {
-	const [currentPage, setCurrentPage] = useState(1);
-	const [zoomed, setZoomed] = useState(false);
-	const [image, setImage] = useState("");
-
-	const [searchText, setSearchText] = useState(""); //작성하면 저장
-	const [search, setSearch] = useState(""); //검색 트리거
-	const [pageSize, setPageSize] = useState(10);
-	const [sort, setSort] = useState("finalWinCount");
-	const { data,  } = useSWR<rank_res>(
-		`${BACK_URL}/worldcups/${worldcupId}/candidates?sort=${sort}&direction=DESC&size=${pageSize}&page=${currentPage}${search}`,
-		(url) => fetcherPost(url, { password: null })
-	);
-
+ const {
+    currentPage,
+    setCurrentPage,
+    zoomed,
+    setZoomed,
+    image,
+    setImage,
+    searchText,
+    setSearchText,
+    search,
+    setSearch,
+    pageSize,
+    setPageSize,
+    sort,
+    setSort,
+    data,  // SWR로 불러온 데이터
+  } = useTableStateWithSWRWithSWR(worldcupId);
+  
 	useEffect(() => {
 		setCurrentPage(1);
 	}, [pageSize]);
 
-	// if (error) return <div>failed to load</div>;
-	// if (isLoading) return <div>loading...</div>;
-	// if (data?.data === undefined) return <div>데이터가 없습니다</div>; //비밀번호 체킹
-	console.log(data, "데이터");
 
 	const rankMember: rank_res_data[] = data ? data!.data : rank_res_data_dummy;
 	const totalPage: number = data ? data!.pageInfo.totalPages : 1;
 
-	const handleSearch = (
-		e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLImageElement>
-	) => {
-		e.preventDefault();
-		const trimmedSearchTerm = searchText.trim();
+const handleSearch = useHandleSearchState({searchText, setSearch})
 
-		if (trimmedSearchTerm) {
-			setSearch("&keyword=" + trimmedSearchTerm);
-		} else {
-			setSearch("");
-		}
-	};
 	const zoomedHandler = (image: string) => {
 		setImage(image);
 		setZoomed(true);
@@ -256,13 +206,8 @@ function Table({ worldcupId }: Props) {
 										? " bg-inputGray text-center "
 										: "text-gray text-center"
 								}>
-								{rank.finalWinCount / rank.matchUpWorldCupCount
-									? (
-											(rank.finalWinCount / rank.matchUpWorldCupCount) *
-											100
-									  ).toFixed(2)
-									: 0}
-								%
+								{calculateRatio(rank.finalWinCount, rank.matchUpWorldCupCount)}%
+								
 							</td>
 							<td
 								className={
