@@ -1,3 +1,5 @@
+import { rank_res_data } from "@/type/Types";
+
 // const worldCupDummy: Contestant[] = [
 //   {
 //     id: 1,
@@ -131,18 +133,54 @@ const rankDummy = [
   },
 ];
 
-const calculatePageNumbers = (wikiList = [], currentPage = 1) => {
-  //페이지네이션 계산 함수
-  const itemsPerPage = 5;
 
-  const indexOfLast = currentPage * itemsPerPage; // 마지막을 먼저 구함
-  const indexOfFirst = indexOfLast - itemsPerPage; // 제거
-  const currentItems = wikiList.slice(indexOfFirst, indexOfLast); // 슬라이스 활용
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(wikiList.length / itemsPerPage); i++) {
-    pageNumbers.push(i);
-  }
-  return [pageNumbers, currentItems];
-};
+const rank_res_data_dummy: rank_res_data[] = [
+	{
+		id: 0,
+		name: "",
+		image: "/icon/blueMascot.svg",
+		finalWinCount: 100,
+		winCount: 100,
+		matchUpWorldCupCount: 100,
+		matchUpGameCount: 100,
+		worldCupId: 0,
+		thumb: "/icon/blueMascot.svg"
+	},
+	{
+		id: 1,
+		name: "",
+		image: "/icon/blueMascot.svg",
+		finalWinCount: 0,
+		winCount: 0,
+		matchUpWorldCupCount: 0,
+		matchUpGameCount: 0,
+		worldCupId: 0,
+		thumb: "/icon/blueMascot.svg"
+	},
+	{
+		id: 2,
+		name: "",
+		image: "/icon/blueMascot.svg",
+		finalWinCount: 0,
+		winCount: 0,
+		matchUpWorldCupCount: 0,
+		matchUpGameCount: 0,
+		worldCupId: 0,
+		thumb: "/icon/blueMascot.svg"
+	},
+	{
+		id: 3,
+		name: "",
+		image: "/icon/blueMascot.svg",
+		finalWinCount: 0,
+		winCount: 0,
+		matchUpWorldCupCount: 0,
+		matchUpGameCount: 0,
+		worldCupId: 0,
+		thumb: "/icon/blueMascot.svg"
+	}
+];
 
-export { calculatePageNumbers, rankDummy };
+
+export { rankDummy, rank_res_data_dummy };
+
