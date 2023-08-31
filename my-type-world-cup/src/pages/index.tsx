@@ -1,10 +1,10 @@
 import SearchBar from "@/components/main/SearchBar";
 import SortButtons from "@/components/main/SortButtons";
 import WorldcupList from "@/components/main/WorldcupList";
-import { useWorldcups } from "@/lib/hooks/useWorldcups";
+import { useWorldcupsStateWithSWR } from "@/lib/hooks/useWorldcupsStateWithSWR";
 export default function Home() {
 	const { containerRef, sort, setSort, setSearch, worldcups, isLoading } =
-		useWorldcups("/worldcups");
+		useWorldcupsStateWithSWR("/worldcups");
 
 	return (
 		<main

@@ -1,4 +1,4 @@
-import type { SortValue } from "@/lib/hooks/useWorldcups";
+import type { SortValue } from "@/lib/hooks/useWorldcupsStateWithSWR";
 interface Sort_buttons {
 	name: string;
 	value: SortValue;

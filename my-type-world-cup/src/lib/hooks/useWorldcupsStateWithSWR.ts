@@ -6,7 +6,7 @@ import { BACK_URL } from "../config";
 
 export type SortValue = "playCount" | "createdAt" | "commentCount";
 
-export function useWorldcups(url: string, token?: string | null) {
+export function useWorldcupsStateWithSWR(url: string, token?: string | null) {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [sort, setSort] = useState<SortValue>("playCount");
 	const [search, setSearch] = useState<string>("");
