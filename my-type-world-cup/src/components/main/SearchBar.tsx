@@ -1,25 +1,16 @@
 //search bar component for the app
 
+import { useHandleSearchState } from "@/lib/hooks/useHandleSearchState";
 import Image from "next/image";
 import { useState } from "react";
-
 interface Props {
 	setSearch: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const SearchBar = ({ setSearch }: Props) => {
-	const [searchTerm, setSearchTerm] = useState("");
+	const [searchText, setSearchText] = useState("");
 
-	const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		const trimmedSearchTerm = searchTerm.trim();
-
-		if (trimmedSearchTerm) {
-			setSearch("&keyword=" + trimmedSearchTerm);
-		} else {
-			setSearch("");
-		}
-	};
+const handleSearch = useHandleSearchState({searchText, setSearch})
 
 	return (
 		<div className="flex items-center justify-center">
@@ -39,7 +30,7 @@ const SearchBar = ({ setSearch }: Props) => {
 					type="text"
 					placeholder="당신의 이상형을 찾아주세요"
 					className="border-b-2 border-b-gray text-gray pb-2 pl-3 text-xl w-[280px] h-10 "
-					onChange={(e) => setSearchTerm(e.target.value)}
+					onChange={(e) => setSearchText(e.target.value)}
 				/>
 			</form>
 		</div>

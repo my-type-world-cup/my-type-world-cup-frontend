@@ -2,12 +2,14 @@ import { delete_candidates } from "@/api/user";
 
 import { fetcherPost } from "@/api/swr_fetch";
 import { BACK_URL } from "@/lib/config";
+import { useHandleSearchState } from "@/lib/hooks/useHandleSearchState";
 import { rank_Data, rank_res, rank_res_data } from "@/type/Types";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import TablePagiNation from "../rank/TablePagiNation";
 import TrComponent from "./TrComponent";
+
 type Props = {
 	rankData: rank_Data;
 	accessToken: string | null;
@@ -46,6 +48,9 @@ function EditorTable({
 		(url) => fetcherPost(url, { password: rankData.password })
 	);
 	console.log(data, "랭크데이터");
+	
+const handleSearch = useHandleSearchState({searchText, setSearch})
+
 	useEffect(() => {
 		setCurrentPage(1);
 	}, [pageSize]);
@@ -58,18 +63,8 @@ function EditorTable({
 	const rankMember: rank_res_data[] = data!.data;
 	const totalPage: number = data!.pageInfo.totalPages;
 
-	const handleSearch = (
-		e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLImageElement>
-	) => {
-		e.preventDefault();
-		const trimmedSearchTerm = searchText.trim();
 
-		if (trimmedSearchTerm) {
-			setSearch("&keyword=" + trimmedSearchTerm);
-		} else {
-			setSearch("");
-		}
-	};
+
 
 	const handleDelete = (id: number) => {
 		delete_candidates(accessToken || "", id).then(() => mutate());
