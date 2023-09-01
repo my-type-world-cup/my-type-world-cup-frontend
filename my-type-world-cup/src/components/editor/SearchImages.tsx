@@ -1,5 +1,5 @@
 import { convertToBase64, uploadImageToServer } from "@/lib/editor/base64";
-import type { imgbb_result } from "@/type/Types";
+import type { Imgbb_result } from "@/type/Types";
 import Image from "next/image";
 import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
 import BigModal from "../all/BigModal";
@@ -74,7 +74,7 @@ const SearchImages: React.FC<ImageListProps> = ({
       //     console.error("Error fetching image:", error);
       //   });
 
-      const response: imgbb_result = await uploadImageToServer(image);
+      const response: Imgbb_result = await uploadImageToServer(image);
 
       convertToBase64(response.data.image.url).then((base64) => {
         setImgSrc(base64);

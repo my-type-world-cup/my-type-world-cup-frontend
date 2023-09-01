@@ -2,7 +2,7 @@ import { delete_worldcup, get_detail } from "@/api/user";
 import SearchBar from "@/components/main/SearchBar";
 import SortButtons from "@/components/main/SortButtons";
 import WorldcupList from "@/components/main/WorldcupList";
-import { useWorldcupsStateWithSWR } from "@/lib/hooks/useWorldcupsStateWithSWR"; // 훅 가져오기
+import useWorldcupsStateWithSWR from "@/lib/hooks/useWorldcupsStateWithSWR"; // 훅 가져오기
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";

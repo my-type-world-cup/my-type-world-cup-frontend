@@ -1,13 +1,13 @@
 import { patch_candidates } from "@/api/user";
 import type { Save_data } from "@/type/Types";
-import { rank_res_data } from "@/type/Types";
+import { Rank_res_data } from "@/type/Types";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import loadingGif from "../../../public/icon/loading.gif";
 import EventModal from "../all/EventModal";
 import ZoomedImage from "../all/ZoomImage";
 type Props = {
-	rank: rank_res_data;
+	rank: Rank_res_data;
 	i: number;
 	currentPage: number;
 	pageSize: number;
