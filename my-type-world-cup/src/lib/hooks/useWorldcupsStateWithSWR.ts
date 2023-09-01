@@ -1,12 +1,25 @@
 import { fetcher, fetcherToken } from "@/api/swr_fetch";
 import { MainWorldcup, WorldcupsResponse } from "@/type/Types";
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 import { BACK_URL } from "../config";
-
 export type SortValue = "playCount" | "createdAt" | "commentCount";
 
-export function useWorldcupsStateWithSWR(url: string, token?: string | null) {
+type ReturnType= {
+	containerRef: RefObject<HTMLDivElement>;
+	sort: SortValue;
+	setSort: Dispatch<SetStateAction<SortValue>>;
+	search: string;
+	setSearch: Dispatch<SetStateAction<string>>;
+	worldcups: MainWorldcup[];
+	isLoading: boolean;
+};
+
+
+const useWorldcupsStateWithSWR = (
+	url: string,
+	token?: string | null
+): ReturnType => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [sort, setSort] = useState<SortValue>("playCount");
 	const [search, setSearch] = useState<string>("");
@@ -46,4 +59,6 @@ export function useWorldcupsStateWithSWR(url: string, token?: string | null) {
 		worldcups,
 		isLoading // 로딩 상태를 반환 객체에 포함
 	};
-}
+};
+
+export default useWorldcupsStateWithSWR
