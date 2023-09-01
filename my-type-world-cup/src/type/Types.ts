@@ -5,7 +5,7 @@ type Candidate = {
   thumb: string;
 };
 
-type result_data = {
+type Result_data = {
   id: number;
   matchUpGameCount: number;
   winCount: number;
@@ -49,17 +49,17 @@ type Contestant = {
   thumb: string;
 };
 
-type rank_Data = {
+type Rank_Data = {
   worldCupId: number;
   password: string | null;
 };
 
-type rank_res = {
-  data: rank_res_data[];
-  pageInfo: rank_res_pageInfo;
+type Rank_res = {
+  data: Rank_res_data[];
+  pageInfo: Rank_res_pageInfo;
 };
 
-type rank_res_data = {
+type Rank_res_data = {
   id: number;
   name: string;
   image: string;
@@ -71,7 +71,7 @@ type rank_res_data = {
   thumb: string;
 };
 
-type rank_res_pageInfo = {
+type Rank_res_pageInfo = {
   first: boolean;
   page: number;
   size: number;
@@ -143,7 +143,7 @@ type Save_data = {
   matchUpGameCount?: number;
 };
 
-type imgbb_result = {
+type Imgbb_result = {
   data: {
     id: string;
     title: string;
@@ -185,20 +185,15 @@ export type {
   Comment_list,
   Comment_list_data,
   Comment_list_pageInfo,
-  Contestant,
-  IngameModalData,
+  Contestant, Imgbb_result, IngameModalData,
   MainWorldcup,
   PageInfo,
   Post_req,
-  Post_res,
-  Round,
+  Post_res, Rank_Data, Rank_res,
+  Rank_res_data,
+  Rank_res_pageInfo, Result_data, Round,
   Save_data,
   Search_Image,
-  WorldcupsResponse,
-  imgbb_result,
-  rank_Data,
-  rank_res,
-  rank_res_data,
-  rank_res_pageInfo,
-  result_data,
+  WorldcupsResponse
 };
+

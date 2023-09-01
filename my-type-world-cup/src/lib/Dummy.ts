@@ -1,4 +1,4 @@
-import { rank_res_data } from "@/type/Types";
+import { Rank_res_data } from "@/type/Types";
 
 // const worldCupDummy: Contestant[] = [
 //   {
@@ -134,7 +134,7 @@ const rankDummy = [
 ];
 
 
-const rank_res_data_dummy: rank_res_data[] = [
+const Rank_res_data_dummy: Rank_res_data[] = [
 	{
 		id: 0,
 		name: "",
@@ -182,5 +182,5 @@ const rank_res_data_dummy: rank_res_data[] = [
 ];
 
 
-export { rankDummy, rank_res_data_dummy };
+export { Rank_res_data_dummy, rankDummy };
 

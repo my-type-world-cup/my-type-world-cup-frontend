@@ -7,7 +7,7 @@ export default function index({
 }: {
 	worldcupId: number;
 }) {
-	// const rankData: rank_Data = {
+	// const rankData: Rank_Data = {
 	// 	worldCupId: worldcupId,
 	// 	password: null
 	// };  렌더링 고려하여 객체에서 원시값으로 변경

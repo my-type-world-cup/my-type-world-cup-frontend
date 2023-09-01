@@ -4,8 +4,8 @@ import type {
 	Contestant,
 	Post_req,
 	Post_res,
-	Save_data,
-	result_data
+	Result_data,
+	Save_data
 } from "@/type/Types";
 import { MutableRefObject } from "react";
 import { BACK_URL } from "../lib/config";
@@ -437,8 +437,8 @@ export const fetchContestants = async (
 };
 
 // 게임 결과 순위를 업데이트하는 함수
-export const rank_result_fetch = async (
-	args: result_data[]
+export const Rank_result_fetch = async (
+	args: Result_data[]
 ): Promise<boolean> => {
 	const loginRes = await fetch(CANDIDATES_URL, {
 		method: "PATCH",

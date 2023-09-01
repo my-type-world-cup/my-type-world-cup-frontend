@@ -1,5 +1,5 @@
-import { rank_result_fetch } from "@/api/user";
-import type { Contestant, Round, result_data } from "@/type/Types";
+import { Rank_result_fetch } from "@/api/user";
+import type { Contestant, Result_data, Round } from "@/type/Types";
 import Image from "next/image";
 import {
 	Dispatch,
@@ -41,7 +41,7 @@ export default function InGame({
 	pickCandidateNum,
 	title
 }: Props) {
-	const isResult = useRef<result_data[]>([]);
+	const isResult = useRef<Result_data[]>([]);
 	const [count, setCount] = useState<number>(1);
 	const isButtonDisabledRef = useRef(false);
 
@@ -88,7 +88,7 @@ export default function InGame({
 				}
 			]);
 
-			await rank_result_fetch(isResult.current);
+			await Rank_result_fetch(isResult.current);
 
 			setStartON(false);
 			setAnimationON(true);

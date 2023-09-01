@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { MutableRefObject } from "react";
-import type { Contestant, rank_Data } from "../../type/Types";
+import type { Contestant, Rank_Data } from "../../type/Types";
 import GameSet from "../all/GameSet";
 import Table from "../rank/Table";
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function Result({ winnerRef, id, title }: Props) {
-	const rankData: rank_Data = {
+	const rankData: Rank_Data = {
 		worldCupId: id,
 		password: null
 	};
