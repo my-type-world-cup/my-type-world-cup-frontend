@@ -1,12 +1,14 @@
-import { rank_res_data_dummy } from "@/lib/Dummy";
+import { Rank_res_data_dummy } from "@/lib/Dummy";
 import { useHandleSearchState } from "@/lib/hooks/useHandleSearchState";
-import useTableStateWithSWRWithSWR from "@/lib/hooks/useTableStateWithSWR";
-import { rank_res_data } from "@/type/Types";
-import Image from "next/image";
+import useTableStateWithSWR from "@/lib/hooks/useTableStateWithSWR";
+import { Rank_res_data } from "@/type/Types";
 import { useEffect } from "react";
+import SearchForm from "../all/SearchForm";
 import ZoomedImage from "../all/ZoomImage";
 import ImageContainer from "./ImageContainer";
+import TableHeader from "./TableHeader";
 import TablePagiNation from "./TablePagiNation";
+
 type Props = {
 	
 	worldcupId:number;
@@ -33,6 +35,7 @@ const calculateRatio = (WinCount:number, matchUpWorldCupCount:number) => {
 
 
 function Table({ worldcupId }: Props) {
+	
  const {
     currentPage,
     setCurrentPage,
@@ -42,51 +45,35 @@ function Table({ worldcupId }: Props) {
     setImage,
     searchText,
     setSearchText,
-    search,
     setSearch,
     pageSize,
     setPageSize,
     sort,
     setSort,
     data,  // SWR로 불러온 데이터
-  } = useTableStateWithSWRWithSWR(worldcupId);
+  } = useTableStateWithSWR(worldcupId);
   
 	useEffect(() => {
 		setCurrentPage(1);
 	}, [pageSize]);
 
 
-	const rankMember: rank_res_data[] = data ? data!.data : rank_res_data_dummy;
-	const totalPage: number = data ? data!.pageInfo.totalPages : 1;
-
 const handleSearch = useHandleSearchState({searchText, setSearch})
 
-	const zoomedHandler = (image: string) => {
-		setImage(image);
-		setZoomed(true);
-	};
+const zoomedHandler = (image: string) => {
+	setImage(image);
+	setZoomed(true);
+};
+
+const rankMember: Rank_res_data[] = data ? data!.data : Rank_res_data_dummy;
+const totalPage: number = data ? data!.pageInfo.totalPages : 1;
+
 
 	return (
 		<>
 			<main className="flex justify-center items-center mt-20 mx-auto">
 				{/* 검색창 */}
-				<form className="mb-4 mr-4 relative" onSubmit={handleSearch}>
-					<input
-						type="text"
-						className="w-full rounded border-gray border-[1px]  p-1"
-						placeholder="Search"
-						value={searchText}
-						onChange={(e) => setSearchText(e.target.value)}
-					/>
-					<Image
-						src="/icon/search.svg"
-						alt="Search"
-						className="absolute right-2 top-2 cursor-pointer"
-						width={18}
-						height={18}
-						onClick={handleSearch}
-					/>
-				</form>
+				<SearchForm handleSearch={handleSearch} searchText={searchText} setSearchText={setSearchText} />
 
 				{/* 페이지 당 아이템 수 선택 */}
 				<div className="mb-4">
@@ -121,48 +108,34 @@ const handleSearch = useHandleSearchState({searchText, setSearch})
 						<th>순위</th>
 						<th>사진</th>
 						<th>이름</th>
-						<th
-							className={
-								sort === "finalWinCount"
-									? "text-main border-b-4 border-main"
-									: "cursor-pointer"
-							}
-							onClick={() => {
-								setSort("finalWinCount");
-							}}>
-							우승
-						</th>
-						<th
-							className={
-								sort === "finalWinRatio"
-									? "text-main border-b-4 border-main"
-									: "cursor-pointer"
-							}
-							onClick={() => setSort("finalWinRatio")}>
-							우승비율
-						</th>
-						<th
-							className={
-								sort === "winCount"
-									? "text-main border-b-4 border-main"
-									: "cursor-pointer"
-							}
-							onClick={() => setSort("winCount")}>
-							승리
-						</th>
-						<th
-							className={
-								sort === "winRatio"
-									? "text-main border-b-4 border-main"
-									: "cursor-pointer"
-							}
-							onClick={() => setSort("winRatio")}>
-							1:1 승률
-						</th>
+						<TableHeader
+							label="우승"
+							sortKey="finalWinCount"
+							sort={sort}
+							setSort={setSort}
+						/>
+						<TableHeader
+							label="우승비율"
+							sortKey="finalWinRatio"
+							sort={sort}
+							setSort={setSort}
+						/>
+						<TableHeader
+							label="승리"
+							sortKey="winCount"
+							sort={sort}
+							setSort={setSort}
+						/>
+						<TableHeader
+							label="1:1 승률"
+							sortKey="winRatio"
+							sort={sort}
+							setSort={setSort}
+						/>
 					</tr>
 				</thead>
 				<tbody>
-					{rankMember.map((rank: rank_res_data, i: number) => (
+					{rankMember.map((rank: Rank_res_data, i: number) => (
 						<tr className="border-hr border" key={rank.id}>
 							<td className="text-center text-gray">
 								{i + 1 + (currentPage - 1) * pageSize}
@@ -207,7 +180,6 @@ const handleSearch = useHandleSearchState({searchText, setSearch})
 										: "text-gray text-center"
 								}>
 								{calculateRatio(rank.finalWinCount, rank.matchUpWorldCupCount)}%
-								
 							</td>
 							<td
 								className={
