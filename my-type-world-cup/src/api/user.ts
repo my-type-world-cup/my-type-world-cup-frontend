@@ -15,7 +15,10 @@ const WORLDCUPS_URL = `${BACK_URL}/worldcups`;
 const CANDIDATES_URL = `${BACK_URL}/candidates`;
 
 // 사용자 데이터를 가져오는 함수
-export async function fetchUserData(accessToken: string, retryCount: number = 0): Promise<User> {
+export async function fetchUserData(
+	accessToken: string,
+	retryCount: number = 0
+): Promise<User> {
 	try {
 		const response = await fetch(MEMBERS_URL, {
 			headers: {
@@ -24,12 +27,12 @@ export async function fetchUserData(accessToken: string, retryCount: number = 0)
 		});
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
-				if (retryCount >= 3) {
-				throw new Error('토큰을 갱신할 수 없습니다.');
+			if (retryCount >= 3) {
+				throw new Error("토큰을 갱신할 수 없습니다.");
 			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return fetchUserData(refreshedToken.data as string, retryCount+1);
+			return fetchUserData(refreshedToken.data as string, retryCount + 1);
 		} else if (!response.ok) {
 			throw response.status;
 		}
@@ -61,12 +64,12 @@ export async function patchMember(
 
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
-				if (retryCount >= 3) {
-				throw new Error('토큰을 갱신할 수 없습니다.');
+			if (retryCount >= 3) {
+				throw new Error("토큰을 갱신할 수 없습니다.");
 			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return patchMember(refreshedToken.data, nickname, retryCount+1);
+			return patchMember(refreshedToken.data, nickname, retryCount + 1);
 		} else if (!response.ok) {
 			throw response.status;
 		}
@@ -98,12 +101,12 @@ export async function post_worldcup(
 
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
-				if (retryCount >= 3) {
-				throw new Error('토큰을 갱신할 수 없습니다.');
+			if (retryCount >= 3) {
+				throw new Error("토큰을 갱신할 수 없습니다.");
 			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return post_worldcup(refreshedToken.data, worldCup, retryCount+1);
+			return post_worldcup(refreshedToken.data, worldCup, retryCount + 1);
 		} else if (!response.ok) {
 			throw response.status;
 		}
@@ -136,12 +139,12 @@ export async function patch_worldcup(
 
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
-				if (retryCount >= 3) {
-				throw new Error('토큰을 갱신할 수 없습니다.');
+			if (retryCount >= 3) {
+				throw new Error("토큰을 갱신할 수 없습니다.");
 			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return patch_worldcup(refreshedToken.data, worldCup, id, retryCount+1);
+			return patch_worldcup(refreshedToken.data, worldCup, id, retryCount + 1);
 		} else if (!response.ok) {
 			throw response.status;
 		}
@@ -172,12 +175,12 @@ export async function delete_worldcup(
 
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
-				if (retryCount >= 3) {
-				throw new Error('토큰을 갱신할 수 없습니다.');
+			if (retryCount >= 3) {
+				throw new Error("토큰을 갱신할 수 없습니다.");
 			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return delete_worldcup(refreshedToken.data, id, retryCount+1);
+			return delete_worldcup(refreshedToken.data, id, retryCount + 1);
 		} else if (!response.ok) {
 			throw response.status;
 		}
@@ -211,12 +214,12 @@ export async function post_candidates(
 
 			if (response.status === 401) {
 				// 토큰이 만료되었을 때
-					if (retryCount >= 3) {
-				throw new Error('토큰을 갱신할 수 없습니다.');
-			}
+				if (retryCount >= 3) {
+					throw new Error("토큰을 갱신할 수 없습니다.");
+				}
 				const refreshedToken = await get_refresh(); // refresh 토큰 요청
 				// refresh 토큰을 사용하여 다시 요청
-				return post_candidates(refreshedToken.data, candidates, retryCount+1);
+				return post_candidates(refreshedToken.data, candidates, retryCount + 1);
 			} else if (!response.ok) {
 				throw response.status;
 			}
@@ -249,12 +252,12 @@ export async function patch_candidates(
 
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
-				if (retryCount >= 3) {
-				throw new Error('토큰을 갱신할 수 없습니다.');
+			if (retryCount >= 3) {
+				throw new Error("토큰을 갱신할 수 없습니다.");
 			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return patch_candidates(refreshedToken.data, candidates, retryCount+1);
+			return patch_candidates(refreshedToken.data, candidates, retryCount + 1);
 		} else if (!response.ok) {
 			throw response.status;
 		}
@@ -273,7 +276,7 @@ export async function patch_candidates(
 export async function delete_candidates(
 	accessToken: string,
 	id: number,
-	retryCount: number = 0,
+	retryCount: number = 0
 ): Promise<Response> {
 	try {
 		const response = await fetch(`${CANDIDATES_URL}/${id}`, {
@@ -286,12 +289,12 @@ export async function delete_candidates(
 
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
-				if (retryCount >= 3) {
-				throw new Error('토큰을 갱신할 수 없습니다.');
+			if (retryCount >= 3) {
+				throw new Error("토큰을 갱신할 수 없습니다.");
 			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return delete_candidates(refreshedToken.data, id, retryCount+1);
+			return delete_candidates(refreshedToken.data, id, retryCount + 1);
 		} else if (!response.ok) {
 			throw response.status;
 		}
@@ -346,12 +349,12 @@ export async function get_detail(
 		console.log(response);
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
-				if (retryCount >= 3) {
-				throw new Error('토큰을 갱신할 수 없습니다.');
+			if (retryCount >= 3) {
+				throw new Error("토큰을 갱신할 수 없습니다.");
 			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return get_detail(id, refreshedToken.data,retryCount+1);
+			return get_detail(id, refreshedToken.data, retryCount + 1);
 		} else if (!response.ok) {
 			throw response.status;
 		}
@@ -364,10 +367,10 @@ export async function get_detail(
 }
 
 // 댓글을 생성하는 함수
-export async function post_comments(
+export async function post_comment(
 	comment: { content: string; worldCupId: number; winner?: string },
 	accessToken?: string | null,
-	retryCount: number = 0,
+	retryCount: number = 0
 ): Promise<Comment_list_data> {
 	try {
 		const response = await fetch(`${BACK_URL}/comments`, {
@@ -380,21 +383,87 @@ export async function post_comments(
 			},
 			body: JSON.stringify(comment)
 		});
-		console.log(response);
+
 		if (response.status === 401) {
 			// 토큰이 만료되었을 때
-				if (retryCount >= 3) {
-				throw new Error('토큰을 갱신할 수 없습니다.');
+			if (retryCount >= 3) {
+				throw new Error("토큰을 갱신할 수 없습니다.");
 			}
 			const refreshedToken = await get_refresh(); // refresh 토큰 요청
 			// refresh 토큰을 사용하여 다시 요청
-			return post_comments(comment, refreshedToken.data, retryCount + 1);
-		} else if (!response.ok) {
-			throw response.status;
+			return post_comment(comment, refreshedToken.data, retryCount + 1);
 		}
 
 		const data = await response.json();
 		return data;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+// 댓글을 좋아요 버튼
+export async function likes_comment(
+	id: number,
+	accessToken?: string | null,
+	retryCount: number = 0
+): Promise<Response> {
+	try {
+		const response = await fetch(`${BACK_URL}/comments/${id}/likes`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				...(accessToken && { Authorization: `Bearer ${accessToken}` })
+			},
+			body: JSON.stringify({ commentId: id })
+		});
+
+		if (response.status === 401) {
+			// 토큰이 만료되었을 때
+			if (retryCount >= 3) {
+				throw new Error("토큰을 갱신할 수 없습니다.");
+			}
+			const refreshedToken = await get_refresh(); // refresh 토큰 요청
+			// refresh 토큰을 사용하여 다시 요청
+			return likes_comment(id, refreshedToken.data, retryCount + 1);
+		} else if (!response.ok) {
+			throw response.status;
+		}
+
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function cancle_like_comment(
+	id: number,
+	accessToken?: string | null,
+	retryCount: number = 0
+): Promise<Response> {
+	try {
+		const response = await fetch(`${BACK_URL}/comments/${id}/likes`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+				...(accessToken && { Authorization: `Bearer ${accessToken}` })
+			}
+		});
+
+		if (response.status === 401) {
+			// 토큰이 만료되었을 때
+			if (retryCount >= 3) {
+				throw new Error("토큰을 갱신할 수 없습니다.");
+			}
+			const refreshedToken = await get_refresh(); // refresh 토큰 요청
+			// refresh 토큰을 사용하여 다시 요청
+			return likes_comment(id, refreshedToken.data, retryCount + 1);
+		} else if (!response.ok) {
+			throw response.status;
+		}
+
+		return response;
 	} catch (error) {
 		console.log(error);
 		throw error;
