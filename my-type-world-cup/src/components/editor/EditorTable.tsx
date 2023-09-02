@@ -5,8 +5,8 @@ import { Rank_Data, Rank_res_data } from "@/type/Types";
 import { useEffect } from "react";
 import PageSizeSelector from "../all/PageSizeSelector";
 import SearchForm from "../all/SearchForm";
-import TablePagiNation from "../rank/TablePagiNation";
-import TrComponent from "./TrComponent";
+import TablePagiNation from "../all/TablePagiNation";
+import TrcomponentWithEditor from "./TrcomponentWithEditor";
 
 type Props = {
 	rankData: Rank_Data;
@@ -16,20 +16,18 @@ type Props = {
 	setCandidateId: React.Dispatch<React.SetStateAction<number>>;
 };
 
-type Item = {
-	name: string;
-	value: string;
-};
+// type Item = {
+// 	name: string;
+// 	value: string;
+// };
 
-const items: Item[] = [
-	{ name: "우승", value: "finalWinCount" },
-	{ name: "우승비율", value: "finalWinRatio" },
-	{ name: "승리", value: "winCount" },
-	{ name: "1대1 승률", value: "winRatio" }
-];
+// const items: Item[] = [
+// 	{ name: "우승", value: "finalWinCount" },
+// 	{ name: "우승비율", value: "finalWinRatio" },
+// 	{ name: "승리", value: "winCount" },
+// 	{ name: "1대1 승률", value: "winRatio" }
+// ];
 
-const PAGE_SIZE_OPTIONS = [5, 10, 20, 30] as const;
-type PageSizeOptionsType = typeof PAGE_SIZE_OPTIONS[number]; // 5 | 10 | 20 | 30
 
 function EditorTable({
 	rankData,
@@ -67,6 +65,7 @@ const handleSearch = useHandleSearchState({searchText, setSearch})
 
 	if (error) return <div>failed to load</div>;
 	if (isLoading) return <div>loading...</div>;
+	
 	const rankMember: Rank_res_data[] = data!.data;
 	const totalPage: number = data!.pageInfo.totalPages;
 
@@ -109,7 +108,7 @@ const handleSearch = useHandleSearchState({searchText, setSearch})
 				</thead>
 				<tbody>
 					{rankMember.map((rank: Rank_res_data, i: number) => (
-						<TrComponent
+						<TrcomponentWithEditor
 							key={rank.id}
 							rank={rank}
 							i={i}

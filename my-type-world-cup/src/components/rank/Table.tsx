@@ -3,11 +3,13 @@ import { useHandleSearchState } from "@/lib/hooks/useHandleSearchState";
 import useTableStateWithSWR from "@/lib/hooks/useTableStateWithSWR";
 import { Rank_res_data } from "@/type/Types";
 import { useEffect } from "react";
+import PageSizeSelector from "../all/PageSizeSelector";
 import SearchForm from "../all/SearchForm";
+import TablePagiNation from "../all/TablePagiNation";
 import ZoomedImage from "../all/ZoomImage";
-import ImageContainer from "./ImageContainer";
 import TableHeader from "./TableHeader";
-import TablePagiNation from "./TablePagiNation";
+import TrComponentWithRank from "./TrcomponentWithRank";
+
 
 type Props = {
 	
@@ -27,8 +29,6 @@ type Props = {
 // ];
 
 
-const PAGE_SIZE_OPTIONS = [10, 20, 30];
-const SORT_OPTIONS = ["finalWinCount", "finalWinRatio", "winCount", "winRatio"];
 const calculateRatio = (WinCount:number, matchUpWorldCupCount:number) => {
   return matchUpWorldCupCount? ((WinCount / matchUpWorldCupCount) * 100).toFixed(2) : 0;
 };
@@ -73,22 +73,14 @@ const totalPage: number = data ? data!.pageInfo.totalPages : 1;
 		<>
 			<main className="flex justify-center items-center mt-20 mx-auto">
 				{/* 검색창 */}
-				<SearchForm handleSearch={handleSearch} searchText={searchText} setSearchText={setSearchText} />
+				<SearchForm
+					handleSearch={handleSearch}
+					searchText={searchText}
+					setSearchText={setSearchText}
+				/>
 
 				{/* 페이지 당 아이템 수 선택 */}
-				<div className="mb-4">
-					<select
-						value={pageSize}
-						onChange={(e) => setPageSize(parseInt(e.target.value))}
-						className="ml-2 rounded border-gray-300 py-2 outline-none">
-						{PAGE_SIZE_OPTIONS.map((option) => (
-							<option key={option} value={option}>
-								{option}
-							</option>
-						))}
-					</select>
-					<label className="font-bold mr-[1px]">개씩 보기</label>
-				</div>
+				<PageSizeSelector pageSize={pageSize} setPageSize={setPageSize} />
 
 				{/* 목록 */}
 			</main>
@@ -136,71 +128,15 @@ const totalPage: number = data ? data!.pageInfo.totalPages : 1;
 				</thead>
 				<tbody>
 					{rankMember.map((rank: Rank_res_data, i: number) => (
-						<tr className="border-hr border" key={rank.id}>
-							<td className="text-center text-gray">
-								{i + 1 + (currentPage - 1) * pageSize}
-							</td>
-							<td>
-								<div className="overflow-hidden h-12 flex justify-center ">
-									{/* <Image
-                    className="flex justify-center items-center cursor-pointer"
-                    src={rank.thumb}
-                    alt="start"
-                    width={60}
-                    height={60}
-                    onClick={() => zoomedHandler(rank.image)}
-                    onError={(e) => {
-                      console.log("하이");
-                    }}
-                  /> */}
-									<ImageContainer
-										thumb={rank.thumb}
-										image={rank.image}
-										zoomedHandler={zoomedHandler}
-									/>
-								</div>
-							</td>
-							<td className="text-gray">
-								<div className="truncate w-20 text-center mx-auto text-xs">
-									{rank.name}
-								</div>
-							</td>
-							<td
-								className={
-									sort === "finalWinCount"
-										? " bg-inputGray text-center "
-										: "text-gray text-center"
-								}>
-								{rank.finalWinCount}
-							</td>
-							<td
-								className={
-									sort === "finalWinRatio"
-										? " bg-inputGray text-center "
-										: "text-gray text-center"
-								}>
-								{calculateRatio(rank.finalWinCount, rank.matchUpWorldCupCount)}%
-							</td>
-							<td
-								className={
-									sort === "winCount"
-										? " bg-inputGray text-center "
-										: "text-gray text-center"
-								}>
-								{rank.winCount}
-							</td>
-							<td
-								className={
-									sort === "winRatio"
-										? " bg-inputGray text-center "
-										: "text-gray text-center"
-								}>
-								{rank.winCount / rank.matchUpGameCount
-									? ((rank.winCount / rank.matchUpGameCount) * 100).toFixed(2)
-									: 0}
-								%
-							</td>
-						</tr>
+						<TrComponentWithRank
+							key={rank.id}
+							rank={rank}
+							i={i}
+							currentPage={currentPage}
+							pageSize={pageSize}
+							sort={sort}
+							zoomedHandler={zoomedHandler}
+						/>
 					))}
 				</tbody>
 			</table>
