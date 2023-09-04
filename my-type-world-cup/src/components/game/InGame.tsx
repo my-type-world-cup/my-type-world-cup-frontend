@@ -44,11 +44,16 @@ export default function InGame({
 	const isResult = useRef<Result_data[]>([]);
 	const [count, setCount] = useState<number>(1);
 	const isButtonDisabledRef = useRef(false);
+	const [loadHighQuality, setLoadHighQuality] = useState<boolean[]>([
+		false,
+		false
+	]);
 
 	const handleClick = async (num: number) => {
 		if (isButtonDisabledRef.current) {
 			return;
 		}
+		setLoadHighQuality([false, false]);
 		setAnimationON(false);
 		isButtonDisabledRef.current = true; // 버튼 비활성화
 		setPickCandidateNum(num);
@@ -136,11 +141,26 @@ export default function InGame({
 				}}>
 				<Image
 					src={twoPeople[0].image}
-					alt="이상형 1"
+					alt="고화질 이상형 1"
 					width={330}
 					height={330}
 					priority
-					className="cursor-pointer  sm:hover:scale-105  duration-300"
+					className={`cursor-pointer sm:hover:scale-105 duration-300 ${
+						loadHighQuality[0] ? "" : "hidden"
+					}`}
+					onLoadingComplete={() => {
+						setLoadHighQuality((value) => [true, value[1]]);
+					}}
+				/>
+				<Image
+					src={twoPeople[0].thumb}
+					alt="저화질 이상형 1"
+					width={330}
+					height={330}
+					priority
+					className={`cursor-pointer sm:hover:scale-105 duration-300 ${
+						loadHighQuality[0] ? "hidden" : ""
+					}`}
 				/>
 				<h3
 					className="absolute text-white bottom-10 left-1/2 transform -translate-x-1/2 "
@@ -183,12 +203,28 @@ export default function InGame({
 				}}>
 				<Image
 					src={twoPeople[1].image}
-					alt="이상형 2"
+					alt="고화질 이상형 2"
 					width={330}
 					priority
 					height={330}
 					onClick={() => handleClick(1)}
-					className="cursor-pointer sm:hover:scale-105 duration-300"
+					className={`cursor-pointer sm:hover:scale-105 duration-300 ${
+						loadHighQuality[1] ? "" : "hidden"
+					}`}
+					onLoadingComplete={() => {
+						setLoadHighQuality((value) => [value[0], true]);
+					}}
+				/>
+				<Image
+					src={twoPeople[1].thumb}
+					alt="저화질 이상형 2"
+					width={330}
+					priority
+					height={330}
+					onClick={() => handleClick(1)}
+					className={`cursor-pointer sm:hover:scale-105 duration-300 ${
+						loadHighQuality[1] ? "hidden" : ""
+					}`}
 				/>
 				<h3
 					className="absolute text-white bottom-10 left-1/2 transform -translate-x-1/2 "
