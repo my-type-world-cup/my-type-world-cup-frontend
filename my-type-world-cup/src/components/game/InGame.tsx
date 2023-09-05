@@ -5,6 +5,7 @@ import {
 	Dispatch,
 	MutableRefObject,
 	SetStateAction,
+	useEffect,
 	useRef,
 	useState
 } from "react";
@@ -48,6 +49,26 @@ export default function InGame({
 		false,
 		false
 	]);
+	const [imageHeightWidth, setImageHeightWidth] = useState(
+		window.innerHeight <= 700 ? 280 : 330
+	);
+	const [iconHeightWidth, setIconHeightWidth] = useState(
+		window.innerWidth <= 640 ? 40 : 60
+	);
+	const handleResize = () => {
+		setImageHeightWidth(window.innerHeight <= 700 ? 280 : 330);
+		setIconHeightWidth(window.innerWidth <= 640 ? 40 : 60);
+	};
+
+	useEffect(() => {
+		// 이벤트 리스너 추가
+		window.addEventListener("resize", handleResize);
+
+		// 컴포넌트가 언마운트 될 때 이벤트 리스너를 제거
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	}, []);
 
 	const handleClick = async (num: number) => {
 		if (isButtonDisabledRef.current) {
@@ -121,11 +142,11 @@ export default function InGame({
 
 	return (
 		<div className="relative">
-			<h2 className="text-white text-xl text-center h-4 mt-4 sm:mt-2">
+			<h2 className="text-white text-xl text-center h-4 mt-2">
 				{title} {isModal[1] === 2 ? `결승` : `${isModal[1]}강`}
 			</h2>
 			<div
-				className="flex justify-center pt-2 sm:mt-4 mt-6"
+				className="flex justify-center pt-2 mt-4"
 				onClick={() => handleClick(0)}
 				style={{
 					transform: animationON
@@ -142,8 +163,8 @@ export default function InGame({
 				<Image
 					src={twoPeople[0].image}
 					alt="고화질 이상형 1"
-					width={330}
-					height={330}
+					width={imageHeightWidth}
+					height={imageHeightWidth}
 					priority
 					className={`cursor-pointer sm:hover:scale-105 duration-300 ${
 						loadHighQuality[0] ? "" : "hidden"
@@ -155,8 +176,8 @@ export default function InGame({
 				<Image
 					src={twoPeople[0].thumb}
 					alt="저화질 이상형 1"
-					width={330}
-					height={330}
+					width={imageHeightWidth}
+					height={imageHeightWidth}
 					priority
 					className={`cursor-pointer sm:hover:scale-105 duration-300 ${
 						loadHighQuality[0] ? "hidden" : ""
@@ -180,13 +201,13 @@ export default function InGame({
 				<Image
 					src="/icon/vs.svg"
 					alt="Picture of the author"
-					width={40}
-					height={40}
+					width={iconHeightWidth}
+					height={iconHeightWidth}
 					className="mx-4"
 				/>
 			</div>
 			<div
-				className="flex justify-center "
+				className="flex justify-center sm:mt-40"
 				onClick={() => handleClick(1)}
 				style={{
 					transform: animationON
@@ -204,9 +225,9 @@ export default function InGame({
 				<Image
 					src={twoPeople[1].image}
 					alt="고화질 이상형 2"
-					width={330}
 					priority
-					height={330}
+					width={imageHeightWidth}
+					height={imageHeightWidth}
 					onClick={() => handleClick(1)}
 					className={`cursor-pointer sm:hover:scale-105 duration-300 ${
 						loadHighQuality[1] ? "" : "hidden"
@@ -218,9 +239,9 @@ export default function InGame({
 				<Image
 					src={twoPeople[1].thumb}
 					alt="저화질 이상형 2"
-					width={330}
 					priority
-					height={330}
+					width={imageHeightWidth}
+					height={imageHeightWidth}
 					onClick={() => handleClick(1)}
 					className={`cursor-pointer sm:hover:scale-105 duration-300 ${
 						loadHighQuality[1] ? "hidden" : ""
