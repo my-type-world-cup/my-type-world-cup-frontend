@@ -35,6 +35,7 @@ const Header = () => {
 						width={100}
 						height={100}
 						onClick={handleHome}
+						priority
 					/>
 				</div>
 				<h1 className='text-2xl tracking-wider font-medium text-white'>
