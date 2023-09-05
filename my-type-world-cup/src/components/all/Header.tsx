@@ -25,36 +25,33 @@ const Header = () => {
 	const page = pages.filter((page) => page.path === gamePath)[0];
 	// console.log(pathname, gamePath, page);
 	return (
-		<div className='relative'>
-			<header className='bg-main flex w-full relative z-40 px-4 py-3 items-center justify-between'>
-				<div className='w-10 h-10'>
+		<header className="relative">
+			<div className="bg-main flex w-full relative z-40 px-4 py-3 items-center justify-between">
+				<div className="w-10 h-10">
 					<Image
-						src='/icon/whiteDolphin2.svg'
-						alt='Home'
-						className='cursor-pointer hover:scale-125 mt-[4px]'
+						src="/icon/whiteDolphin2.svg"
+						alt="Home"
+						className="cursor-pointer hover:scale-125 mt-[4px]"
 						width={100}
 						height={100}
 						onClick={handleHome}
 						priority
 					/>
 				</div>
-				<h1 className='text-2xl tracking-wider font-medium text-white'>
+				<h1 className="text-2xl tracking-wider font-medium text-white">
 					{page?.word}
 				</h1>
 				<Image
-					src='/icon/hambuger.svg'
-					alt='dropdown'
-					className='cursor-pointer hover:scale-125'
+					src="/icon/hambuger.svg"
+					alt="dropdown"
+					className="cursor-pointer hover:scale-125"
 					width={30}
 					height={22}
 					onClick={() => setIsDropdownOpen(!isDropdownOpen)}
 				/>
-			</header>
-			<DropDown
-				isOpen={isDropdownOpen}
-				setIsOpen={setIsDropdownOpen}
-			/>
-		</div>
+			</div>
+			<DropDown isOpen={isDropdownOpen} setIsOpen={setIsDropdownOpen} />
+		</header>
 	);
 };
 
