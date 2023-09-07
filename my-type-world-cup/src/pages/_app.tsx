@@ -36,16 +36,21 @@ function App({ Component, pageProps }: AppProps) {
 						}}
 					/>
 				</Head>
+
 				<Script
 					async
 					src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
 				/>
+
+				{/* 웹화면 배경 */}
 				<div className="my-auto h-0 lg:h-auto mt-40 mr-4 hidden lg:block">
 					<p className="mt-4 text-2xl text-left">나의 마음을 확인하세요</p>
 					<h2 className="text-left text-5xl font-bold text-[#117FFA]">
 						이상형 월드컵
 					</h2>
 				</div>
+
+				{/* 기본 화면 */}
 				<RecoilRoot>
 					<div className="bg-white max-w-[480px] w-full sm:min-w-[480px] mx-auto sm:mx-20 shadow-lg h-5/6">
 						<Header />
