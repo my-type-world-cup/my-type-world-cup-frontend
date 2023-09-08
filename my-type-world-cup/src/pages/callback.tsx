@@ -1,43 +1,49 @@
 import { fetchUserData } from "@/api/user";
+import CardSkeleton from "@/components/main/CardSkeleton";
+import SearchBar from "@/components/main/SearchBar";
+import SortButtons from "@/components/main/SortButtons";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { accessTokenState, lastPath, userState } from "../lib/atom/atom";
-// const dummy =
-//   "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJ3bnM0NTBAZ21haWwuY29tIiwic3ViIjoid25zNDUwQGdtYWlsLmNvbSIsImlhdCI6MTY4OTM4MDAwMCwiZXhwIjoxNjg5MDAwMDAwfQ.Q-6tO2FQ6rQ8IXZD8jm6f7AN45fG_qpj0zqjD4-C2Yc";
 
-type Props = {};
+export default function Callback() {
+	const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+	const [lastPathState, setlastPathState] = useRecoilState(lastPath);
+	const [forOnlyUI, setForOnlyUI] = useState<any>();
 
-export default function Callback({}: Props) {
-  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
-  const [lastPathState, setlastPathState] = useRecoilState(lastPath);
-  const router = useRouter();
-  const setUser = useSetRecoilState(userState);
+	const router = useRouter();
+	const setUser = useSetRecoilState(userState);
 
-  useEffect(() => {
-    if (accessToken) {
-      fetchUserData(accessToken as string)
-        .then((data) => {
-          setUser(data);
-          if (lastPathState) {
-            router.replace(lastPathState); // 이전 페이지로 이동
-            setlastPathState(null);
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+	useEffect(() => {
+		if (accessToken) {
+			fetchUserData(accessToken as string)
+				.then((data) => {
+					setUser(data);
+					if (lastPathState) {
+						router.replace(lastPathState); // 이전 페이지로 이동
+						setlastPathState(null);
+					}
+				})
+				.catch((error) => {
+					console.error(error);
+				});
+		} else if (router.query.access_token) {
+			setAccessToken(router.query.access_token as string); // 토큰 저장
+		} else if (!router.query.access_token && !lastPathState) {
+			router.replace("/"); // 토큰이 없고 이전 경로가 없으면 메인으로 이동
+		}
+	}, [router.query.access_token, accessToken, setAccessToken]);
 
-    } else if (router.query.access_token) {
-      setAccessToken(router.query.access_token as string); // 토큰 저장
-    } else if (!router.query.access_token && !lastPathState) {
-      router.replace("/"); // 토큰이 없고 이전 경로가 없으면 메인으로 이동
-    }
-  }, [router.query.access_token, accessToken, setAccessToken]);
-
-  return (
-		<div className="mt-40 flex justify-center items-center">
-			<p>Loading...</p>
-		</div>
+	return (
+		<main className="flex h-screen flex-col overflow-y-scroll relative pt-24">
+			<SearchBar setSearch={setForOnlyUI} />
+			<SortButtons setSort={setForOnlyUI} sort={forOnlyUI} />
+			<article className="w-full h-auto ">
+				{Array.from({ length: 10 }, (_, i) => (
+					<CardSkeleton key={i} />
+				))}
+			</article>
+		</main>
 	);
 }
