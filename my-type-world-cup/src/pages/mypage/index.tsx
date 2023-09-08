@@ -27,16 +27,16 @@ export default function Index() {
 		useMessageAndTimer();
 	const router = useRouter();
 
+	//비로그인 시 내보냄
 	useEffect(() => {
 		if (user === null) {
 			router.push("/");
-		}
-
-		if (user?.nickname) {
+		}else{
 			setIsSaved(user);
 		}
 	}, [user, router]);
 
+	// 닉네임 상태 관리 함수
 	const handleNicknameChange = (e: ChangeEvent<HTMLInputElement>): void => {
 		const input: string = e.target.value.trim();
 
@@ -47,6 +47,8 @@ export default function Index() {
 		}
 	};
 
+
+	//변경 내역 저장 함수
 	const saveHandler = async (): Promise<void> => {
 		const trimmedNickname = isSaved.nickname.trim();
 
