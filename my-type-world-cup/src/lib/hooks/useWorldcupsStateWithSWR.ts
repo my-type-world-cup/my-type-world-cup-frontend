@@ -1,11 +1,18 @@
 import { fetcher, fetcherToken } from "@/api/swr_fetch";
+import type { SortValue } from "@/type/Types";
 import { MainWorldcup, WorldcupsResponse } from "@/type/Types";
-import { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from "react";
+import {
+	Dispatch,
+	RefObject,
+	SetStateAction,
+	useEffect,
+	useRef,
+	useState
+} from "react";
 import useSWRInfinite from "swr/infinite";
 import { BACK_URL } from "../config";
-export type SortValue = "playCount" | "createdAt" | "commentCount";
 
-type ReturnType= {
+type ReturnType = {
 	containerRef: RefObject<HTMLDivElement>;
 	sort: SortValue;
 	setSort: Dispatch<SetStateAction<SortValue>>;
@@ -14,7 +21,6 @@ type ReturnType= {
 	worldcups: MainWorldcup[];
 	isLoading: boolean;
 };
-
 
 const useWorldcupsStateWithSWR = (
 	url: string,
@@ -61,4 +67,4 @@ const useWorldcupsStateWithSWR = (
 	};
 };
 
-export default useWorldcupsStateWithSWR
+export default useWorldcupsStateWithSWR;

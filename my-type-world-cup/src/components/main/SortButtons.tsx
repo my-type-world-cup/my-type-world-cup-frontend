@@ -1,22 +1,12 @@
-import type { SortValue } from "@/lib/hooks/useWorldcupsStateWithSWR";
-interface Sort_buttons {
-	name: string;
-	value: SortValue;
-}
+import type { SortValue, Sort_buttons } from "@/type/Types";
 
-interface Props {
+type Props = {
 	setSort: React.Dispatch<React.SetStateAction<SortValue>>;
 	sort: SortValue;
-}
+	sortButtons: Sort_buttons[];
+};
 
-const SortButtons = ({ setSort, sort }: Props) => {
-	const sortButtons: Sort_buttons[] = [
-		{ name: "인기순", value: "playCount" },
-		{ name: "최신순", value: "createdAt" },
-
-		{ name: "댓글순", value: "commentCount" }
-	];
-
+const SortButtons = ({ setSort, sort, sortButtons }: Props) => {
 	const sortHandler = (value: SortValue) => {
 		setSort(value);
 	};
