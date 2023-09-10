@@ -4,7 +4,7 @@ import WorldcupList from "@/components/main/WorldcupList";
 import useWorldcupsStateWithSWR from "@/lib/hooks/useWorldcupsStateWithSWR";
 import { Sort_buttons } from "@/type/Types";
 
-const sortButtons: Sort_buttons[] = [
+export const sortButtons: Sort_buttons[] = [
 	{ name: "인기순", value: "playCount" },
 	{ name: "최신순", value: "createdAt" },
 	{ name: "댓글순", value: "commentCount" }

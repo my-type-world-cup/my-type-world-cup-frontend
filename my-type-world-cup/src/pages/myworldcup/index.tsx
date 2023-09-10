@@ -6,6 +6,7 @@ import useWorldcupsStateWithSWR from "@/lib/hooks/useWorldcupsStateWithSWR"; // 
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
+import { sortButtons } from "..";
 import { accessTokenState, postWorldcup } from "../../lib/atom/atom";
 
 export default function MyWorldCup({}: {}) {
@@ -48,9 +49,7 @@ export default function MyWorldCup({}: {}) {
 			className="flex h-screen flex-col overflow-y-scroll relative pt-24"
 			ref={containerRef}>
 			<SearchBar setSearch={setSearch} />
-			<div className="mt-12 mx-auto">
-				<SortButtons setSort={setSort} sort={sort} />
-			</div>
+			<SortButtons setSort={setSort} sort={sort} sortButtons={sortButtons} />
 
 			<WorldcupList
 				worldcups={worldcups}

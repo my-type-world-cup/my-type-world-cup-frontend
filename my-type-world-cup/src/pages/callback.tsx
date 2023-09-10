@@ -2,6 +2,7 @@ import { fetchUserData } from "@/api/user";
 import CardSkeleton from "@/components/main/CardSkeleton";
 import SearchBar from "@/components/main/SearchBar";
 import SortButtons from "@/components/main/SortButtons";
+import { sortButtons } from "@/pages";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -38,7 +39,11 @@ export default function Callback() {
 	return (
 		<main className="flex h-screen flex-col overflow-y-scroll relative pt-24">
 			<SearchBar setSearch={setForOnlyUI} />
-			<SortButtons setSort={setForOnlyUI} sort={forOnlyUI} />
+			<SortButtons
+				setSort={setForOnlyUI}
+				sort={forOnlyUI}
+				sortButtons={sortButtons}
+			/>
 			<article className="w-full h-auto ">
 				{Array.from({ length: 10 }, (_, i) => (
 					<CardSkeleton key={i} />
