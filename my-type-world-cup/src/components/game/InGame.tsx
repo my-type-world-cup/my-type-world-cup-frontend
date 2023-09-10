@@ -49,15 +49,22 @@ export default function InGame({
 		false,
 		false
 	]);
-	const [imageHeightWidth, setImageHeightWidth] = useState(
-		window.innerHeight <= 700 ? 280 : 330
+	const [isImagesLoaded, setIsImagesLoaded] = useState<boolean[]>([
+		false,
+		false
+	]);
+	const [imageDimensions, setImageDimensions] = useState(
+		window.innerHeight <= 640 ? 280 : 330
 	);
-	const [iconHeightWidth, setIconHeightWidth] = useState(
-		window.innerWidth <= 640 ? 40 : 60
+	const [iconDimensions, setIconDimensions] = useState(
+		window.innerHeight <= 640 ? 40 : 60
 	);
+	// useRef를 사용해서 라운드가 끝났는지를 저장
+	const isImageUploadEndRef = useRef(false);
+
 	const handleResize = () => {
-		setImageHeightWidth(window.innerHeight <= 700 ? 280 : 330);
-		setIconHeightWidth(window.innerWidth <= 640 ? 40 : 60);
+		setImageDimensions(window.innerHeight <= 640 ? 280 : 330);
+		setIconDimensions(window.innerHeight <= 640 ? 40 : 60);
 	};
 
 	useEffect(() => {
@@ -70,11 +77,22 @@ export default function InGame({
 		};
 	}, []);
 
+	const handleImageLoad = (index: number) => {
+		setIsImagesLoaded((prevStatus) => {
+			const newStatus = [...prevStatus];
+			newStatus[index] = true;
+			return newStatus;
+		});
+	};
+
+	const checkAllImagesLoaded = () => {
+		return isImagesLoaded.every((status) => status);
+	};
+
 	const handleClick = async (num: number) => {
-		if (isButtonDisabledRef.current) {
+		if (isButtonDisabledRef.current || !checkAllImagesLoaded()) {
 			return;
 		}
-		setLoadHighQuality([false, false]);
 		setAnimationON(false);
 		isButtonDisabledRef.current = true; // 버튼 비활성화
 		setPickCandidateNum(num);
@@ -121,18 +139,26 @@ export default function InGame({
 			return;
 		} else if (matchRef.current.length === 0) {
 			//다음 라운드로 넘어가기
+
 			setCount((prev) => prev + 1);
 			setIsModal((prev) => [prev[0], (prev[1] / 2) as Round]);
 			matchRef.current = winnerRef.current;
 			winnerRef.current = [];
+
+			isImageUploadEndRef.current = true; // 이미지 업로드 완료
 		}
 
 		setTimeout(() => {
 			setAnimationON(true);
-			// setIsCheck([true, 3]); //원위치.
 			setStartON(true);
 			randomContestant(); //다시뽑기
 			isButtonDisabledRef.current = false; // 버튼 활성화
+			// 이미지 업로드 이후 캐싱으로 사용되기 때문에 더이상 쓰지 않음
+			// (onLoadingComplet이 작동하지 않음)
+			if (!isImageUploadEndRef.current) {
+				setLoadHighQuality([false, false]);
+				setIsImagesLoaded([false, false]);
+			}
 		}, 2200);
 	};
 
@@ -163,8 +189,8 @@ export default function InGame({
 				<Image
 					src={twoPeople[0].image}
 					alt="고화질 이상형 1"
-					width={imageHeightWidth}
-					height={imageHeightWidth}
+					width={imageDimensions}
+					height={imageDimensions}
 					priority
 					className={`cursor-pointer sm:hover:scale-105 duration-300 ${
 						loadHighQuality[0] ? "" : "hidden"
@@ -176,12 +202,13 @@ export default function InGame({
 				<Image
 					src={twoPeople[0].thumb}
 					alt="저화질 이상형 1"
-					width={imageHeightWidth}
-					height={imageHeightWidth}
+					width={imageDimensions}
+					height={imageDimensions}
 					priority
 					className={`cursor-pointer sm:hover:scale-105 duration-300 ${
 						loadHighQuality[0] ? "hidden" : ""
 					}`}
+					onLoadingComplete={() => handleImageLoad(0)}
 				/>
 				<h3
 					className="absolute text-white bottom-10 left-1/2 transform -translate-x-1/2 "
@@ -201,8 +228,8 @@ export default function InGame({
 				<Image
 					src="/icon/vs.svg"
 					alt="Picture of the author"
-					width={iconHeightWidth}
-					height={iconHeightWidth}
+					width={iconDimensions}
+					height={iconDimensions}
 					className="mx-4"
 				/>
 			</div>
@@ -226,8 +253,8 @@ export default function InGame({
 					src={twoPeople[1].image}
 					alt="고화질 이상형 2"
 					priority
-					width={imageHeightWidth}
-					height={imageHeightWidth}
+					width={imageDimensions}
+					height={imageDimensions}
 					onClick={() => handleClick(1)}
 					className={`cursor-pointer sm:hover:scale-105 duration-300 ${
 						loadHighQuality[1] ? "" : "hidden"
@@ -240,9 +267,10 @@ export default function InGame({
 					src={twoPeople[1].thumb}
 					alt="저화질 이상형 2"
 					priority
-					width={imageHeightWidth}
-					height={imageHeightWidth}
+					width={imageDimensions}
+					height={imageDimensions}
 					onClick={() => handleClick(1)}
+					onLoadingComplete={() => handleImageLoad(1)}
 					className={`cursor-pointer sm:hover:scale-105 duration-300 ${
 						loadHighQuality[1] ? "hidden" : ""
 					}`}
