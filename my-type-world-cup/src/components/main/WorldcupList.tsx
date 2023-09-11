@@ -20,6 +20,7 @@ const WorldcupList = ({
 	isLoading
 }: WorldcupListProps) => {
 	const router = useRouter();
+	const hasWorldcups = worldcups && worldcups.length > 0;
 
 	if (isLoading) {
 		return (
@@ -33,11 +34,11 @@ const WorldcupList = ({
 
 	return (
 		<article className="w-full h-auto ">
-			{worldcups && worldcups.length > 0 ? (
-				worldcups.map((v) => (
+			{hasWorldcups ? (
+				worldcups.map((worldcup) => (
 					<Card
-						key={v.id}
-						worldcup={v}
+						key={worldcup.id}
+						worldcup={worldcup}
 						mine={mine}
 						handlerDelete={handlerDelete}
 						handlerEditorWorldCup={handlerEditorWorldCup}
@@ -63,9 +64,9 @@ const WorldcupList = ({
 								를 통해 업데이트해주세요
 							</>
 						) : (
-								<span className="bg-main p-2 text-white rounded-lg">
-									이상형 월드컵 만들기를 통해 업데이트해주세요
-								</span>
+							<span className="bg-main p-2 text-white rounded-lg">
+								이상형 월드컵 만들기를 통해 업데이트해주세요
+							</span>
 						)}
 					</h3>
 				</div>
