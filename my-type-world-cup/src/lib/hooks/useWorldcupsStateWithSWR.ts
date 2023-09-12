@@ -6,7 +6,6 @@ import {
 	RefObject,
 	SetStateAction,
 	useEffect,
-	useMemo,
 	useRef,
 	useState
 } from "react";
@@ -23,8 +22,17 @@ type ReturnType = {
 	isLoading: boolean;
 };
 
+const buildURL = (
+	baseURL: string,
+	index: number,
+	sort: SortValue,
+	search: string
+): string =>
+	`${BACK_URL}${baseURL}?page=${index + 1}&size=10&sort=${sort}${search}`;
+
 const useWorldcupsStateWithSWR = (
 	url: string,
+	initialData: WorldcupsResponse,
 	token?: string | null
 ): ReturnType => {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -32,17 +40,22 @@ const useWorldcupsStateWithSWR = (
 	const [search, setSearch] = useState<string>("");
 
 	const { data, setSize, isValidating } = useSWRInfinite<WorldcupsResponse>(
-		(index) =>
-			`${BACK_URL}${url}?page=${index + 1}&size=10&sort=${sort}${search}`,
-		token ? (url: string) => fetcherToken(url, token) : fetcher
+		(index) => buildURL(url, index, sort, search),
+		token ? (url: string) => fetcherToken(url, token) : fetcher,
+		{
+			initialSize: 0 // initialSize를 0으로 설정
+		}
 	);
 
-	const isReachingEnd = data && data[data.length - 1]?.data.length < 10;
-	const isLoading = !data && isValidating; // 로딩 상태를 나타내는 변수
+	const worldcups: MainWorldcup[] = initialData.data.concat(
+		data ? data.flatMap((item) => item.data) : []
+	);
 
-	const worldcups: MainWorldcup[] = useMemo(() => {
-		return data ? data.map((v) => v.data).flat() : [];
-	}, [data]);
+	// 더 이상 데이터를 불러올 수 있는지 판단
+	const isReachingEnd = data && data[data.length - 1]?.data.length < 10;
+
+	// 로딩 상태 판단
+	const isLoading = !data && isValidating;
 
 	useEffect(() => {
 		const handleScroll = () => {
