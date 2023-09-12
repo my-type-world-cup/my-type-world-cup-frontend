@@ -24,19 +24,15 @@ function App({ Component, pageProps }: AppProps) {
 					<link rel="icon" href="/icon/trophy.svg" />
 					<link rel="mask-icon" href="/icon/trophy.svg" color="#000000" />
 					<MetaTags />
-					<script
-						dangerouslySetInnerHTML={{
-							__html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-
-              gtag('config', '${GA_TRACKING_ID}');
-            `
-						}}
-					/>
 				</Head>
-
+				<Script id="gtag-init">
+					{`
+   					window.dataLayer = window.dataLayer || [];
+    				function gtag(){dataLayer.push(arguments);}
+   					 gtag('js', new Date());
+  					  gtag('config', '${GA_TRACKING_ID}');
+ 					 `}
+				</Script>
 				<Script
 					async
 					src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
