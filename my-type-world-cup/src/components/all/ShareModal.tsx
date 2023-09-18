@@ -21,6 +21,7 @@ const ShareModal = ({
 		: "absolute top-0 left-0  w-full h-full flex justify-center items-center pointer-events-none";
 	return (
 		<div className={modalClass}>
+			{/* 백그라운드 */}
 			<div
 				className="fixed w-screen left-0 top-0 h-screen  bg-black opacity-50 z-50"
 				style={{
@@ -35,6 +36,7 @@ const ShareModal = ({
 					opacity: modalVisible ? 1 : 0,
 					transition: "opacity 0.3s ease-out"
 				}}>
+				{/* 로그인 이슈일 시 oauth로 안내함 */}
 				<p className="p-4 text-white">{message}</p>
 				{message === "로그인을 해주세요" && (
 					<div
