@@ -1,47 +1,49 @@
 import { BACK_URL } from "@/lib/config";
 import Image from "next/image";
+
+type ShareModalProps = {
+	message: string;
+	modalVisible: boolean; // 'isCopied'를 'modalVisible'로 이름 변경
+	setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
 const ShareModal = ({
 	message,
-	isCopied,
-	setIsCopied
-}: {
-	setIsCopied: React.Dispatch<React.SetStateAction<boolean>>;
-	message: string;
-	isCopied: boolean;
-}) => {
-	const OauthHandler = () => {
+	modalVisible,
+	setModalVisible
+}: ShareModalProps) => {
+	const handleOAuth = () => {
 		window.location.href = `${BACK_URL}/oauth2/authorization/google`;
 	};
+
+	const modalClass = modalVisible
+		? "absolute top-0 left-0  w-full h-full flex justify-center items-center pointer-events-auto"
+		: "absolute top-0 left-0  w-full h-full flex justify-center items-center pointer-events-none";
 	return (
-		<div
-			className={
-				isCopied
-					? "absolute top-0 left-0  w-full h-full flex justify-center items-center pointer-events-auto"
-					: "absolute top-0 left-0  w-full h-full flex justify-center items-center pointer-events-none"
-			}>
+		<div className={modalClass}>
 			<div
-				className='fixed w-screen left-0 top-0 h-screen  bg-black opacity-50 z-50'
+				className="fixed w-screen left-0 top-0 h-screen  bg-black opacity-50 z-50"
 				style={{
-					opacity: isCopied ? 0.5 : 0,
+					opacity: modalVisible ? 0.5 : 0,
 					transition: "opacity 0.3s ease-out"
 				}}
-				onClick={() => setIsCopied(false)}
+				onClick={() => setModalVisible(false)}
 			/>
 			<div
-				className='fixed top-[35%] bg-main rounded-xl z-50 flex justify-center items-center flex-col'
+				className="fixed top-[35%] bg-main rounded-xl z-50 flex justify-center items-center flex-col"
 				style={{
-					opacity: isCopied ? 1 : 0,
+					opacity: modalVisible ? 1 : 0,
 					transition: "opacity 0.3s ease-out"
 				}}>
-				<p className='p-4 text-white'>{message}</p>
+				<p className="p-4 text-white">{message}</p>
 				{message === "로그인을 해주세요" && (
 					<div
-						className='flex justify-center items-center cursor-pointer text-white mb-2'
-						onClick={() => OauthHandler()}>
+						className="flex justify-center items-center cursor-pointer text-white mb-2"
+						onClick={() => handleOAuth()}>
 						<Image
-							src='/icon/google.svg'
-							alt='Mypage'
-							className=' mr-2'
+							src="/icon/google.svg"
+							alt="Mypage"
+							className=" mr-2"
 							width={30}
 							height={30}
 						/>
