@@ -6,14 +6,14 @@ type HandleDelete = () => void;
 
 const EventModal = ({
 	message, //메시지
-	isCopied, // 모달 조건
-	setIsCopied,
+	modalVisible, // 모달 조건
+	setModalVisible,
 
 	img, //이미지
 	handleDelete //이벤트
 }: {
-	isCopied: boolean;
-	setIsCopied: Dispatch<SetStateAction<boolean>>;
+	modalVisible: boolean;
+	setModalVisible: Dispatch<SetStateAction<boolean>>;
 	message: string;
 
 	img: string;
@@ -22,25 +22,25 @@ const EventModal = ({
 	return (
 		<div
 			className={
-				isCopied
+				modalVisible
 					? "fixed left-0 top-0 w-full h-full z-50 flex justify-center items-center pointer-events-auto"
 					: "fixed left-0 top-0 w-full h-full z-50 flex justify-center items-center pointer-events-none"
 			}>
 			<div
 				className='absolute w-full h-full bg-black opacity-50'
 				style={{
-					opacity: isCopied ? 0.5 : 0,
+					opacity: modalVisible ? 0.5 : 0,
 					transition: "opacity 0.3s ease-out"
 				}}
 				onClick={() => {
-					setIsCopied(false);
+					setModalVisible(false);
 				}}
 			/>
 
 			<div
 				className='fixed top-[25%] bg-main rounded-xl p-4 pt-6 z-50 flex justify-center items-center flex-col'
 				style={{
-					opacity: isCopied ? 1 : 0,
+					opacity: modalVisible ? 1 : 0,
 					transition: "opacity 0s"
 				}}>
 				{
@@ -63,7 +63,7 @@ const EventModal = ({
 							</button>
 							<button
 								className=' hover:scale-125 hover:text-lightBlue'
-								onClick={() => setIsCopied(false)}>
+								onClick={() => setModalVisible(false)}>
 								아니오
 							</button>
 						</div>

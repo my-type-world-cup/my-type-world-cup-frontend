@@ -11,13 +11,13 @@ type GameButtonsProps = {
 
 const GameButtons = ({ isReload = false, id }: GameButtonsProps) => {
 	const router = useRouter();
-	const [isCopied, setIsCopied] = useState(false);
+	const [modalVisible, setModalVisible] = useState(false);
 
 	const handleCopyLink = () => {
 		navigator.clipboard.writeText(FRONT_URL + "/game/" + id);
-		setIsCopied(true);
+		setModalVisible(true);
 		setTimeout(() => {
-			setIsCopied(false);
+			setModalVisible(false);
 		}, 1000);
 	};
 
@@ -55,8 +55,8 @@ const GameButtons = ({ isReload = false, id }: GameButtonsProps) => {
 
 			<ShareModal
 				message="복사되었습니다"
-				isCopied={isCopied}
-				setIsCopied={setIsCopied}
+				modalVisible={modalVisible}
+				setModalVisible={setModalVisible}
 			/>
 		</div>
 	);

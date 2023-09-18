@@ -132,8 +132,8 @@ const SearchImages: React.FC<ImageListProps> = ({
         </div>
         <BigModal
           message="이미지를 선택하시겠습니까?"
-          isCopied={modal}
-          setIsCopied={setModal}
+          modalVisible={modal}
+          setModalVisible={setModal}
           setLoading={setLoading}
           img={img}
           uploadHandler={uploadHandler}

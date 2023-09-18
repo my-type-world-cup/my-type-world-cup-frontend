@@ -28,7 +28,7 @@ const CommentForm: React.FC<FormProps> = ({
 	// 상태를 관리합니다.
 	const [message, setMessage] = useState("");
 	const [modalMessage, setmodalMessage] = useState<string>("");
-	const [isCopied, setIsCopied] = useState<boolean>(false);
+	const [modalVisible, setModalVisible] = useState<boolean>(false);
 	const [nickname, setnickname] = useState<string>("익명");
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -69,8 +69,8 @@ const CommentForm: React.FC<FormProps> = ({
 
 	// 닉네임 클릭 시, 변경 조건을 알려줍니다
 	const alram = () => {
-		if (isCopied) return;
-		setIsCopied(true);
+		if (modalVisible) return;
+		setModalVisible(true);
 		if (user?.nickname) {
 			setmodalMessage("회원정보에서 수정 가능합니다.");
 		} else {
@@ -78,7 +78,7 @@ const CommentForm: React.FC<FormProps> = ({
 		}
 
 		setTimeout(() => {
-			setIsCopied(false);
+			setModalVisible(false);
 		}, 2000);
 	};
 
@@ -137,8 +137,8 @@ const CommentForm: React.FC<FormProps> = ({
 			{/* 닉네임 변경조건 알려주는 모달 창 */}
 			<ShareModal
 				message={modalMessage}
-				isCopied={isCopied}
-				setIsCopied={setIsCopied}
+				modalVisible={modalVisible}
+				setModalVisible={setModalVisible}
 			/>
 		</>
 	);

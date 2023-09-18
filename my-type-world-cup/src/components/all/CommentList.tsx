@@ -19,7 +19,7 @@ type Props = {
 
 export default function CommentList({ accessToken, id, rendering }: Props) {
 	const containerRef = useRef<HTMLDivElement>(null);
-	const [isCopied, setIsCopied] = useState<boolean>(false);
+	const [modalVisible, setModalVisible] = useState<boolean>(false);
 	const [message, setMessage] = useState<string>("");
 
 	// SWR을 사용하여 무한 스크롤 데이터 가져오기
@@ -65,14 +65,14 @@ export default function CommentList({ accessToken, id, rendering }: Props) {
 
 			if (response.ok) {
 				setMessage(successMessage); // 메시지 설정
-				setIsCopied(true);
+				setModalVisible(true);
 
 				mutate();
-				setTimeout(() => setIsCopied(false), 1000);
+				setTimeout(() => setModalVisible(false), 1000);
 			}
 		} catch (error) {
 			setMessage("로그인을 해주세요.");
-			setIsCopied(true);
+			setModalVisible(true);
 			mutate();
 		}
 	};
@@ -121,8 +121,8 @@ export default function CommentList({ accessToken, id, rendering }: Props) {
 			{/* 댓글 좋아요 관련 모달 */}
 			<ShareModal
 				message={message}
-				isCopied={isCopied}
-				setIsCopied={setIsCopied}
+				modalVisible={modalVisible}
+				setModalVisible={setModalVisible}
 			/>
 		</>
 	);

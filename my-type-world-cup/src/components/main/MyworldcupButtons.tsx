@@ -17,7 +17,7 @@ const MyworldcupButtons = ({
 	handlerDelete,
 	candidateImage = "/icon/blueMascot.svg"
 }: myworldcupButtonsProps) => {
-	const [isCopied, setIsCopied] = useState(false);
+	const [modalVisible, setModalVisible] = useState(false);
 
 	return (
 		<div>
@@ -33,13 +33,13 @@ const MyworldcupButtons = ({
 						icon="/icon/white_delete.svg"
 						alt="Delete"
 						label="삭제하기"
-						onClick={() => setIsCopied(true)}
+						onClick={() => setModalVisible(true)}
 					/>
 				</div>
 			</div>
 			<EventModal
-				isCopied={isCopied}
-				setIsCopied={setIsCopied}
+				modalVisible={modalVisible}
+				setModalVisible={setModalVisible}
 				message={`${worldcupTitle}를 삭제하시겠습니까?`}
 				img={hasCandidates ? candidateImage : "/icon/blueMascot.svg"}
 				handleDelete={() => handlerDelete(id)}

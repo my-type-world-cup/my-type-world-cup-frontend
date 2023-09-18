@@ -2,8 +2,8 @@ import Image from "next/image";
 import loadingGif from "../../../public/icon/loading.gif";
 const BigModal = ({
 	message,
-	isCopied,
-	setIsCopied,
+	modalVisible,
+	setModalVisible,
 	setIsMake,
 	img,
 	uploadHandler,
@@ -11,9 +11,9 @@ const BigModal = ({
 	setLoading
 }: {
 	setIsMake?: React.Dispatch<React.SetStateAction<boolean>>;
-	setIsCopied: React.Dispatch<React.SetStateAction<boolean>>;
+	setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 	message: string;
-	isCopied: boolean;
+	modalVisible: boolean;
 	img: string;
 	uploadHandler: (image: string) => void;
 	loading: boolean;
@@ -22,26 +22,26 @@ const BigModal = ({
 	return (
 		<div
 			className={
-				isCopied
+				modalVisible
 					? "absolute left-[0px] top-0 w-full h-full z-50 flex justify-center items-center pointer-events-auto"
 					: "absolute left-[0px] top-0 w-full h-full z-50 flex justify-center items-center pointer-events-none"
 			}>
 			<div
 				className="absolute w-full bg-black opacity-50"
 				style={{
-					opacity: isCopied ? 0.5 : 0,
+					opacity: modalVisible ? 0.5 : 0,
 					transition: "opacity 0.3s ease-out",
 					height: "calc(100% + 40px)"
 				}}
 				onClick={() => {
-					if (!loading) setIsCopied(false);
+					if (!loading) setModalVisible(false);
 				}}
 			/>
 
 			<div
 				className="fixed top-[25%] bg-main rounded-xl p-4 pt-6 z-50 flex justify-center items-center flex-col"
 				style={{
-					opacity: isCopied ? 1 : 0,
+					opacity: modalVisible ? 1 : 0,
 					transition: "opacity 0.3s ease-out"
 				}}>
 				{!!img && loading ? (
@@ -74,7 +74,7 @@ const BigModal = ({
 							</button>
 							<button
 								className=" hover:scale-125 hover:text-lightBlue"
-								onClick={() => setIsCopied(false)}>
+								onClick={() => setModalVisible(false)}>
 								아니오
 							</button>
 						</div>
@@ -88,7 +88,7 @@ const BigModal = ({
 							<button
 								className=" hover:scale-125 hover:text-lightBlue"
 								onClick={() => {
-									setIsCopied(false);
+									setModalVisible(false);
 									setLoading(false);
 								}}>
 								나가기

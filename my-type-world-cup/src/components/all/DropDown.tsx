@@ -23,7 +23,7 @@ type DropDownProps = {
 const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
 	const setLastPath = useSetRecoilState(lastPath);
 	const resetAccessToken = useResetRecoilState(accessTokenState);
-	const [isCopied, setIsCopied] = useState<boolean>(false);
+	const [modalVisible, setModalVisible] = useState<boolean>(false);
 	const [message, setMessage] = useState("");
 	const router = useRouter();
 	const [isLogin, setIsLogin] = useState(false);
@@ -51,13 +51,13 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
 	};
 
 	const alram = (word: string) => {
-		if (isCopied) return;
+		if (modalVisible) return;
 		if (user?.nickname) {
 			setIsOpen(false);
 			router.push(`/${word}`);
 		} else {
 			setMessage("로그인을 해주세요");
-			setIsCopied(true);
+			setModalVisible(true);
 		}
 	};
 
@@ -205,8 +205,8 @@ const DropDown = ({ isOpen, setIsOpen }: DropDownProps) => {
 			/>
 			<ShareModal
 				message={message}
-				isCopied={isCopied}
-				setIsCopied={setIsCopied}
+				modalVisible={modalVisible}
+				setModalVisible={setModalVisible}
 			/>
 		</>
 	);

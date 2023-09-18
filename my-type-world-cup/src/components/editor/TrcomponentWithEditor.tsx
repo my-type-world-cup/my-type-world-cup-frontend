@@ -34,7 +34,7 @@ export default function TrcomponentWithEditor({
 	const [savedText, setSavedText] = useState<string>("");
 	const [isEditing, setIsEditing] = useState<boolean>(true);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [isCopied, setIsCopied] = useState<boolean>(false);
+	const [modalVisible, setModalVisible] = useState<boolean>(false);
 	const [handlerState, setHandlerState] = useState<Handler>(() => {});
 	const [zoomed, setZoomed] = useState<boolean>(false);
 
@@ -146,7 +146,7 @@ export default function TrcomponentWithEditor({
 						onClick={() => {
 							setMessage("수정하시겠습니까?");
 							setHandlerState(() => handler);
-							setIsCopied(true);
+							setModalVisible(true);
 						}}
 					/>
 					<Image
@@ -158,14 +158,14 @@ export default function TrcomponentWithEditor({
 						onClick={() => {
 							setMessage("삭제하시겠습니까?");
 							setHandlerState(() => () => handleDelete(rank.id));
-							setIsCopied(true);
+							setModalVisible(true);
 						}}
 					/>
 				</div>
 
 				<EventModal
-					isCopied={isCopied}
-					setIsCopied={setIsCopied}
+					modalVisible={modalVisible}
+					setModalVisible={setModalVisible}
 					message={message}
 					img={rank.thumb}
 					handleDelete={handlerState}
