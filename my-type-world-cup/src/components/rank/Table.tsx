@@ -1,7 +1,7 @@
 import { Rank_res_data_dummy } from "@/lib/Dummy";
 import { useHandleSearchState } from "@/lib/hooks/useHandleSearchState";
 import useTableStateWithSWR from "@/lib/hooks/useTableStateWithSWR";
-import { Rank_res_data } from "@/type/Types";
+import type { Rank_res_data } from "@/type/Types";
 import { useEffect } from "react";
 import PageSizeSelector from "../all/PageSizeSelector";
 import SearchForm from "../all/SearchForm";

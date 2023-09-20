@@ -1,6 +1,5 @@
 import { patch_candidates } from "@/api/user";
-import type { Save_data } from "@/type/Types";
-import { Rank_res_data } from "@/type/Types";
+import type { Rank_res_data, Save_data } from "@/type/Types";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import loadingGif from "../../../public/icon/loading.gif";

@@ -1,4 +1,4 @@
-import { Rank_res_data } from "@/type/Types";
+import type { Rank_res_data } from "@/type/Types";
 
 // const worldCupDummy: Contestant[] = [
 //   {
@@ -85,7 +85,7 @@ const rankDummy = [
     winCount: 21,
     matchUpWorldCupCount: 10, //출전횟수
     matchUpGameCount: 20, // 싸움 횟수
-    worldCupId: 1,
+    worldCupId: 1
   },
   {
     id: 3,
@@ -97,7 +97,7 @@ const rankDummy = [
     winCount: 10,
     matchUpWorldCupCount: 10,
     matchUpGameCount: 20,
-    worldCupId: 1,
+    worldCupId: 1
   },
   {
     id: 2,
@@ -108,7 +108,7 @@ const rankDummy = [
     winCount: 3,
     matchUpWorldCupCount: 10,
     matchUpGameCount: 12,
-    worldCupId: 1,
+    worldCupId: 1
   },
   {
     id: 4,
@@ -119,7 +119,7 @@ const rankDummy = [
     winCount: 0,
     matchUpWorldCupCount: 9,
     matchUpGameCount: 9,
-    worldCupId: 1,
+    worldCupId: 1
   },
   {
     id: 5,
@@ -129,58 +129,55 @@ const rankDummy = [
     winCount: 0,
     matchUpWorldCupCount: 0,
     matchUpGameCount: 0,
-    worldCupId: 1,
-  },
+    worldCupId: 1
+  }
 ];
-
 
 const Rank_res_data_dummy: Rank_res_data[] = [
-	{
-		id: 0,
-		name: "",
-		image: "/icon/blueMascot.svg",
-		finalWinCount: 100,
-		winCount: 100,
-		matchUpWorldCupCount: 100,
-		matchUpGameCount: 100,
-		worldCupId: 0,
-		thumb: "/icon/blueMascot.svg"
-	},
-	{
-		id: 1,
-		name: "",
-		image: "/icon/blueMascot.svg",
-		finalWinCount: 0,
-		winCount: 0,
-		matchUpWorldCupCount: 0,
-		matchUpGameCount: 0,
-		worldCupId: 0,
-		thumb: "/icon/blueMascot.svg"
-	},
-	{
-		id: 2,
-		name: "",
-		image: "/icon/blueMascot.svg",
-		finalWinCount: 0,
-		winCount: 0,
-		matchUpWorldCupCount: 0,
-		matchUpGameCount: 0,
-		worldCupId: 0,
-		thumb: "/icon/blueMascot.svg"
-	},
-	{
-		id: 3,
-		name: "",
-		image: "/icon/blueMascot.svg",
-		finalWinCount: 0,
-		winCount: 0,
-		matchUpWorldCupCount: 0,
-		matchUpGameCount: 0,
-		worldCupId: 0,
-		thumb: "/icon/blueMascot.svg"
-	}
+  {
+    id: 0,
+    name: "",
+    image: "/icon/blueMascot.svg",
+    finalWinCount: 100,
+    winCount: 100,
+    matchUpWorldCupCount: 100,
+    matchUpGameCount: 100,
+    worldCupId: 0,
+    thumb: "/icon/blueMascot.svg"
+  },
+  {
+    id: 1,
+    name: "",
+    image: "/icon/blueMascot.svg",
+    finalWinCount: 0,
+    winCount: 0,
+    matchUpWorldCupCount: 0,
+    matchUpGameCount: 0,
+    worldCupId: 0,
+    thumb: "/icon/blueMascot.svg"
+  },
+  {
+    id: 2,
+    name: "",
+    image: "/icon/blueMascot.svg",
+    finalWinCount: 0,
+    winCount: 0,
+    matchUpWorldCupCount: 0,
+    matchUpGameCount: 0,
+    worldCupId: 0,
+    thumb: "/icon/blueMascot.svg"
+  },
+  {
+    id: 3,
+    name: "",
+    image: "/icon/blueMascot.svg",
+    finalWinCount: 0,
+    winCount: 0,
+    matchUpWorldCupCount: 0,
+    matchUpGameCount: 0,
+    worldCupId: 0,
+    thumb: "/icon/blueMascot.svg"
+  }
 ];
 
-
 export { Rank_res_data_dummy, rankDummy };
-
