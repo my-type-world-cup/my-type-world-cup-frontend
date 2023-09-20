@@ -66,6 +66,7 @@ export default function InGame({
   );
   // useRef를 사용해서 라운드가 끝났는지를 저장
   const uploadCompletedRef = useRef<boolean>(false);
+  const imageClickNumRef = useRef<number>(0);
 
   useEffect(() => {
     const handleResize = () => {
@@ -88,6 +89,7 @@ export default function InGame({
 
   const checkAllImagesLoaded = () => {
     return (
+      imageClickNumRef.current > 2 ||
       imageLoadedFlagsRef.current.every((status) => {
         return status;
       })
@@ -109,6 +111,7 @@ export default function InGame({
   const handleClick = async (num: number) => {
     // 사진 로딩이 느릴 상황을 고려한 로직 (같은 사진을 사용하는 경우도 고려함)
     //유저가 pause되는 상황을 피하기 위함
+    imageClickNumRef.current += 1;
     if (isButtonDisabledRef.current || !checkAllImagesLoaded()) return;
 
     setAnimationON(false); // animation 시작
