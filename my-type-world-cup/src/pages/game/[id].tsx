@@ -107,3 +107,5 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   // 데이터 요청이 성공한 경우, data를 props로 반환합니다.
   return { props: { data } };
 };
+
+//다음부터는 default false로 잡고 시작하거나 하는 것은 true로 설정
