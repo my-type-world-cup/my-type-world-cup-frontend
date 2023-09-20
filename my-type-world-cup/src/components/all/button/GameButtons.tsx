@@ -21,15 +21,21 @@ const GameButtons = ({ isReload = false, id }: GameButtonsProps) => {
     }, 1000);
   };
 
+    const handleStartGame = () => {
+    if (router.pathname.includes("/game")) { // 현재 경로에 'game'이 포함되어 있는지 확인
+      window.location.reload(); // reload
+    } else {
+      router.push(`/game/${id}`); // 페이지 이동
+    }
+  };
+
   return (
     <div className="flex items-center justify-center mx-auto mt-4 h-10 w-full text-sm sm:text-lg text-white font-medium">
       <GameButton
         icon="/icon/start.svg"
         alt="Start Game"
         label={isReload ? "다시하기" : "시작하기"}
-        onClick={() =>
-          isReload ? window.location.reload() : router.push(`/game/${id}`)
-        }
+        onClick={handleStartGame}
       />
 
       {isReload ? (
