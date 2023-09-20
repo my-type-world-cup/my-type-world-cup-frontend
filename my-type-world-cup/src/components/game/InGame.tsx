@@ -165,6 +165,7 @@ export default function InGame({
   if (!startON) {
     return <></>;
   }
+   console.log(twoPeople[0])
   console.log(isButtonDisabledRef.current, "정지");
   return (
     <div className="relative">
@@ -198,6 +199,7 @@ export default function InGame({
           }`}
           onLoadingComplete={() => {
             setLoadHighQuality((value) => [true, value[1]]);
+            if(!isImagesLoadedRef.current[0]) isImagesLoadedRef.current[0] = true;
           }}
         />
         <Image
@@ -259,12 +261,12 @@ export default function InGame({
           priority
           width={imageDimensions}
           height={imageDimensions}
-          onClick={() => handleClick(1)}
           className={`cursor-pointer sm:hover:scale-105 duration-300 ${
             loadHighQuality[1] ? "" : "hidden"
           }`}
           onLoadingComplete={() => {
             setLoadHighQuality((value) => [value[0], true]);
+             if(!isImagesLoadedRef.current[1]) isImagesLoadedRef.current[1] = true;
           }}
         />
         <Image
@@ -273,7 +275,6 @@ export default function InGame({
           priority
           width={imageDimensions}
           height={imageDimensions}
-          onClick={() => handleClick(1)}
           onLoadingComplete={() => handleImageLoad(1)}
           className={`cursor-pointer sm:hover:scale-105 duration-300 ${
             loadHighQuality[1] ? "hidden" : ""
