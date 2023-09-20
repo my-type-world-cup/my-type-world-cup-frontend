@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
-import loadingGif from "../../../public/icon/loading.gif";
+import loadingGif from "../../../../public/icon/loading.gif";
 
 type ZoomedImageProps = {
 	imageUrl: string;

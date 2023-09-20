@@ -1,5 +1,5 @@
 import Image from "next/image";
-import loadingGif from "../../../public/icon/loading.gif";
+import loadingGif from "../../../../public/icon/loading.gif";
 
 type BigModalProps = {
 	setIsMake?: React.Dispatch<React.SetStateAction<boolean>>;
