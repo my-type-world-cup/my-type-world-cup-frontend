@@ -1,9 +1,8 @@
 import Editor from "@/components/editor/Editor";
 import ImageUpload from "@/components/editor/ImageUpload";
-import type { Step } from "@/components/editor/TabButton";
 import TabButtons from "@/components/editor/TabButton";
 import { accessTokenState, postWorldcup } from "@/lib/atom/atom";
-import type { Post_res } from "@/type/Types";
+import type { Editor_step, Post_res } from "@/type/Types";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
@@ -11,7 +10,7 @@ import { useRecoilValue } from "recoil";
 const WorldCupEditor = () => {
   const saveWorldcup = useRecoilValue<Post_res | null>(postWorldcup);
   const accessToken = useRecoilValue<string | null>(accessTokenState);
-  const [isNumber, setIsNumber] = useState<Step>("1");
+  const [isNumber, setIsNumber] = useState<Editor_step>("1");
   const router = useRouter();
 
   useEffect(() => {

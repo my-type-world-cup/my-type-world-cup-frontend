@@ -1,16 +1,14 @@
+import type { Editor_step } from "@/type/Types";
 import { Dispatch, MouseEvent, SetStateAction } from "react";
-
 interface Tab_buttons {
   name: string;
-  value: Step;
+  value: Editor_step;
 }
 
 interface TabButtonProps {
-  isNumber: Step;
-  setIsNumber: Dispatch<SetStateAction<Step>>;
+  isNumber: Editor_step;
+  setIsNumber: Dispatch<SetStateAction<Editor_step>>;
 }
-
-export type Step = "1" | "2" | "3";
 
 const sortButtons: Tab_buttons[] = [
   { name: "정보 입력", value: "1" },
@@ -19,7 +17,7 @@ const sortButtons: Tab_buttons[] = [
 
 const TabButtons = ({ isNumber, setIsNumber }: TabButtonProps) => {
   const sortHandler = async (e: MouseEvent<HTMLButtonElement>) => {
-    setIsNumber(e.currentTarget.value as Step);
+    setIsNumber(e.currentTarget.value as Editor_step);
 
     //함수로 구현
     // const sortType = e.currentTarget.value
