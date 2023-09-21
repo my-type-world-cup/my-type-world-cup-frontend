@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, MouseEvent, SetStateAction } from "react";
 
 interface Tab_buttons {
   name: string;
@@ -11,14 +11,15 @@ interface TabButtonProps {
 }
 
 export type Step = "1" | "2" | "3";
-const TabButtons = ({ isNumber, setIsNumber }: TabButtonProps) => {
-  const sortButtons: Tab_buttons[] = [
-    { name: "정보 입력", value: "1" },
-    { name: "후보 등록", value: "2" },
-  ];
 
-  const sortHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    setIsNumber(e.currentTarget.value as Step); //메모
+const sortButtons: Tab_buttons[] = [
+  { name: "정보 입력", value: "1" },
+  { name: "후보 등록", value: "2" }
+];
+
+const TabButtons = ({ isNumber, setIsNumber }: TabButtonProps) => {
+  const sortHandler = async (e: MouseEvent<HTMLButtonElement>) => {
+    setIsNumber(e.currentTarget.value as Step);
 
     //함수로 구현
     // const sortType = e.currentTarget.value
