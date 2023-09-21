@@ -5,8 +5,8 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 import SearchBar from "../main/SearchBar";
-import EditorTable from "./EditorTable";
 import ImageEditor from "./ImageEditor";
+import ImageEditorTable from "./ImageEditorTable";
 import SearchImage from "./SearchImages";
 
 type Props = {
@@ -78,7 +78,7 @@ export default function ImageUpload({
           <h1 className="mt-8 sm:mt-12 mb-0 sm:mb-2 sm:text-xl  py-4 font-bold">
             후보 목록
           </h1>
-          <EditorTable
+          <ImageEditorTable
             rankData={{
               worldCupId: saveWorldcup?.id || 0,
               password: saveWorldcup?.password || null

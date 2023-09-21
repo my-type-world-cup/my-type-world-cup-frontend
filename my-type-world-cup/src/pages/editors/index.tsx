@@ -1,4 +1,4 @@
-import Editor from "@/components/editor/Editor";
+import Editor from "@/components/editor/editorPanel/Editor";
 import ImageUpload from "@/components/editor/ImageUpload";
 import TabButtons from "@/components/editor/TabButton";
 import { accessTokenState, postWorldcup } from "@/lib/atom/atom";
