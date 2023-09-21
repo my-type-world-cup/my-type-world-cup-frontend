@@ -18,7 +18,7 @@ const WorldCupEditor = () => {
     if (!accessToken) {
       router.push("/"); // 홈으로 이동합니다.
     }
-  }, [accessToken, router]);
+  }, [accessToken]);
 
   const content = (() => {
     switch (isNumber) {
@@ -37,7 +37,6 @@ const WorldCupEditor = () => {
   return (
     <div className="pt-12 relative">
       <TabButtons isNumber={isNumber} setIsNumber={setIsNumber} />
-
       {content}
     </div>
   );
