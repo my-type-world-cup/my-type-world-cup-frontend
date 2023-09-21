@@ -87,7 +87,8 @@ const useEditorSaveAndReset = ({
   };
 
   const handlePublicChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setIsPublic(event.target.value === "public");
+    const isPublic = event.target.value === "public";
+    setIsPublic(isPublic);
   };
 
   //password 바꾸는 함수
