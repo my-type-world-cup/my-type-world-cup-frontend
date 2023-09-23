@@ -2,7 +2,15 @@ import { post_candidates } from "@/api/user";
 import { blobToServer } from "@/lib/editor/base64";
 import type { Imgbb_result, Save_data } from "@/type/Types";
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  SyntheticEvent,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import ReactCrop, {
   Crop,
   PixelCrop,
@@ -42,12 +50,12 @@ function centerAspectCrop(
 
 type Props = {
   imgSrc: string;
-  setIsMake: React.Dispatch<React.SetStateAction<boolean>>;
-  setImgSrc: React.Dispatch<React.SetStateAction<string>>;
+  setIsMake: Dispatch<SetStateAction<boolean>>;
+  setImgSrc: Dispatch<SetStateAction<string>>;
   candidateId: number;
   id: number | undefined;
   accessToken: string | null;
-  setCandidateId: React.Dispatch<React.SetStateAction<number>>;
+  setCandidateId: Dispatch<SetStateAction<number>>;
 };
 
 export default function ImageEditor({
@@ -90,7 +98,7 @@ export default function ImageEditor({
     }
   }, [imgSrc]);
   //파일 읽음
-  // function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
+  // function onSelectFile(e: ChangeEvent<HTMLInputElement>) {
   //   if (e.target.files && e.target.files.length > 0) {
   //     // console.log(e.target.files);
   //     // setCrop(undefined); //이미지 간 자르기 미리보기를 업데이트합니다
@@ -101,14 +109,14 @@ export default function ImageEditor({
   //     });
   //   }
   // }
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const name = nameRef.current?.value;
 
     // 여기에서 이름을 처리하거나 다른 작업을 수행합니다.
   };
   //이미지 로드
-  function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
+  function onImageLoad(e: SyntheticEvent<HTMLImageElement>) {
     if (aspect) {
       const { width, height } = e.currentTarget;
 

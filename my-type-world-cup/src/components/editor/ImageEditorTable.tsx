@@ -2,18 +2,17 @@ import { delete_candidates } from "@/api/user";
 import { useHandleSearchState } from "@/lib/hooks/useHandleSearchState";
 import useTableStateWithSWR from "@/lib/hooks/useTableStateWithSWR";
 import type { Rank_Data, Rank_res_data } from "@/type/Types";
-import { useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import PageSizeSelector from "../all/PageSizeSelector";
 import SearchForm from "../all/SearchForm";
 import TablePagiNation from "../all/TablePagiNation";
 import TrcomponentWithEditor from "./TrcomponentWithEditor";
-
 type Props = {
   rankData: Rank_Data;
   accessToken: string | null;
-  setSaveList: React.Dispatch<React.SetStateAction<number>>;
-  setIsMake: React.Dispatch<React.SetStateAction<boolean>>;
-  setCandidateId: React.Dispatch<React.SetStateAction<number>>;
+  setSaveList: Dispatch<SetStateAction<number>>;
+  setIsMake: Dispatch<SetStateAction<boolean>>;
+  setCandidateId: Dispatch<SetStateAction<number>>;
 };
 
 // type Item = {
@@ -28,7 +27,7 @@ type Props = {
 // 	{ name: "1대1 승률", value: "winRatio" }
 // ];
 
-function EditorTable({
+function ImageEditorTable({
   rankData,
   accessToken,
   setSaveList,
@@ -133,4 +132,4 @@ function EditorTable({
   );
 }
 
-export default EditorTable;
+export default ImageEditorTable;

@@ -1,7 +1,13 @@
 import { post_comment } from "@/api/user";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { Dispatch, useEffect, useState } from "react";
+import {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useState
+} from "react";
 import { useRecoilValue } from "recoil";
 import { accessTokenState, userState } from "../../../lib/atom/atom";
 import type { Contestant } from "../../../type/Types";
@@ -9,16 +15,16 @@ import ShareModal from "../modal/ShareModal";
 
 type FormProps = {
   winner?: Contestant;
-  setRendering: Dispatch<React.SetStateAction<boolean>>;
+  setRendering: Dispatch<SetStateAction<boolean>>;
   rendering: boolean;
 };
 
-const CommentForm: React.FC<FormProps> = ({
+const CommentForm = ({
   rendering,
 
   winner,
   setRendering
-}) => {
+}: FormProps) => {
   // React Router와 Recoil 상태를 사용합니다.
   const router = useRouter();
   const id = Number(router.query.id);
@@ -40,7 +46,7 @@ const CommentForm: React.FC<FormProps> = ({
   }, [user]);
 
   // 댓글을 제출하는 함수입니다
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (message && !isLoading) {
       setIsLoading(true);

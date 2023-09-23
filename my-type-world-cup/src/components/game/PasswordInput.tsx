@@ -10,13 +10,13 @@ interface PasswordInputProps {
   onEnterPress: (password: string | null) => void;
 }
 
-const PasswordInput: React.FC<PasswordInputProps> = ({
+const PasswordInput = ({
   data,
   setPassword,
   setError,
   password,
   onEnterPress
-}) => {
+}: PasswordInputProps) => {
   return (
     <>
       <input

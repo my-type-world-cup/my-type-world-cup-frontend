@@ -1,23 +1,30 @@
 import { convertToBase64, uploadImageToServer } from "@/lib/editor/base64";
 import type { Imgbb_result } from "@/type/Types";
 import Image from "next/image";
-import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  SyntheticEvent,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import BigModal from "../all/modal/BigModal";
 interface ImageListProps {
   onandoff: boolean;
   data: string[] | null;
-  setImgSrc: React.Dispatch<React.SetStateAction<string>>;
+  setImgSrc: Dispatch<SetStateAction<string>>;
   setSize: (size: ((prevSize: number) => number) | number) => void;
   keyword: string;
 }
 
-const SearchImages: React.FC<ImageListProps> = ({
+const SearchImages = ({
   data,
   setSize,
   setImgSrc,
   keyword,
   onandoff
-}) => {
+}: ImageListProps) => {
   console.log(data);
   const [modal, setModal] = useState<boolean>(false);
   const [img, setImg] = useState<string>("");

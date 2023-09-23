@@ -1,11 +1,8 @@
-import { saveWorldcups } from "@/lib/atom/atom";
 import type { Save_data } from "@/type/Types";
-import { useEffect, useRef, useState } from "react";
-import { useSetRecoilState } from "recoil";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+
 const SpanInput = ({
-  name,
-  accessToken,
-  item,
+  name
 }: {
   name: string;
   accessToken: string | null;
@@ -16,7 +13,7 @@ const SpanInput = ({
   const [savedText, setSavedText] = useState(name);
   const inputRef = useRef<HTMLInputElement>(null);
   const blurRef = useRef<HTMLDivElement>(null);
-  const setSaveList = useSetRecoilState(saveWorldcups);
+
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (blurRef.current && !blurRef.current.contains(event.target)) {
@@ -50,7 +47,7 @@ const SpanInput = ({
     setText(savedText);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
 

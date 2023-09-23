@@ -1,15 +1,15 @@
 // DescriptionInput.tsx
-import React, { ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 
 interface DescriptionInputProps {
   description: string;
   setDescription: (description: string) => void;
 }
 
-const EditorDescriptionInput: React.FC<DescriptionInputProps> = ({
+const EditorDescriptionInput = ({
   description,
   setDescription
-}) => (
+}: DescriptionInputProps) => (
   <>
     <label htmlFor="description">설명</label>
     <textarea

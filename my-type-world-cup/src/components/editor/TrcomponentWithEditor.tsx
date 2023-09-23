@@ -1,7 +1,14 @@
 import { patch_candidates } from "@/api/user";
 import type { Rank_res_data, Save_data } from "@/type/Types";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import loadingGif from "../../../public/icon/loading.gif";
 import EventModal from "../all/modal/EventModal";
 import ZoomedImage from "../all/modal/ZoomImage";
@@ -12,8 +19,8 @@ type Props = {
   currentPage: number;
   pageSize: number;
   handleDelete: (id: number) => void;
-  setIsMake: React.Dispatch<React.SetStateAction<boolean>>;
-  setCandidateId: React.Dispatch<React.SetStateAction<number>>;
+  setIsMake: Dispatch<SetStateAction<boolean>>;
+  setCandidateId: Dispatch<SetStateAction<number>>;
   accessToken: string | null;
 };
 
@@ -60,7 +67,7 @@ export default function TrcomponentWithEditor({
     setIsEditing(!isEditing);
     setSavedText(text);
   };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
   const handleSave = () => {

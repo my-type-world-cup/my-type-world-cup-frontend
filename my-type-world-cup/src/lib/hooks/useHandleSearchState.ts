@@ -1,18 +1,19 @@
-
-import { FormEvent, MouseEvent } from 'react';
+import { Dispatch, FormEvent, MouseEvent, SetStateAction } from "react";
 
 type HandleSearchProps = {
   searchText: string;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  setSearch: Dispatch<SetStateAction<string>>;
 };
 
 type HandleSearchReturnType = (
   e: FormEvent<HTMLFormElement> | MouseEvent<HTMLImageElement>
 ) => void;
 
-
 //tag에 달기 위해 커스텀 훅으로 변경
-export const useHandleSearchState = ({ searchText, setSearch }: HandleSearchProps): HandleSearchReturnType => {
+export const useHandleSearchState = ({
+  searchText,
+  setSearch
+}: HandleSearchProps): HandleSearchReturnType => {
   const handleSearch = (
     e: FormEvent<HTMLFormElement> | MouseEvent<HTMLImageElement>
   ) => {
@@ -24,11 +25,9 @@ export const useHandleSearchState = ({ searchText, setSearch }: HandleSearchProp
   return handleSearch;
 };
 
-
-
 // const handleSearch = (
-//   e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLImageElement>,
-//   setSearch: React.Dispatch<React.SetStateAction<string>>,
+//   e: FormEvent<HTMLFormElement> | MouseEvent<HTMLImageElement>,
+//   setSearch: Dispatch<SetStateAction<string>>,
 //   searchText: string
 // ) => {
 //   e.preventDefault();

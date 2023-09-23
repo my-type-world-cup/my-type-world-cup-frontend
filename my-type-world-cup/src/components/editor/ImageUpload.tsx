@@ -2,7 +2,13 @@ import { fetcherToken } from "@/api/swr_fetch";
 import { BACK_URL } from "@/lib/config";
 import type { Editor_step, Post_res, Search_Image } from "@/type/Types";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState
+} from "react";
 import useSWRInfinite from "swr/infinite";
 import SearchBar from "../main/SearchBar";
 import ImageEditor from "./ImageEditor";
@@ -11,7 +17,7 @@ import SearchImage from "./SearchImages";
 
 type Props = {
   saveWorldcup: Post_res | null;
-  setIsNumber: React.Dispatch<React.SetStateAction<Editor_step>>;
+  setIsNumber: Dispatch<SetStateAction<Editor_step>>;
   accessToken: string | null;
 };
 
@@ -53,7 +59,7 @@ export default function ImageUpload({
     // deleteImage("https://ibb.co/FVM8BWM/8a86410147f09597e85d2dd8f5e60e2a");
   }, [saveWorldcup, setIsNumber]);
 
-  function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
+  function onSelectFile(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
       // console.log(e.target.files);
       // setCrop(undefined); //이미지 간 자르기 미리보기를 업데이트합니다

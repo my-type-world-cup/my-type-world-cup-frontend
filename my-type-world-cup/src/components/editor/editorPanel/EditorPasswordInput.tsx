@@ -1,5 +1,5 @@
 // PasswordInput.tsx
-import React, { ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 
 interface PasswordInputProps {
   password: string | null;
@@ -8,12 +8,12 @@ interface PasswordInputProps {
   isPublic: boolean;
 }
 
-const EditorPasswordInput: React.FC<PasswordInputProps> = ({
+const EditorPasswordInput = ({
   password,
   onChangePassword,
   isValid,
   isPublic
-}) => (
+}: PasswordInputProps) => (
   <div className="flex justify-center flex-col pt-4">
     <label htmlFor="password">비밀번호</label>
     <input

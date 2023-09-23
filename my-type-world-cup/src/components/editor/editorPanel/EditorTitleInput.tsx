@@ -1,12 +1,12 @@
 // TitleInput.tsx
-import React, { ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 
 interface TitleInputProps {
   title: string;
   setTitle: (title: string) => void;
 }
 
-const EditorTitleInput: React.FC<TitleInputProps> = ({ title, setTitle }) => (
+const EditorTitleInput = ({ title, setTitle }: TitleInputProps) => (
   <>
     <label htmlFor="title">제목</label>
     <input

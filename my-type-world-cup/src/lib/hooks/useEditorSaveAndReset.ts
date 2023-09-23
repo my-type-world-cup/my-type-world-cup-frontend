@@ -9,7 +9,7 @@ import { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 type SaveAndResetProps = {
   setWorldcup: Dispatch<SetStateAction<Post_res | null>>;
-  setIsNumber: Dispatch<React.SetStateAction<Editor_step>>;
+  setIsNumber: Dispatch<SetStateAction<Editor_step>>;
   accessToken: string | null;
   worldcup: Post_res | null;
   setIsValid: Dispatch<SetStateAction<boolean>>;
