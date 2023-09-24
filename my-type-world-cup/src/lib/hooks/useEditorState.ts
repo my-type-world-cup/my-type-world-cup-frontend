@@ -7,6 +7,7 @@ const useEditorState = (initialWorldcup: Post_res | null) => {
   const [isPublic, setIsPublic] = useState<boolean>(true);
   const [password, setPassword] = useState<string | null>(null);
   const [isValid, setIsValid] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
     if (initialWorldcup !== null) {
@@ -31,7 +32,9 @@ const useEditorState = (initialWorldcup: Post_res | null) => {
     password,
     setPassword,
     isValid,
-    setIsValid
+    setIsValid,
+    setErrorMessage,
+    errorMessage
   };
 };
 

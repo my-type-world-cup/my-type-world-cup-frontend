@@ -11,7 +11,6 @@ interface PasswordInputProps {
 const EditorPasswordInput = ({
   password,
   onChangePassword,
-  isValid,
   isPublic
 }: PasswordInputProps) => (
   <div className="flex justify-center flex-col pt-4">
@@ -25,9 +24,6 @@ const EditorPasswordInput = ({
       value={password ? password : ""}
       onChange={onChangePassword}
     />
-    {!isValid && (
-      <p className="text-error text-sm mt-1">4자리 숫자를 입력해주세요.</p>
-    )}
   </div>
 );
 

@@ -26,7 +26,6 @@ export default function ImageUpload({
   setIsNumber,
   accessToken
 }: Props) {
-  console.log(saveWorldcup, "saveWorldcup");
   const [search, setSearch] = useState<string>("");
   const [imgSrc, setImgSrc] = useState("");
   const router = useRouter();
@@ -45,7 +44,7 @@ export default function ImageUpload({
     },
     (url: string) => fetcherToken(url, accessToken)
   );
-  console.log(saveList, "saveList");
+
   const searchData: string[] = data ? data.map((v) => v.data).flat() : [];
 
   useEffect(() => {
@@ -73,9 +72,11 @@ export default function ImageUpload({
   const handleMyWorldCup = () => {
     router.push(`/myworldcup`);
   };
+
   if (!saveWorldcup) {
     return <></>;
   }
+
   return (
     <>
       {!isMake ? (

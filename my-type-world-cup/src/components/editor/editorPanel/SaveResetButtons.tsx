@@ -10,7 +10,7 @@ const SaveResetButtons = ({ onSave, onReset }: ButtonGroupProps) => {
       <button
         type="button"
         onClick={onSave} // onSave 연결
-        className="mt-20 px-4 py-2 bg-main text-white rounded-md hover:scale-105 transition-all"
+        className="px-4 py-2 bg-main text-white rounded-md hover:scale-105 transition-all"
       >
         저장
       </button>

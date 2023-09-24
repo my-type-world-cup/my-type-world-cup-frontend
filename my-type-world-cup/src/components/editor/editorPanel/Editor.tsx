@@ -26,7 +26,9 @@ const Editor = ({ setIsNumber }: EditorProps) => {
     password,
     setPassword,
     isValid,
-    setIsValid
+    setIsValid,
+    errorMessage,
+    setErrorMessage
   } = useEditorState(worldcup);
 
   const { handleSave, handleReset, handlePublicChange, handlePasswordChange } =
@@ -43,7 +45,8 @@ const Editor = ({ setIsNumber }: EditorProps) => {
       title,
       description,
       isPublic,
-      password
+      password,
+      setErrorMessage
     });
 
   return (
@@ -67,6 +70,9 @@ const Editor = ({ setIsNumber }: EditorProps) => {
       )}
 
       <VisibilityRadioGroup isPublic={isPublic} onChange={handlePublicChange} />
+      <div className="mt-20 text-error text-sm mb-1">
+        {!isValid && <p>{errorMessage}</p>}
+      </div>
       <SaveResetButtons onSave={handleSave} onReset={handleReset} />
     </div>
   );

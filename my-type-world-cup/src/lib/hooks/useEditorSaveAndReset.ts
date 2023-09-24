@@ -17,6 +17,7 @@ type SaveAndResetProps = {
   setTitle: Dispatch<SetStateAction<string>>;
   setDescription: Dispatch<SetStateAction<string>>;
   setPassword: Dispatch<SetStateAction<string | null>>;
+  setErrorMessage: Dispatch<SetStateAction<string>>;
   title: string;
   description: string;
   isPublic: boolean;
@@ -38,7 +39,8 @@ const useEditorSaveAndReset = ({
   title,
   description,
   isPublic,
-  password
+  password,
+  setErrorMessage
 }: SaveAndResetProps) => {
   // 초기화 함수
   const resetStates = () => {
@@ -62,11 +64,16 @@ const useEditorSaveAndReset = ({
 
   // 저장하기
   const handleSave = async () => {
-    if (!isPublic && password === null) {
+    if (
+      //비공개
+      (!isPublic && (password === null || !title || !description)) ||
+      //공개
+      (isPublic && (!title || !description))
+    ) {
       setIsValid(false);
+      setErrorMessage("빈칸을 채워주세요");
       return;
     }
-
     const post_body: Post_req = {
       title,
       description,
@@ -81,8 +88,11 @@ const useEditorSaveAndReset = ({
       worldcup?.id
     );
 
-    if (res !== null) {
+    if (res) {
       resetAndNavigateToNextStep(res);
+    } else {
+      setIsValid(false);
+      setErrorMessage("저장에 실패하였습니다");
     }
   };
 
@@ -96,6 +106,7 @@ const useEditorSaveAndReset = ({
     const inputPassword = event.target.value;
     const isValidPassword = inputPassword.length === PASSWORD_LENGTH;
 
+    !isValidPassword && setErrorMessage("4자리 숫자를 입력해주세요");
     setIsValid(isValidPassword); // 유효성 검사 후 상태 업데이트
     setPassword(inputPassword); //true일떄만 사용
   };
