@@ -11,7 +11,6 @@ import {
 } from "react";
 import BigModal from "../all/modal/BigModal";
 interface ImageListProps {
-  onandoff: boolean;
   data: string[] | null;
   setImgSrc: Dispatch<SetStateAction<string>>;
   setSize: (size: ((prevSize: number) => number) | number) => void;
@@ -22,8 +21,7 @@ const SearchImages = ({
   data,
   setSize,
   setImgSrc,
-  keyword,
-  onandoff
+  keyword
 }: ImageListProps) => {
   console.log(data);
   const [modal, setModal] = useState<boolean>(false);
@@ -99,7 +97,7 @@ const SearchImages = ({
     <>
       <div
         style={{
-          maxHeight: !onandoff ? "0px" : "500px",
+          maxHeight: data && data.length > 0 ? "500px" : "0px",
           overflow: "hidden",
           transition: "all 1s ease-in-out"
         }}

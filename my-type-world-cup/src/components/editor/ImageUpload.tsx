@@ -1,15 +1,7 @@
-import { fetcherToken } from "@/api/swr_fetch";
-import { BACK_URL } from "@/lib/config";
-import type { Editor_step, Post_res, Search_Image } from "@/type/Types";
+import { useImageUploadState } from "@/lib/hooks/useImageUploadState";
+import type { Editor_step, Post_res } from "@/type/Types";
 import { useRouter } from "next/router";
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState
-} from "react";
-import useSWRInfinite from "swr/infinite";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
 import SearchBar from "../main/SearchBar";
 import ImageEditor from "./ImageEditor";
 import ImageEditorTable from "./ImageEditorTable";
@@ -26,32 +18,24 @@ export default function ImageUpload({
   setIsNumber,
   accessToken
 }: Props) {
-  const [search, setSearch] = useState<string>("");
-  const [imgSrc, setImgSrc] = useState("");
   const router = useRouter();
-  const [saveList, setSaveList] = useState<number>(0);
-  const [onandoff, setOnandoff] = useState<boolean[]>([true, true]);
-  const [isMake, setIsMake] = useState<boolean>(false);
-  const [candidateId, setCandidateId] = useState<number>(0);
-  const keyword = search.slice(1);
-  const { data, setSize } = useSWRInfinite<Search_Image>(
-    (index) => {
-      // keyword가 비어 있으면 빈 문자열 반환
-      if (!keyword) {
-        return "";
-      }
-      return `${BACK_URL}/images?${keyword}&page=${index + 1}&size=20`;
-    },
-    (url: string) => fetcherToken(url, accessToken)
-  );
-
-  const searchData: string[] = data ? data.map((v) => v.data).flat() : [];
+  const {
+    keyword,
+    setSize,
+    setSearch,
+    imgSrc,
+    setImgSrc,
+    saveList,
+    setSaveList,
+    isMake,
+    setIsMake,
+    candidateId,
+    setCandidateId,
+    searchData
+  } = useImageUploadState({ accessToken });
 
   useEffect(() => {
-    setSize(1);
-  }, [keyword]);
-
-  useEffect(() => {
+    //props으로 관리되어서 커스텀훅에서 제외함
     if (!saveWorldcup) {
       setIsNumber(1);
     }
@@ -140,7 +124,6 @@ export default function ImageUpload({
             setSize={setSize}
             setImgSrc={setImgSrc}
             keyword={keyword}
-            onandoff={onandoff[1]}
           />
 
           <ImageEditor
