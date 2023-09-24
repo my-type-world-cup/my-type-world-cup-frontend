@@ -51,7 +51,7 @@ const useEditorSaveAndReset = ({
   const resetAndNavigateToNextStep = (res: Post_res): void => {
     setWorldcup(res); // 저장
     resetStates(); // 초기화
-    setIsNumber("2"); // 다음 스텝으로 이동
+    setIsNumber(2); // 다음 스텝으로 이동
   };
 
   // 다시 만들기

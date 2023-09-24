@@ -189,7 +189,7 @@ type Sort_buttons = {
 
 type Save_worldcupType = "new" | "update";
 
-type Editor_step = "1" | "2" | "3";
+type Editor_step = 1 | 2;
 
 export type {
   Candidate,
