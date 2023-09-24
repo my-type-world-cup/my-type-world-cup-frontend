@@ -1,6 +1,6 @@
-import Editor from "@/components/editor/editorPanel/Editor";
-import ImageUpload from "@/components/editor/ImageUpload";
+import ImageUpload from "@/components/editor/CandidateManagementPanel/CandidateManagement";
 import TabButtons from "@/components/editor/TabButton";
+import WorldcupEditor from "@/components/editor/worldcupEditorPanel/WorldcupEditor";
 import { accessTokenState, postWorldcup } from "@/lib/atom/atom";
 import type { Editor_step, Post_res } from "@/type/Types";
 import { useRouter } from "next/router";
@@ -22,7 +22,7 @@ const WorldCupEditor = () => {
   const content = (() => {
     switch (isNumber) {
       case 1:
-        return <Editor setIsNumber={setIsNumber} />;
+        return <WorldcupEditor setIsNumber={setIsNumber} />;
       case 2:
         return (
           <ImageUpload

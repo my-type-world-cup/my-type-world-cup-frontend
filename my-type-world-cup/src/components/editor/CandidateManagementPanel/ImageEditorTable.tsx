@@ -3,10 +3,10 @@ import { useHandleSearchState } from "@/lib/hooks/useHandleSearchState";
 import useTableStateWithSWR from "@/lib/hooks/useTableStateWithSWR";
 import type { Rank_Data, Rank_res_data } from "@/type/Types";
 import { Dispatch, SetStateAction, useEffect } from "react";
-import PageSizeSelector from "../all/PageSizeSelector";
-import SearchForm from "../all/SearchForm";
-import TablePagiNation from "../all/TablePagiNation";
-import TrcomponentWithEditor from "./TrcomponentWithEditor";
+import PageSizeSelector from "../../all/PageSizeSelector";
+import SearchForm from "../../all/SearchForm";
+import TablePagiNation from "../../all/TablePagiNation";
+import TrcomponentWithEditor from "../TrcomponentWithEditor";
 type Props = {
   rankData: Rank_Data;
   accessToken: string | null;

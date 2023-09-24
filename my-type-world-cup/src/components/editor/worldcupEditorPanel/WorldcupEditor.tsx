@@ -13,7 +13,7 @@ interface EditorProps {
   setIsNumber: Dispatch<SetStateAction<Editor_step>>;
 }
 
-const Editor = ({ setIsNumber }: EditorProps) => {
+const WorldcupEditor = ({ setIsNumber }: EditorProps) => {
   const [worldcup, setWorldcup] = useRecoilState<Post_res | null>(postWorldcup);
   const accessToken = useRecoilValue(accessTokenState);
   const {
@@ -77,4 +77,4 @@ const Editor = ({ setIsNumber }: EditorProps) => {
     </div>
   );
 };
-export default Editor;
+export default WorldcupEditor;

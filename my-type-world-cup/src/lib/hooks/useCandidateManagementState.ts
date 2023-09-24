@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 import { BACK_URL } from "../config";
 
-interface ImageUploadProps {
+interface CandidateManagementProps {
   accessToken: string | null;
 }
 
-export const useImageUploadState = ({ accessToken }: ImageUploadProps) => {
+export const useCandidateManagementState = ({
+  accessToken
+}: CandidateManagementProps) => {
   const [search, setSearch] = useState<string>("");
   const [imgSrc, setImgSrc] = useState<string>("");
   const [saveList, setSaveList] = useState<number>(0);
