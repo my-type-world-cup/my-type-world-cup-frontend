@@ -34,7 +34,7 @@ const WorldCupEditor = () => {
     }
   })();
   return (
-    <div className="pt-12 relative">
+    <div className="pt-12 relative min-h-screen">
       <TabButtons isNumber={isNumber} setIsNumber={setIsNumber} />
       {content}
     </div>

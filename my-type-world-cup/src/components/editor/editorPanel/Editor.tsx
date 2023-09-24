@@ -48,7 +48,7 @@ const Editor = ({ setIsNumber }: EditorProps) => {
 
   return (
     <div
-      className="sm:pt-20 mt-4 sm:mt-8 mx-8 text-lg flex flex-col min-h-screen"
+      className="sm:pt-20 mt-4 sm:mt-8 mx-8 text-lg flex flex-col"
       // onSubmit={handleSubmit}
     >
       <EditorTitleInput title={title} setTitle={setTitle} />

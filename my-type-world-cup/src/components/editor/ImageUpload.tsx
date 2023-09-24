@@ -79,7 +79,7 @@ export default function ImageUpload({
   return (
     <>
       {!isMake ? (
-        <section className="flex flex-col mx-8 text-lg min-h-screen">
+        <section className="flex flex-col mx-8 text-lg">
           <h1 className="mt-8 sm:mt-12 mb-0 sm:mb-2 sm:text-xl  py-4 font-bold">
             후보 목록
           </h1>
