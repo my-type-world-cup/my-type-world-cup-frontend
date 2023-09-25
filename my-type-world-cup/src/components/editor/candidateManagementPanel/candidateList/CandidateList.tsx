@@ -2,7 +2,7 @@
 import type { Post_res } from "@/type/Types";
 import { useRouter } from "next/router";
 import { Dispatch, SetStateAction } from "react";
-import ImageEditorTable from "./ImageEditorTable";
+import CandidateEditorTable from "./CandidateEditorTable";
 
 interface CandidateListProps {
   saveWorldcup: Post_res | null;
@@ -26,22 +26,21 @@ const CandidateList = ({
   const handleMyWorldCup = () => {
     router.push(`/myworldcup`);
   };
-
+  console.log(saveWorldcup, "헐");
   return (
     <section className="flex flex-col mx-8 text-lg">
       <h1 className="mt-8 sm:mt-12 mb-0 sm:mb-2 sm:text-xl  py-4 font-bold">
         후보 목록
       </h1>
-      <ImageEditorTable
-        rankData={{
-          worldCupId: saveWorldcup?.id || 0,
-          password: saveWorldcup?.password || null
-        }}
+      <CandidateEditorTable
+        worldcupId={saveWorldcup?.id || 0} // worldCupId
+        password={saveWorldcup?.password || null} // password
         setIsMake={setIsMake}
         accessToken={accessToken}
         setSaveList={setSaveList}
         setCandidateId={setCandidateId}
       />
+
       {!(saveList >= 4) ? (
         <p className="flex justify-between text-sm text-error mx-2 mt-8">
           <span>현재 후보 수 : {saveList}</span>
@@ -53,6 +52,7 @@ const CandidateList = ({
           <span> 월드컵이 등록되었습니다</span>
         </div>
       )}
+
       <button
         onClick={() => {
           setIsMake(true);
@@ -62,6 +62,7 @@ const CandidateList = ({
       >
         후보 추가하기
       </button>
+
       {saveList >= 4 && (
         <button
           onClick={handleMyWorldCup}

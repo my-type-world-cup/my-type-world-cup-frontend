@@ -18,10 +18,10 @@ import ReactCrop, {
   makeAspectCrop
 } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import { canvasPreview } from "../../../lib/editor/canvasPreview";
-import { useDebounceEffect } from "../../../lib/editor/useDebounceEffect";
-import BigModal from "../../all/modal/BigModal";
-import ShareModal from "../../all/modal/ShareModal";
+import { canvasPreview } from "../../../../lib/editor/canvasPreview";
+import { useDebounceEffect } from "../../../../lib/editor/useDebounceEffect";
+import BigModal from "../../../all/modal/BigModal";
+import ShareModal from "../../../all/modal/ShareModal";
 // 이것은 % 비율의 aspect crop을 만들고 중앙 정렬하는 방법을 보여주기 위한 것입니다.
 // 이것은 조금 더 까다로우므로 몇 가지 도우미 함수를 사용합니다.
 
@@ -388,7 +388,6 @@ export default function ImageEditor({
         img={img}
         uploadHandler={uploadHandler}
         loading={loading}
-        setIsMake={setIsMake}
       />
       <ShareModal
         message={modalMessage}

@@ -1,4 +1,4 @@
-import ImageUpload from "@/components/editor/CandidateManagementPanel/CandidateManagement";
+import ImageUpload from "@/components/editor/candidateManagementPanel/CandidateManagement";
 import TabButtons from "@/components/editor/TabButton";
 import WorldcupEditor from "@/components/editor/worldcupEditorPanel/WorldcupEditor";
 import { accessTokenState, postWorldcup } from "@/lib/atom/atom";

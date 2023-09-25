@@ -1,39 +1,31 @@
 import { delete_candidates } from "@/api/user";
+import SearchForm from "@/components/all/SearchForm";
 import { useHandleSearchState } from "@/lib/hooks/useHandleSearchState";
 import useTableStateWithSWR from "@/lib/hooks/useTableStateWithSWR";
-import type { Rank_Data, Rank_res_data } from "@/type/Types";
+import type { Rank_res_data } from "@/type/Types";
 import { Dispatch, SetStateAction, useEffect } from "react";
-import PageSizeSelector from "../../all/PageSizeSelector";
-import SearchForm from "../../all/SearchForm";
-import TablePagiNation from "../../all/TablePagiNation";
-import TrcomponentWithEditor from "../TrcomponentWithEditor";
+import PageSizeSelector from "../../../all/PageSizeSelector";
+import TablePagiNation from "../../../all/TablePagiNation";
+import TrcomponentWithEditor from "./TrcomponentWithEditor";
+
 type Props = {
-  rankData: Rank_Data;
+  worldcupId: number;
+  password: string | null;
   accessToken: string | null;
   setSaveList: Dispatch<SetStateAction<number>>;
   setIsMake: Dispatch<SetStateAction<boolean>>;
   setCandidateId: Dispatch<SetStateAction<number>>;
 };
 
-// type Item = {
-// 	name: string;
-// 	value: string;
-// };
-
-// const items: Item[] = [
-// 	{ name: "우승", value: "finalWinCount" },
-// 	{ name: "우승비율", value: "finalWinRatio" },
-// 	{ name: "승리", value: "winCount" },
-// 	{ name: "1대1 승률", value: "winRatio" }
-// ];
-
-function ImageEditorTable({
-  rankData,
+function CandidateEditorTable({
+  worldcupId,
+  password,
   accessToken,
   setSaveList,
   setIsMake,
   setCandidateId
 }: Props) {
+  console.log(worldcupId, password, "헐");
   const {
     currentPage,
     setCurrentPage,
@@ -46,9 +38,7 @@ function ImageEditorTable({
     error,
     mutate,
     isLoading
-  } = useTableStateWithSWR(rankData.worldCupId, rankData.password);
-
-  console.log(data, "랭크데이터");
+  } = useTableStateWithSWR(worldcupId, password);
 
   const handleSearch = useHandleSearchState({ searchText, setSearch });
 
@@ -132,4 +122,4 @@ function ImageEditorTable({
   );
 }
 
-export default ImageEditorTable;
+export default CandidateEditorTable;

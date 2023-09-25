@@ -9,9 +9,9 @@ import {
   useRef,
   useState
 } from "react";
-import loadingGif from "../../../public/icon/loading.gif";
-import EventModal from "../all/modal/EventModal";
-import ZoomedImage from "../all/modal/ZoomImage";
+import loadingGif from "../../../../../public/icon/loading.gif";
+import EventModal from "../../../all/modal/EventModal";
+import ZoomedImage from "../../../all/modal/ZoomImage";
 
 type Props = {
   rank: Rank_res_data;
@@ -93,6 +93,7 @@ export default function TrcomponentWithEditor({
         {i + 1 + (currentPage - 1) * pageSize}
       </td>
       <td>
+        {/* 이미지 */}
         <div className="relative overflow-hidden h-20 flex items-center justify-center">
           <Image
             className="cursor-pointer z-20"
@@ -104,6 +105,7 @@ export default function TrcomponentWithEditor({
             onLoadingComplete={() => setIsLoading(true)}
             priority
           />
+          {/* 로딩 이미지 */}
           {!isLoading && (
             <div className="absolute z-10">
               <Image
@@ -117,6 +119,7 @@ export default function TrcomponentWithEditor({
           )}
         </div>
       </td>
+      {/* 이름 및 수정 기능 */}
       <td className="text-gray text-center w-32">
         {isEditing ? (
           <div
@@ -143,6 +146,7 @@ export default function TrcomponentWithEditor({
         )}
       </td>
       <td>
+        {/* 이미지 수정 및 삭제*/}
         <div className={"flex justify-evenly items-center text-center "}>
           <Image
             src="/icon/picture.svg"
@@ -170,6 +174,7 @@ export default function TrcomponentWithEditor({
           />
         </div>
 
+        {/* 알림 모달 */}
         <EventModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
@@ -178,6 +183,7 @@ export default function TrcomponentWithEditor({
           handleDelete={handlerState}
         />
 
+        {/* 이미지 확대 모달*/}
         {zoomed && (
           <ZoomedImage
             zoomed={zoomed}
