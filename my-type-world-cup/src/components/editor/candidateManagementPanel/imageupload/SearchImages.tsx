@@ -82,3 +82,62 @@ const SearchImages = ({
     }
   };
 
+  const hasData = data && data.length > 0;
+
+  return (
+    <>
+      <div
+        style={{
+          maxHeight: hasData ? "500px" : "80px",
+          overflow: "hidden",
+          transition: "all 1s ease-in-out"
+        }}
+      >
+        <div
+          className={
+            hasData
+              ? "overflow-scroll  bg-white px-2 py-1 h-full"
+              : " bg-white border border-hr rounded px-2 py-1"
+          }
+          ref={containerRef}
+        >
+          <div className="flex w-fit bg-white">
+            {hasData ? (
+              data.map((imageUrl, index) => (
+                <div
+                  key={index}
+                  className="w-32 h-44 flex items-center mr-2"
+                  onClick={() => modalHandler(imageUrl)}
+                >
+                  <Image
+                    src={imageUrl}
+                    alt={`Image ${index}`}
+                    width={200}
+                    height={200}
+                    className="cursor-pointer"
+                    onError={handleImageError}
+                  />
+                </div>
+              ))
+            ) : (
+              <div className="bg-white h-fit text-gray ">
+                {loading ? "검색중입니다" : "검색 결과가 없습니다."}
+              </div>
+            )}
+          </div>
+        </div>
+        <BigModal
+          message="이미지를 선택하시겠습니까?"
+          modalVisible={modal}
+          setModalVisible={setModal}
+          setLoading={setLoading}
+          img={img}
+          uploadHandler={uploadHandler}
+          loading={loading}
+        />
+      </div>
+    </>
+  );
+};
+
+export default SearchImages;
