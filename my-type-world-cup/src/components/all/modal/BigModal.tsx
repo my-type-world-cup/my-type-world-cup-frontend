@@ -3,7 +3,6 @@ import { Dispatch, SetStateAction } from "react";
 import loadingGif from "../../../../public/icon/loading.gif";
 
 type BigModalProps = {
-  setIsMake?: Dispatch<SetStateAction<boolean>>;
   setModalVisible: Dispatch<SetStateAction<boolean>>;
   message: string;
   modalVisible: boolean;
@@ -17,7 +16,6 @@ const BigModal = ({
   message,
   modalVisible,
   setModalVisible,
-  setIsMake,
   img,
   uploadHandler,
   loading,
