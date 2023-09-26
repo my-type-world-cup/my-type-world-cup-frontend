@@ -1,4 +1,4 @@
-import ImageUpload from "@/components/editor/candidateManagementPanel/CandidateManagement";
+import CandidateManagement from "@/components/editor/candidateManagementPanel/Management";
 import TabButtons from "@/components/editor/TabButton";
 import WorldcupEditor from "@/components/editor/worldcupEditorPanel/WorldcupEditor";
 import { accessTokenState, postWorldcup } from "@/lib/atom/atom";
@@ -25,7 +25,7 @@ const WorldCupEditor = () => {
         return <WorldcupEditor setIsNumber={setIsNumber} />;
       case 2:
         return (
-          <ImageUpload
+          <CandidateManagement
             accessToken={accessToken}
             saveWorldcup={saveWorldcup}
             setIsNumber={setIsNumber}

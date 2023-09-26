@@ -1,8 +1,9 @@
+import CandidateList from "@/components/editor/candidateManagementPanel/candidateList/CandidateList";
+import ImageUpload from "@/components/editor/candidateManagementPanel/imageupload/ImageUpload";
 import { useCandidateManagementState } from "@/lib/hooks/useCandidateManagementState";
 import type { Editor_step, Post_res } from "@/type/Types";
 import { Dispatch, SetStateAction, useEffect } from "react";
-import ImageUpload from "./imageupload/ImageUpload";
-import CandidateList from "./candidateList/CandidateList";
+
 type Props = {
   saveWorldcup: Post_res | null;
   setIsNumber: Dispatch<SetStateAction<Editor_step>>;
