@@ -49,6 +49,7 @@ const SearchImages = ({
     scrollToStart();
   }, [keyword]);
 
+  //이미지 깨지는 경우에는 삭제
   const handleImageError = (event: SyntheticEvent<HTMLImageElement, Event>) => {
     const target = event.target as HTMLImageElement;
     const parentElement = target.parentElement;
@@ -56,16 +57,21 @@ const SearchImages = ({
       parentElement.style.display = "none"; // 부모 요소인 DIV를 숨김 처리
     }
   };
+
+  //재검색시 스크롤 초기화
   const scrollToStart = () => {
     if (containerRef.current) {
       containerRef.current.scrollLeft = 10;
     }
   };
 
+  //클릭할 시 이미지 확인 모달
   const modalHandler = (image: string) => {
     setModal(!modal);
     setImg(image);
   };
+
+  //업로드 함수
   const uploadHandler = async (image: string) => {
     try {
       setLoading(true); // 로딩 상태 시작
