@@ -1,25 +1,11 @@
 import { post_candidates } from "@/api/user";
 import { blobToServer } from "@/lib/editor/base64";
+import useImageEditorState from "@/lib/hooks/useImageEditorState";
 import type { Imgbb_result, Save_data } from "@/type/Types";
 import Image from "next/image";
-import {
-  Dispatch,
-  FormEvent,
-  SetStateAction,
-  SyntheticEvent,
-  useEffect,
-  useRef,
-  useState
-} from "react";
-import ReactCrop, {
-  Crop,
-  PixelCrop,
-  centerCrop,
-  makeAspectCrop
-} from "react-image-crop";
+import { Dispatch, SetStateAction, SyntheticEvent } from "react";
+import ReactCrop, { centerCrop, makeAspectCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import { canvasPreview } from "../../../../lib/editor/canvasPreview";
-import { useDebounceEffect } from "../../../../lib/editor/useDebounceEffect";
 import BigModal from "../../../all/modal/BigModal";
 import ShareModal from "../../../all/modal/ShareModal";
 // 이것은 % 비율의 aspect crop을 만들고 중앙 정렬하는 방법을 보여주기 위한 것입니다.
@@ -67,59 +53,39 @@ export default function ImageEditor({
   accessToken,
   setCandidateId
 }: Props) {
-  // const [imgSrc, setImgSrc] = useState("");
-  const [modal, setModal] = useState<boolean>(false);
-  const [img, setImg] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const previewCanvasRef = useRef<HTMLCanvasElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
-  const hiddenAnchorRef = useRef<HTMLAnchorElement>(null);
-  const nameRef = useRef<HTMLInputElement>(null);
-  const blobUrlRef = useRef("");
-  const [crop, setCrop] = useState<Crop>();
-  const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
-  const [scale, setScale] = useState(1);
-  const [rotate, setRotate] = useState(0);
-  const [aspect, setAspect] = useState<number | undefined>(1 / 1);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [modalMessage, setModalMessage] =
-    useState<string>("이름을 작성해주세요");
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const {
+    modal,
+    setModal,
+    img,
+    setImg,
+    loading,
+    setLoading,
+    crop,
+    setCrop,
+    completedCrop,
+    setCompletedCrop,
+    scale,
+    setScale,
+    rotate,
+    setRotate,
+    aspect,
+    setAspect,
+    previewCanvasRef,
+    imgRef,
+    blobUrlRef,
+    hiddenAnchorRef,
+    nameRef,
+    modalMessage,
+    setModalMessage,
+    modalVisible,
+    setModalVisible,
+    scrollRef
+  } = useImageEditorState({ imgSrc });
 
-  useEffect(() => {
-    setScale(1);
-    setRotate(0);
-    setCrop(undefined);
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    }
-  }, [imgSrc]);
-  //파일 읽음
-  // function onSelectFile(e: ChangeEvent<HTMLInputElement>) {
-  //   if (e.target.files && e.target.files.length > 0) {
-  //     // console.log(e.target.files);
-  //     // setCrop(undefined); //이미지 간 자르기 미리보기를 업데이트합니다
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(e.target.files[0]);
-  //     reader.addEventListener("load", () => {
-  //       setImgSrc(reader.result?.toString() || "");
-  //     });
-  //   }
-  // }
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const name = nameRef.current?.value;
-
-    // 여기에서 이름을 처리하거나 다른 작업을 수행합니다.
-  };
   //이미지 로드
   function onImageLoad(e: SyntheticEvent<HTMLImageElement>) {
     if (aspect) {
       const { width, height } = e.currentTarget;
-
       setCrop(centerAspectCrop(width, height, aspect));
     }
   }
