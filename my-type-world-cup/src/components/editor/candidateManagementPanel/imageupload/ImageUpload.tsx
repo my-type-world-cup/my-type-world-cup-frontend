@@ -81,7 +81,7 @@ const ImageUpload = ({
 
       <button
         onClick={() => setIsMake(false)}
-        className="bg-main rounded-md text-white w-full h-12 mt-1 mb-2 hover:scale-110"
+        className="bg-main rounded-md text-white w-full h-12 mb-2 hover:scale-110"
       >
         돌아가기
       </button>
