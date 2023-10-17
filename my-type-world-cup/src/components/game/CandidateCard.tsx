@@ -2,6 +2,7 @@
 import type { Contestant } from "@/type/Types";
 import Image from "next/image";
 import type { CSSProperties, Dispatch, SetStateAction } from "react";
+import loadingGif from "../../../../public/icon/loading.gif";
 
 interface CandidateCardProps {
   pickNum: number;
@@ -14,6 +15,7 @@ interface CandidateCardProps {
   imageLoadedFlag: boolean;
   imageDimensions: number;
   handleClick: (num: number) => Promise<void>;
+
 }
 
 export const CandidateCard = ({
@@ -26,7 +28,8 @@ export const CandidateCard = ({
   setLoadHighQuality,
   imageLoadedFlag,
   imageDimensions,
-  handleClick
+  handleClick,
+
 }: CandidateCardProps) => {
   const first = pickNum === 0;
   const marginTop = first ? "mt-6" : "sm:mt-40";
@@ -49,12 +52,21 @@ export const CandidateCard = ({
     visibility: getVisibility()
   };
 
+  const isLoading =!imageLoadedFlag&&!loadHighQuality[pickNum]
+
   return (
     <div
       className={`flex justify-center ${marginTop}`}
       onClick={() => handleClick(pickNum)}
       style={candidateStyle}
     >
+     {isLoading&&<Image
+						src={loadingGif}
+						alt={`cover`}
+						width={imageDimensions}
+						height={imageDimensions}
+					/>
+     }
       {/*adaptive streaming 방식으로 저화질 -> 고화질 업로드*/}
       <Image
         src={person.image}
