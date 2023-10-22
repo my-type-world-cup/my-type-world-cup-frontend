@@ -15,7 +15,6 @@ interface CandidateCardProps {
   imageLoadedFlag: boolean;
   imageDimensions: number;
   handleClick: (num: number) => Promise<void>;
-
 }
 
 export const CandidateCard = ({
@@ -28,8 +27,7 @@ export const CandidateCard = ({
   setLoadHighQuality,
   imageLoadedFlag,
   imageDimensions,
-  handleClick,
-
+  handleClick
 }: CandidateCardProps) => {
   const first = pickNum === 0;
   const marginTop = first ? "mt-6" : "sm:mt-40";
@@ -52,7 +50,7 @@ export const CandidateCard = ({
     visibility: getVisibility()
   };
 
-  const isLoading =!imageLoadedFlag&&!loadHighQuality[pickNum]
+  const isLoading = !imageLoadedFlag && !loadHighQuality[pickNum];
 
   return (
     <div
@@ -60,13 +58,15 @@ export const CandidateCard = ({
       onClick={() => handleClick(pickNum)}
       style={candidateStyle}
     >
-     {isLoading&&<Image
-						src={loadingGif}
-						alt={`cover`}
-						width={imageDimensions}
-						height={imageDimensions}
-					/>
-     }
+      {isLoading && (
+        <Image
+          src={loadingGif}
+          alt={`cover`}
+          width={imageDimensions}
+          height={imageDimensions}
+          priority
+        />
+      )}
       {/*adaptive streaming 방식으로 저화질 -> 고화질 업로드*/}
       <Image
         src={person.image}
@@ -75,7 +75,7 @@ export const CandidateCard = ({
         height={imageDimensions}
         priority
         className={`cursor-pointer sm:hover:scale-105 duration-300 ${
-         loadHighQuality[pickNum] ? "" : "hidden"
+          loadHighQuality[pickNum] ? "" : "hidden"
         }`}
         onLoadingComplete={() => {
           setLoadHighQuality((prev) => {
@@ -95,7 +95,7 @@ export const CandidateCard = ({
         height={imageDimensions}
         priority
         className={`cursor-pointer sm:hover:scale-105 duration-300 ${
-          !imageLoadedFlag||loadHighQuality[pickNum] ? "hidden" : ""
+          !imageLoadedFlag || loadHighQuality[pickNum] ? "hidden" : ""
         }`}
         onLoadingComplete={() => handleImageLoad(pickNum)}
       />
