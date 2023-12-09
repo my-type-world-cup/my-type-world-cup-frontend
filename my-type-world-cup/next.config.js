@@ -32,4 +32,8 @@ if (process.env.NEXT_PUBLIC_NODE_ENV === "prod") {
   };
 }
 
-module.exports = nextConfig;
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+module.exports = withBundleAnalyzer(nextConfig);
