@@ -27,7 +27,7 @@
 
 로컬에 이미지가 존재한다면 업로드할 수 있습니다. 이는 바이너리 데이터로 받아오기 때문에 더 빠른 속도로 업로드 가능합니다.
 
-![로컬 업로드](/public/gif/local-upload.gif)
+![로컬 업로드](my-type-world-cup/public/gif/local-upload.gif)
 
 </details>
 
@@ -36,7 +36,7 @@
 
 검색을 통해 이미지를 가져와 월드컵에 추가할 수 있습니다. 스크래핑을 통해 받아온 URL을 Blob 객체로 변환하여 사용합니다.
 
-![검색을 통한 이미지 업로드](/public/gif/search-upload.gif)
+![검색을 통한 이미지 업로드](my-type-world-cup/public/gif/search-upload.gif)
 
 </details>
 
@@ -45,7 +45,7 @@
 
 사진을 확대하거나 돌릴 수 있습니다.
 
-![사진 편집](/public/gif/fix-picture.gif)
+![사진 편집](my-type-world-cup/public/gif/fix-picture.gif)
 
 </details>
 
@@ -54,7 +54,7 @@
 
 월드컵에 올라온 사진을 삭제하는 기능입니다.
 
-![사진 삭제](/public/gif/delete-picture.gif)
+![사진 삭제](my-type-world-cup/public/gif/delete-picture.gif)
 
 </details>
 
@@ -65,7 +65,7 @@
 
 수를 지정하고, 상하 클릭을 통해 이상형을 선택할 수 있습니다. 게임이 끝나면 게임 결과로 이동합니다.
 
-![인게임 영상](/public/gif/ingame.gif)
+![인게임 영상](my-type-world-cup/public/gif/ingame.gif)
 
 </details>
 
@@ -74,7 +74,7 @@
 
 투표를 완료하면 랭킹을 업데이트 합니다.
 
-![랭킹 반영](/public/gif/ranking.gif)
+![랭킹 반영](my-type-world-cup/public/gif/ranking.gif)
 
 </details>
 
@@ -83,14 +83,14 @@
 
 랭킹, 월드컵 만들기에서 사진 확대기능을 활용할 수 있습니다. 기존 사진은 저화질이지만 확대 사진은 고화질입니다.
 
-![사진 확대 기능](/public/gif/zoomin.gif)
+![사진 확대 기능](my-type-world-cup/public/gif/zoomin.gif)
 
 </details>
 
 <details open>
 <summary>댓글 기능</summary>
 
-![댓글](/public/gif/comment.gif)
+![댓글](my-type-world-cup/public/gif/comment.gif)
 
 </details>
 
@@ -101,7 +101,7 @@
 
 검색 및 필터링 기능을 통해 원하는 것을 찾을 수 있습니다.
 
-![검색 및 필터링](/public/gif/search-filter.gif)
+![검색 및 필터링](my-type-world-cup/public/gif/search-filter.gif)
 
 </details>
 
@@ -110,7 +110,7 @@
 
 적은 공간을 활용하기 위해 오른쪽 상단에 메뉴를 만들었습니다.
 
-![모달 형식 메뉴바](/public/gif/gnb.gif)
+![모달 형식 메뉴바](my-type-world-cup/public/gif/gnb.gif)
 
 </details>
 
@@ -119,7 +119,7 @@
 
 구글 Oauth 통한 로그인이 가능합니다. 토큰 저장시, 스켈레톤을 활용하여 자연스러운 화면전환을 만들었습니다.
 
-![로그인 및 스켈레톤](/public/gif/login.gif)
+![로그인 및 스켈레톤](my-type-world-cup/public/gif/login.gif)
 
 </details>
 
@@ -128,7 +128,7 @@
 
 공유하기 버튼을 누르면 해당 게임의 url을 복사합니다.
 
-![공유 기능](/public/gif/share.gif)
+![공유 기능](my-type-world-cup/public/gif/share.gif)
 
 </details>
 
