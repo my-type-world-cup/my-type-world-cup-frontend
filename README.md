@@ -1,24 +1,22 @@
   <img src="https://velog.velcdn.com/images/wns450/post/4b406b41-4389-4485-a2a6-2e10dc758a08/image.png" width="300" height="180">
 
-## 💁 이상형 월드컵
+### 💁 이상형 월드컵
 
 모바일 전용 이상형 월드컵
 스크래핑을 통해 이미지를 업로드 할 수 있다.
 
-## 📆 프로젝트 기간
+### 📆 프로젝트 기간
 
 2023.04 ~ 2023.08 (1차 개발)  
 2023.08 ~ 2023.10 (리펙토링)
 
-## **🛠️ 기술 스택**
-
-### 프론트엔드
+### **🛠️ 기술 스택**
 
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white"> <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"> <img src="https://img.shields.io/badge/Recoil-3578E5?style=for-the-badge&logo=Recoil&logoColor=white"> <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white">
 
 <br/>
 
-### 주요 기능
+### **📷 주요 기능**
 
 ### 에디터
 
